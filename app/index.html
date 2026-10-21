@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kick TV - Diagnostico</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header><div class="brand">KICK<span>TV</span></div><span class="phase">FASE 02 / DIAGNOSTICO</span><span class="build">v0.1.0</span></header>
+  <main>
+    <h1>Estado del dispositivo</h1>
+    <div class="columns">
+      <section aria-label="Entorno" class="environment">
+        <dl>
+          <div><dt>Plataforma</dt><dd id="platform">Comprobando...</dd></div>
+          <div><dt>AVPlay</dt><dd id="avplay">Comprobando...</dd></div>
+          <div><dt>HLS en video HTML5</dt><dd id="hls">Comprobando...</dd></div>
+          <div><dt>Almacenamiento</dt><dd id="storage">Comprobando...</dd></div>
+          <div><dt>Teclas especiales</dt><dd id="keys">Comprobando...</dd></div>
+        </dl>
+        <p id="agent" class="detail"></p>
+        <p id="origin" class="detail"></p>
+      </section>
+      <section class="events" aria-label="Registro de eventos">
+        <h2>Actividad</h2>
+        <div class="last-key"><span>ULTIMA TECLA</span><strong id="last-key">Sin eventos</strong></div>
+        <ol id="log" aria-live="polite"></ol>
+      </section>
+    </div>
+    <nav class="actions" aria-label="Acciones de diagnostico">
+      <button id="check" type="button">Comprobar entorno</button>
+      <button id="clear" type="button">Limpiar registro</button>
+      <button id="reload" type="button">Recargar</button>
+      <button id="local" type="button">Abrir version local</button>
+    </nav>
+  </main>
+  <div id="exit-dialog" class="modal" hidden>
+    <section role="dialog" aria-modal="true" aria-labelledby="exit-title">
+      <h2 id="exit-title">Salir de la app?</h2>
+      <p>En la TV se cerrara TizenBrew.</p>
+      <div class="dialog-actions"><button id="cancel" type="button">Continuar</button><button id="exit" type="button">Salir</button></div>
+    </section>
+  </div>
+  <script src="bundle.js"></script>
+</body>
+</html>

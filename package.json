@@ -1,0 +1,21 @@
+{
+  "name": "kick-tv-personal",
+  "version": "0.1.0",
+  "description": "Kick TV: diagnostico de compatibilidad para TizenBrew y Tizen 3.0",
+  "private": true,
+  "packageType": "app",
+  "appName": "Kick TV - Diagnostico",
+  "appPath": "app/index.html",
+  "keys": ["ChannelUp", "ChannelDown", "ColorF0Red", "ColorF1Green", "ColorF2Yellow", "ColorF3Blue", "MediaPlay", "MediaPause", "MediaPlayPause", "MediaStop"],
+  "files": ["app"],
+  "scripts": {
+    "build": "node scripts/build.cjs",
+    "test": "npm run build",
+    "start": "node scripts/serve.cjs"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.26.0",
+    "@babel/preset-env": "^7.26.0",
+    "acorn": "^8.14.0"
+  }
+}
