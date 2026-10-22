@@ -18,13 +18,14 @@ export class IptvView implements ServiceView {
   private numberRef: MediaRef | null = null;
   private digits = '';
   private settingsOpen = false;
+  private settingsReturnId = 'iptv-catalog-settings';
   private suspended = false;
   constructor(private readonly source: IptvDirectorySource, private readonly favorites: FavoritesService, private readonly grid: ChannelGridService,
     private readonly health: StreamHealthService, private readonly player: PlayerController, private readonly navigate: (route: string) => void,
     private readonly icons: { [name: string]: string }, private readonly storage: KeyValueStore) {
     this.root = document.createElement('section'); this.root.id = 'iptv-content'; this.root.hidden = true;
     this.root.innerHTML = '<div class="section-heading"><div><h1>IPTV Argentina</h1><p id="iptv-summary" class="hub-muted"></p></div><button id="iptv-refresh" class="icon-button" aria-label="Actualizar catalogo" title="Actualizar catalogo">' + this.icons['refresh-cw'] + '</button></div>' +
-      '<div class="iptv-toolbar"><button id="iptv-category">Todas las categorias</button><button id="iptv-language">Todos los idiomas</button><button id="iptv-saved">Mi grilla</button><button id="iptv-search-toggle" class="iptv-search-button" aria-label="Buscar canal en IPTV Argentina" title="Buscar canal en IPTV Argentina" aria-expanded="false"><span data-icon="search">' + this.icons.search + '</span>Buscar</button><button id="iptv-health">Fallos: despriorizar</button><button id="iptv-reset" class="icon-button" aria-label="Restablecer fallos locales" title="Restablecer fallos locales">' + this.icons['refresh-cw'] + '</button><button id="iptv-catalog-settings" class="icon-button" aria-label="URL del catalogo" title="URL del catalogo">' + this.icons.settings + '</button></div>' +
+      '<div id="iptv-toolbar" class="iptv-toolbar"><button id="iptv-category">Todas las categorias</button><button id="iptv-language">Todos los idiomas</button><button id="iptv-saved">Mi grilla</button><button id="iptv-search-toggle" class="iptv-search-button" aria-label="Buscar canal en IPTV Argentina" title="Buscar canal en IPTV Argentina" aria-expanded="false"><span data-icon="search">' + this.icons.search + '</span>Buscar</button><button id="iptv-health">Fallos: despriorizar</button><button id="iptv-reset" class="icon-button" aria-label="Restablecer fallos locales" title="Restablecer fallos locales">' + this.icons['refresh-cw'] + '</button><button id="iptv-catalog-settings" class="icon-button" aria-label="URL del catalogo" title="URL del catalogo">' + this.icons.settings + '</button></div>' +
       '<div id="iptv-search" hidden><input id="iptv-query" type="text" readonly aria-label="Nombre del canal IPTV" placeholder="Nombre del canal"><div id="iptv-keyboard" class="keyboard" aria-label="Teclado IPTV"></div><div class="keyboard-actions"><button id="iptv-delete" class="icon-button" aria-label="Borrar caracter" title="Borrar caracter">' + this.icons.delete + '</button><button id="iptv-clear" class="icon-button" aria-label="Limpiar busqueda" title="Limpiar busqueda">' + this.icons.x + '</button></div></div>' +
       '<p id="iptv-status" role="status"></p><div id="iptv-grid" class="channel-grid"></div><div class="iptv-pages"><button id="iptv-prev" class="icon-button" aria-label="Pagina anterior" title="Pagina anterior">' + this.icons['arrow-left'] + '</button><span id="iptv-range"></span><button id="iptv-next" class="icon-button" aria-label="Pagina siguiente" title="Pagina siguiente">' + this.icons['arrow-right'] + '</button></div>';
     (document.getElementById('service-content') as HTMLElement).appendChild(this.root);
@@ -101,8 +102,8 @@ export class IptvView implements ServiceView {
       var detail = document.createElement('span'); detail.className = 'channel-title'; detail.textContent = item.categories.map(function (category) { return info && info.categories[category] || category; }).join(' / '); watch.appendChild(detail);
       var language = document.createElement('span'); language.className = 'channel-category'; language.textContent = (item.verification.status === 'ok' ? 'HLS sondeado' : 'Por probar') + ' / ' + (item.provenance.status === 'reviewed' ? 'Fuente revisada' : 'Sin revisar'); watch.appendChild(language);
       watch.onclick = function () { self.openItem(item.ref); }; article.appendChild(watch);
-      var favorite = document.createElement('button'); favorite.type = 'button'; favorite.id = 'iptv-favorite-' + (self.offset + index); favorite.className = 'channel-favorite';
-      var selected = saved.some(function (ref) { return sameRef(ref, item.ref); }); favorite.innerHTML = self.icons[selected ? 'star-off' : 'star']; favorite.setAttribute('aria-label', selected ? 'Quitar de Mi grilla' : 'Agregar a Mi grilla'); favorite.title = favorite.getAttribute('aria-label') || '';
+      var favorite = document.createElement('button'); favorite.type = 'button'; favorite.id = 'iptv-favorite-' + (self.offset + index);
+      var selected = saved.some(function (ref) { return sameRef(ref, item.ref); }); favorite.className = 'channel-favorite' + (selected ? ' saved' : ''); favorite.innerHTML = self.icons[selected ? 'star-off' : 'star']; favorite.setAttribute('aria-pressed', String(selected)); favorite.setAttribute('aria-label', selected ? 'Quitar de Mi grilla' : 'Agregar a Mi grilla'); favorite.title = favorite.getAttribute('aria-label') || '';
       favorite.onclick = function () {
         try {
           var ids = self.favorites.list('iptv').map(function (ref) { return ref.itemId; }); var position = ids.indexOf(item.ref.itemId);
@@ -121,6 +122,7 @@ export class IptvView implements ServiceView {
   }
   private focusFirst(): void { var first = this.root.querySelector('.channel-play') as HTMLElement | null; if (first) first.focus(); else this.node('iptv-category').focus(); }
   private settings(): void {
+    this.settingsReturnId = document.activeElement && document.activeElement.id || 'iptv-catalog-settings';
     this.settingsOpen = true; this.node('modal').hidden = false; this.node('modal-title').textContent = 'URL de la lista IPTV';
     var root = this.node('modal-options'); root.textContent = ''; var input = document.createElement('input'); input.id = 'iptv-playlist-url'; input.type = 'url'; input.spellcheck = false; input.setAttribute('aria-label', 'URL de la lista IPTV'); input.value = this.storage.get('stream-hub-iptv-url') || this.source.playlistURL(); root.appendChild(input);
     var save = document.createElement('button'); save.id = 'iptv-save-catalog'; save.type = 'button'; save.className = 'menu-option'; save.textContent = 'Guardar y recargar'; root.appendChild(save); var self = this;
@@ -130,7 +132,7 @@ export class IptvView implements ServiceView {
       try { self.storage.set('stream-hub-iptv-url', value); window.location.reload(); }
       catch (error) { self.node('modal-title').textContent = 'No se pudo guardar la URL.'; }
     };
-    this.node('modal-close').onclick = function (event) { event.stopPropagation(); self.settingsOpen = false; self.node('modal').hidden = true; self.node('iptv-catalog-settings').focus(); }; input.focus();
+    this.node('modal-close').onclick = function (event) { event.stopPropagation(); self.settingsOpen = false; self.node('modal').hidden = true; self.node(self.settingsReturnId).focus(); }; input.focus();
   }
   private assign(ref: MediaRef, number: number): void {
     this.numberRef = ref; this.digits = String(number); this.node('modal').hidden = false; this.node('modal-title').textContent = 'Numero de canal (1-999)';
@@ -145,7 +147,7 @@ export class IptvView implements ServiceView {
     if (!this.active || !(document.getElementById('player') as HTMLElement).hidden) return;
     var active = document.activeElement as HTMLElement; var code = event.keyCode;
     if (this.settingsOpen) {
-      if (code === 27 || code === 10009) { this.settingsOpen = false; this.node('modal').hidden = true; this.node('iptv-catalog-settings').focus(); }
+      if (code === 27 || code === 10009) { this.settingsOpen = false; this.node('modal').hidden = true; this.node(this.settingsReturnId).focus(); }
       else if (code === 13) { if (active.tagName === 'INPUT') this.node('iptv-save-catalog').focus(); else active.click(); }
       else if (active.tagName === 'INPUT') return;
       else if (code >= 37 && code <= 40) this.move(code, this.node('modal'));
@@ -163,7 +165,10 @@ export class IptvView implements ServiceView {
     if (!this.root.contains(active)) return;
     if (code === 27 || code === 10009) { if (!this.node('iptv-search').hidden) { this.node('iptv-search').hidden = true; this.node('iptv-search-toggle').setAttribute('aria-expanded', 'false'); this.node('iptv-search-toggle').focus(); } else this.navigate('home'); }
     else if (code === 13) { if (active.tagName === 'BUTTON') active.click(); }
-    else if (code >= 37 && code <= 40) { if (!this.move(code, this.root) && code === 37) return; }
+    else if (code >= 37 && code <= 40) {
+      if (code === 38 && this.node('iptv-toolbar').contains(active)) return;
+      if (!this.move(code, this.root) && (code === 37 || code === 38)) return;
+    }
     else if (code === 8) this.setQuery(this.query.slice(0, -1));
     else if (!event.ctrlKey && !event.metaKey && event.key && event.key.length === 1) this.setQuery(this.query + event.key);
     else return;

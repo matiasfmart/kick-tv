@@ -1,12 +1,12 @@
 @use './tokens' as t;
 
-$dark-canvas: #17191D;
-$dark-frame: #202329;
-$dark-panel: #2A2E34;
-$dark-surface: #373B42;
+$dark-canvas: #0B0D10;
+$dark-frame: #111418;
+$dark-panel: #181C21;
+$dark-surface: #22272D;
 $dark-ink: #F1F2F4;
 $dark-muted: #A5ABB4;
-$dark-line: #444A54;
+$dark-line: #343A43;
 
 @font-face {
   font-family: 'Poppins';
@@ -39,8 +39,8 @@ html, body { width: 100%; height: 100%; margin: 0; overflow: hidden; }
 body { background: t.$canvas; color: t.$ink; font-family: 'Poppins', sans-serif; font-size: 16px; letter-spacing: 0; }
 button, input { font: inherit; }
 button { display: inline-flex; position: relative; align-items: center; justify-content: center; min-height: 56px; border: 1px solid t.$line; border-radius: 12px; padding: 10px 16px; background: t.$white; color: t.$ink; cursor: pointer; box-shadow: t.$shadow-card; }
-button:focus, input:focus { outline: 3px solid t.$focus; outline-offset: 4px; }
-button:focus { transform: scale(1.06); box-shadow: t.$shadow-focus; z-index: 4; transition: transform .15s ease-out, box-shadow .15s ease-out; }
+button:focus { outline: 0; border-color: t.$focus; background: t.$focus; color: t.$focus-ink; box-shadow: none; z-index: 4; transition: background-color .15s ease-out, color .15s ease-out; }
+input:focus { outline: 0; border-color: t.$focus; }
 button:disabled { opacity: .5; cursor: default; box-shadow: none; }
 input { min-width: 0; border: 1px solid t.$line; border-radius: 12px; padding: 12px 16px; background: t.$white; color: t.$ink; }
 [data-icon] { display: inline-flex; flex: 0 0 auto; width: 28px; height: 28px; align-items: center; justify-content: center; }
@@ -51,12 +51,13 @@ input { min-width: 0; border: 1px solid t.$line; border-radius: 12px; padding: 1
 .hub-mark { display: flex; flex: 0 0 76px; align-items: center; justify-content: center; color: t.$ink; font-size: 26px; font-weight: 600; }
 #hub-nav { display: flex; flex: 1 1 auto; flex-direction: column; align-items: center; width: 100%; padding: 12px 0; }
 #hub-nav button { display: flex; flex: 0 0 64px; width: 64px; height: 64px; min-height: 64px; margin: 0 0 16px; padding: 0; border: 0; border-radius: 50%; background: transparent; color: t.$muted-soft; box-shadow: none; }
-#hub-nav button.selected { color: t.$ink; background: transparent; }
-#hub-nav button.selected:before { content: ''; position: absolute; top: 18px; left: -16px; width: 4px; height: 28px; border-radius: 2px; background: t.$ink; }
-#hub-nav button:focus { background: t.$white; color: t.$ink; border: 0; box-shadow: 0 2px 10px rgba(0, 0, 0, .08); }
+#hub-nav button.selected, #hub-nav button:hover { color: t.$focus-ink; background: t.$focus; }
+#hub-nav button.selected:before { content: ''; position: absolute; top: 18px; left: -16px; width: 4px; height: 28px; border-radius: 2px; background: t.$focus-ink; }
+#hub-nav button:focus { background: t.$focus; color: t.$focus-ink; border: 0; box-shadow: none; }
 #hub-nav button:focus:before { content: ''; position: absolute; top: 18px; left: -16px; width: 4px; height: 28px; border-radius: 2px; background: t.$ink; }
 #hub-nav [data-icon] { width: 28px; height: 28px; margin: 0; }
 .hub-nav-label { display: none; margin-left: 20px; color: t.$ink; font-size: 18px; font-weight: 600; }
+#hub-nav button.selected .hub-nav-label, #hub-nav button:hover .hub-nav-label, #hub-nav button:focus .hub-nav-label { color: t.$focus-ink; }
 .hub-sidebar.expanded #hub-nav { align-items: flex-start; padding: 12px 16px; }
 .hub-sidebar.expanded #hub-nav button { width: 100%; justify-content: flex-start; padding: 0 16px; border-radius: 32px; }
 .hub-sidebar.expanded .hub-nav-label { display: inline; }
@@ -114,11 +115,11 @@ p { line-height: 1.4; }
 .channel-title { display: block; width: 100%; height: 38px; overflow: hidden; margin-top: 7px; color: t.$muted; font-size: 15px; font-weight: 500; line-height: 1.3; overflow-wrap: break-word; }
 .channel-category { display: block; width: 100%; overflow: hidden; margin-top: 5px; color: t.$muted; font-size: 13px; text-overflow: ellipsis; white-space: nowrap; }
 .channel-favorite { position: absolute; top: 14px; right: 14px; width: 42px; height: 42px; min-height: 42px; padding: 9px; border: 1px solid rgba(255, 255, 255, .75); border-radius: 50%; background: rgba(255, 255, 255, .94); color: t.$ink; box-shadow: none; }
-.channel-favorite.saved { color: t.$ink; }
+.channel-favorite:focus { border-color: rgba(255, 255, 255, .75); background: rgba(255, 255, 255, .94); color: t.$ink; box-shadow: 0 4px 12px rgba(0, 0, 0, .2); transform: translateY(-2px); }
+.channel-favorite.saved, .channel-favorite[aria-pressed="true"] { border-color: #EFD08D; background: t.$live-soft; color: t.$live; }
 .channel-favorite [data-icon] { width: 21px; height: 21px; }
 .channel:focus-within { z-index: 4; }
-.channel-play:focus, .hub-media:focus { outline: 0; transform: scale(1.06); box-shadow: t.$shadow-focus; }
-.channel-play:focus:after, .hub-media:focus:after { content: ''; position: absolute; top: -7px; right: -7px; bottom: -7px; left: -7px; border: 3px solid t.$focus; border-radius: 24px; pointer-events: none; }
+#library .channel-play:hover, #library .channel-play:focus, #library .hub-media:hover, #library .hub-media:focus { border: 0; background: t.$white; color: t.$ink; box-shadow: t.$shadow-focus; transform: translateY(-4px); z-index: 4; }
 .channel-play, .hub-media { transition: transform .15s ease-out, box-shadow .15s ease-out; }
 .empty-state { padding: 72px 20px; text-align: center; }
 .empty-state h2 { margin-bottom: 22px; font-size: 24px; }
@@ -206,7 +207,9 @@ body.dark-theme .modal-heading h2 { color: $dark-ink; }
 body.dark-theme .menu-option.selected { border-color: $dark-ink; background: $dark-ink; color: $dark-canvas; }
 body.dark-theme .empty-icon { color: $dark-muted; }
 body.dark-theme #iptv-status { color: #f3c878; }
-body.dark-theme button:focus, body.dark-theme input:focus { outline-color: #E7EAEE; }
+body.dark-theme button:focus { border-color: t.$dark-focus; background: t.$dark-focus; color: t.$dark-focus-ink; }
+body.dark-theme button:focus .channel-name, body.dark-theme button:focus .channel-title, body.dark-theme button:focus .channel-category, body.dark-theme .hub-media:focus strong, body.dark-theme .hub-media:focus > .hub-source-label { color: t.$dark-focus-ink; }
+body.dark-theme input:focus { outline: 0; border-color: t.$dark-focus; }
 @media screen and (max-width: 1250px) {
   .app-header { padding: 0 24px; }
   .header-search { width: 320px; flex-basis: 320px; margin-left: 22px; }
@@ -308,9 +311,15 @@ body.dark-theme button:focus, body.dark-theme input:focus { outline-color: #E7EA
 body.theme-dark { background: $dark-canvas; color: $dark-ink; }
 body.theme-dark #library { border-color: $dark-line; background: $dark-frame; }
 body.theme-dark .hub-sidebar, body.theme-dark .app-header { background: $dark-frame; color: $dark-ink; }
+body.theme-dark #hub-nav button.selected, body.theme-dark #hub-nav button:hover { background: t.$dark-focus; color: t.$dark-focus-ink; }
+body.theme-dark #hub-nav button.selected:before { background: t.$dark-focus-ink; }
+body.theme-dark #hub-nav button.selected .hub-nav-label, body.theme-dark #hub-nav button:hover .hub-nav-label, body.theme-dark #hub-nav button:focus .hub-nav-label { color: t.$dark-focus-ink; }
 body.theme-dark .hub-mark, body.theme-dark .brand, body.theme-dark .brand span, body.theme-dark h1, body.theme-dark h2, body.theme-dark .section-title, body.theme-dark .hub-band-heading h2 { color: $dark-ink; }
 body.theme-dark .hub-main { background: $dark-panel; color: $dark-ink; }
 body.theme-dark .hub-muted, body.theme-dark .section-link, body.theme-dark .service-indicator, body.theme-dark .data-label, body.theme-dark .standard-secondary, body.theme-dark .channel-title, body.theme-dark .channel-category { color: $dark-muted; }
+body.theme-dark .hub-nav-label, body.theme-dark .hub-media strong, body.theme-dark .channel-name, body.theme-dark .setting-row h2, body.theme-dark .setting-row label { color: $dark-ink; }
+body.theme-dark .hub-source-label, body.theme-dark #hub-header-search-label { color: $dark-muted; }
+body.theme-dark .tab.active { background: $dark-surface; color: $dark-ink; box-shadow: none; }
 body.theme-dark button, body.theme-dark input { border-color: $dark-line; background: $dark-surface; color: $dark-ink; }
 body.theme-dark .header-search, body.theme-dark .hero-info, body.theme-dark .standard-info, body.theme-dark .standard-art, body.theme-dark .hub-service, body.theme-dark .hub-row .hub-media, body.theme-dark #favorites-grid .channel-play, body.theme-dark #search-grid .channel-play, body.theme-dark #iptv-grid .channel-play { border-color: $dark-line; background: $dark-surface; color: $dark-ink; }
 body.theme-dark .meta-pill, body.theme-dark .filter-chip { border-color: $dark-line; background: $dark-frame; color: $dark-ink; }
@@ -323,4 +332,9 @@ body.theme-dark .modal > section { border-color: $dark-line; background: $dark-s
 body.theme-dark .modal-heading h2 { color: $dark-ink; }
 body.theme-dark .empty-icon { color: $dark-muted; }
 body.theme-dark #iptv-status { color: #f3c878; }
-body.theme-dark button:focus, body.theme-dark input:focus { outline-color: #E7EAEE; }
+body.theme-dark button:focus { border-color: t.$dark-focus; background: t.$dark-focus; color: t.$dark-focus-ink; }
+body.theme-dark #hub-nav button:focus { border-color: t.$dark-focus; background: t.$dark-focus; color: t.$dark-focus-ink; }
+body.theme-dark #library .channel-play:hover, body.theme-dark #library .channel-play:focus, body.theme-dark #library .hub-media:hover, body.theme-dark #library .hub-media:focus { border: 0; background: $dark-surface; color: $dark-ink; box-shadow: 0 10px 28px rgba(0, 0, 0, .42); transform: translateY(-4px); z-index: 4; }
+body.theme-dark #library .channel-favorite:focus { border-color: $dark-line; background: $dark-surface; color: $dark-ink; box-shadow: 0 4px 12px rgba(0, 0, 0, .42); transform: translateY(-2px); }
+body.theme-dark #library .channel-favorite.saved, body.theme-dark #library .channel-favorite[aria-pressed="true"] { border-color: #7A6035; background: #3B3327; color: #F3C878; }
+body.theme-dark input:focus { outline: 0; border-color: t.$dark-focus; }

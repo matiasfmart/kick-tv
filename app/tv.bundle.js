@@ -721,13 +721,14 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
         var search = document.getElementById("hub-header-search");
         var refresh = document.getElementById("hub-header-refresh");
         var settings = document.getElementById("hub-header-settings");
-        search.hidden = !module || !module.capabilities.search;
+        var routeId = route.indexOf("search:") === 0 ? "search" : route === "settings" ? "settings" : "browse";
+        search.hidden = !module || !module.capabilities.search || module.id === "kick" && routeId === "search";
         if (module) {
           search.setAttribute("aria-label", "Buscar en " + module.name);
           document.getElementById("hub-header-search-label").textContent = "Buscar en " + module.name;
         }
-        refresh.hidden = !module || module.id === "kick" && route.indexOf("search:") === 0;
-        settings.hidden = !module;
+        refresh.hidden = !module || module.id === "kick" && routeId !== "browse";
+        settings.hidden = !module || module.id === "kick" && routeId === "settings";
         document.getElementById("hub-current-service").textContent = module ? module.name + (route === "settings" ? " / Ajustes" : "") : route === "favorites" ? "Favoritos" : "Inicio";
       }
     }, {
@@ -959,24 +960,31 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
           event.stopImmediatePropagation();
           return;
         }
-        var kickTabs = document.getElementById("kick-tabs");
-        if (kickTabs.contains(active)) {
-          var tabs = kickTabs.querySelectorAll("button");
-          var tabPosition = 0;
-          for (var tabIndex = 0; tabIndex < tabs.length; tabIndex++) {
-            if (tabs[tabIndex] === active) tabPosition = tabIndex;
+        var header = document.querySelector(".app-header");
+        if (header.contains(active)) {
+          var headerNodes = header.querySelectorAll("button");
+          var controls = [];
+          var controlIndex = -1;
+          for (var headerIndex = 0; headerIndex < headerNodes.length; headerIndex++) {
+            var headerButton = headerNodes[headerIndex];
+            var headerRect = headerButton.getBoundingClientRect();
+            if (!headerButton.disabled && headerRect.width && headerRect.height) {
+              if (headerButton === active) controlIndex = controls.length;
+              controls.push(headerButton);
+            }
           }
-          if (code === 37 || code === 39) {
-            this.focus(tabs[(tabPosition + (code === 37 ? tabs.length - 1 : 1)) % tabs.length]);
+          if (code === 37) {
+            if (controlIndex > 0) this.focus(controls[controlIndex - 1]);else this.focus(document.getElementById(this.lastNav));
+          } else if (code === 39) {
+            if (controlIndex >= 0 && controlIndex < controls.length - 1) this.focus(controls[controlIndex + 1]);else this.enterContent();
           } else if (code === 40) {
-            this.lastContent = active.id;
-            this.focus(this.firstVisible(document.getElementById("service-content")));
+            this.enterContent();
           } else if (code === 38) {
             this.focus(document.getElementById(this.lastNav));
           } else if (code === 13) {
             active.click();
           } else if (code === 27 || code === 10009 || code === 8) {
-            this.navigate("home");
+            if (this.route !== "home") this.navigate("home");else return;
           } else {
             return;
           }
@@ -999,6 +1007,26 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
           if (!hasLeft) {
             this.lastContent = active.id;
             this.focus(document.getElementById(this.lastNav));
+            event.preventDefault();
+            event.stopImmediatePropagation();
+            return;
+          }
+        }
+        if (code === 38) {
+          var contentRoot = this.focusRoot();
+          var activeRect = active.getBoundingClientRect();
+          var hasAbove = false;
+          var contentNodes = contentRoot.querySelectorAll("button, input");
+          for (var aboveIndex = 0; aboveIndex < contentNodes.length; aboveIndex++) {
+            var aboveRect = contentNodes[aboveIndex].getBoundingClientRect();
+            if (contentNodes[aboveIndex] !== active && aboveRect.width && aboveRect.height && aboveRect.bottom < activeRect.top + 2 && Math.min(aboveRect.right, activeRect.right) > Math.max(aboveRect.left, activeRect.left)) {
+              hasAbove = true;
+              break;
+            }
+          }
+          if (!hasAbove) {
+            this.lastContent = active.id;
+            this.focus(this.firstVisible(document.querySelector(".app-header")));
             event.preventDefault();
             event.stopImmediatePropagation();
             return;
@@ -2386,11 +2414,12 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
       __publicField(this, "numberRef", null);
       __publicField(this, "digits", "");
       __publicField(this, "settingsOpen", false);
+      __publicField(this, "settingsReturnId", "iptv-catalog-settings");
       __publicField(this, "suspended", false);
       this.root = document.createElement("section");
       this.root.id = "iptv-content";
       this.root.hidden = true;
-      this.root.innerHTML = '<div class="section-heading"><div><h1>IPTV Argentina</h1><p id="iptv-summary" class="hub-muted"></p></div><button id="iptv-refresh" class="icon-button" aria-label="Actualizar catalogo" title="Actualizar catalogo">' + this.icons["refresh-cw"] + '</button></div><div class="iptv-toolbar"><button id="iptv-category">Todas las categorias</button><button id="iptv-language">Todos los idiomas</button><button id="iptv-saved">Mi grilla</button><button id="iptv-search-toggle" class="iptv-search-button" aria-label="Buscar canal en IPTV Argentina" title="Buscar canal en IPTV Argentina" aria-expanded="false"><span data-icon="search">' + this.icons.search + '</span>Buscar</button><button id="iptv-health">Fallos: despriorizar</button><button id="iptv-reset" class="icon-button" aria-label="Restablecer fallos locales" title="Restablecer fallos locales">' + this.icons["refresh-cw"] + '</button><button id="iptv-catalog-settings" class="icon-button" aria-label="URL del catalogo" title="URL del catalogo">' + this.icons.settings + '</button></div><div id="iptv-search" hidden><input id="iptv-query" type="text" readonly aria-label="Nombre del canal IPTV" placeholder="Nombre del canal"><div id="iptv-keyboard" class="keyboard" aria-label="Teclado IPTV"></div><div class="keyboard-actions"><button id="iptv-delete" class="icon-button" aria-label="Borrar caracter" title="Borrar caracter">' + this.icons.delete + '</button><button id="iptv-clear" class="icon-button" aria-label="Limpiar busqueda" title="Limpiar busqueda">' + this.icons.x + '</button></div></div><p id="iptv-status" role="status"></p><div id="iptv-grid" class="channel-grid"></div><div class="iptv-pages"><button id="iptv-prev" class="icon-button" aria-label="Pagina anterior" title="Pagina anterior">' + this.icons["arrow-left"] + '</button><span id="iptv-range"></span><button id="iptv-next" class="icon-button" aria-label="Pagina siguiente" title="Pagina siguiente">' + this.icons["arrow-right"] + "</button></div>";
+      this.root.innerHTML = '<div class="section-heading"><div><h1>IPTV Argentina</h1><p id="iptv-summary" class="hub-muted"></p></div><button id="iptv-refresh" class="icon-button" aria-label="Actualizar catalogo" title="Actualizar catalogo">' + this.icons["refresh-cw"] + '</button></div><div id="iptv-toolbar" class="iptv-toolbar"><button id="iptv-category">Todas las categorias</button><button id="iptv-language">Todos los idiomas</button><button id="iptv-saved">Mi grilla</button><button id="iptv-search-toggle" class="iptv-search-button" aria-label="Buscar canal en IPTV Argentina" title="Buscar canal en IPTV Argentina" aria-expanded="false"><span data-icon="search">' + this.icons.search + '</span>Buscar</button><button id="iptv-health">Fallos: despriorizar</button><button id="iptv-reset" class="icon-button" aria-label="Restablecer fallos locales" title="Restablecer fallos locales">' + this.icons["refresh-cw"] + '</button><button id="iptv-catalog-settings" class="icon-button" aria-label="URL del catalogo" title="URL del catalogo">' + this.icons.settings + '</button></div><div id="iptv-search" hidden><input id="iptv-query" type="text" readonly aria-label="Nombre del canal IPTV" placeholder="Nombre del canal"><div id="iptv-keyboard" class="keyboard" aria-label="Teclado IPTV"></div><div class="keyboard-actions"><button id="iptv-delete" class="icon-button" aria-label="Borrar caracter" title="Borrar caracter">' + this.icons.delete + '</button><button id="iptv-clear" class="icon-button" aria-label="Limpiar busqueda" title="Limpiar busqueda">' + this.icons.x + '</button></div></div><p id="iptv-status" role="status"></p><div id="iptv-grid" class="channel-grid"></div><div class="iptv-pages"><button id="iptv-prev" class="icon-button" aria-label="Pagina anterior" title="Pagina anterior">' + this.icons["arrow-left"] + '</button><span id="iptv-range"></span><button id="iptv-next" class="icon-button" aria-label="Pagina siguiente" title="Pagina siguiente">' + this.icons["arrow-right"] + "</button></div>";
       document.getElementById("service-content").appendChild(this.root);
       var self = this;
       this.node("iptv-refresh").onclick = function () {
@@ -2667,11 +2696,12 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
           var favorite = document.createElement("button");
           favorite.type = "button";
           favorite.id = "iptv-favorite-" + (self.offset + index);
-          favorite.className = "channel-favorite";
           var selected = saved.some(function (ref) {
             return sameRef(ref, item.ref);
           });
+          favorite.className = "channel-favorite" + (selected ? " saved" : "");
           favorite.innerHTML = self.icons[selected ? "star-off" : "star"];
+          favorite.setAttribute("aria-pressed", String(selected));
           favorite.setAttribute("aria-label", selected ? "Quitar de Mi grilla" : "Agregar a Mi grilla");
           favorite.title = favorite.getAttribute("aria-label") || "";
           favorite.onclick = function () {
@@ -2731,6 +2761,7 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
     }, {
       key: "settings",
       value: function settings() {
+        this.settingsReturnId = document.activeElement && document.activeElement.id || "iptv-catalog-settings";
         this.settingsOpen = true;
         this.node("modal").hidden = false;
         this.node("modal-title").textContent = "URL de la lista IPTV";
@@ -2769,7 +2800,7 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
           event.stopPropagation();
           self.settingsOpen = false;
           self.node("modal").hidden = true;
-          self.node("iptv-catalog-settings").focus();
+          self.node(self.settingsReturnId).focus();
         };
         input.focus();
       }
@@ -2842,7 +2873,7 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
           if (code === 27 || code === 10009) {
             this.settingsOpen = false;
             this.node("modal").hidden = true;
-            this.node("iptv-catalog-settings").focus();
+            this.node(this.settingsReturnId).focus();
           } else if (code === 13) {
             if (active.tagName === "INPUT") this.node("iptv-save-catalog").focus();else active.click();
           } else if (active.tagName === "INPUT") return;else if (code >= 37 && code <= 40) this.move(code, this.node("modal"));else return;
@@ -2876,7 +2907,8 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
         } else if (code === 13) {
           if (active.tagName === "BUTTON") active.click();
         } else if (code >= 37 && code <= 40) {
-          if (!this.move(code, this.root) && code === 37) return;
+          if (code === 38 && this.node("iptv-toolbar").contains(active)) return;
+          if (!this.move(code, this.root) && (code === 37 || code === 38)) return;
         } else if (code === 8) this.setQuery(this.query.slice(0, -1));else if (!event.ctrlKey && !event.metaKey && event.key && event.key.length === 1) this.setQuery(this.query + event.key);else return;
         event.preventDefault();
         event.stopImmediatePropagation();

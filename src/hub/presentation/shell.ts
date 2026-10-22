@@ -67,10 +67,11 @@ export class HubShell {
     var search = document.getElementById('hub-header-search') as HTMLButtonElement;
     var refresh = document.getElementById('hub-header-refresh') as HTMLButtonElement;
     var settings = document.getElementById('hub-header-settings') as HTMLButtonElement;
-    search.hidden = !module || !module.capabilities.search;
+    var routeId = route.indexOf('search:') === 0 ? 'search' : route === 'settings' ? 'settings' : 'browse';
+    search.hidden = !module || !module.capabilities.search || (module.id === 'kick' && routeId === 'search');
     if (module) { search.setAttribute('aria-label', 'Buscar en ' + module.name); (document.getElementById('hub-header-search-label') as HTMLElement).textContent = 'Buscar en ' + module.name; }
-    refresh.hidden = !module || (module.id === 'kick' && route.indexOf('search:') === 0);
-    settings.hidden = !module;
+    refresh.hidden = !module || (module.id === 'kick' && routeId !== 'browse');
+    settings.hidden = !module || (module.id === 'kick' && routeId === 'settings');
     (document.getElementById('hub-current-service') as HTMLElement).textContent = module ? module.name + (route === 'settings' ? ' / Ajustes' : '') : route === 'favorites' ? 'Favoritos' : 'Inicio';
   }
   private searchCurrent(): void {
@@ -185,15 +186,19 @@ export class HubShell {
       else { return; }
       event.preventDefault(); event.stopImmediatePropagation(); return;
     }
-    var kickTabs = document.getElementById('kick-tabs') as HTMLElement;
-    if (kickTabs.contains(active)) {
-      var tabs = kickTabs.querySelectorAll('button'); var tabPosition = 0;
-      for (var tabIndex = 0; tabIndex < tabs.length; tabIndex++) { if (tabs[tabIndex] === active) tabPosition = tabIndex; }
-      if (code === 37 || code === 39) { this.focus(tabs[(tabPosition + (code === 37 ? tabs.length - 1 : 1)) % tabs.length] as HTMLElement); }
-      else if (code === 40) { this.lastContent = active.id; this.focus(this.firstVisible(document.getElementById('service-content') as HTMLElement)); }
+    var header = document.querySelector('.app-header') as HTMLElement;
+    if (header.contains(active)) {
+      var headerNodes = header.querySelectorAll('button'); var controls: HTMLElement[] = []; var controlIndex = -1;
+      for (var headerIndex = 0; headerIndex < headerNodes.length; headerIndex++) {
+        var headerButton = headerNodes[headerIndex] as HTMLButtonElement; var headerRect = headerButton.getBoundingClientRect();
+        if (!headerButton.disabled && headerRect.width && headerRect.height) { if (headerButton === active) controlIndex = controls.length; controls.push(headerButton); }
+      }
+      if (code === 37) { if (controlIndex > 0) this.focus(controls[controlIndex - 1]); else this.focus(document.getElementById(this.lastNav)); }
+      else if (code === 39) { if (controlIndex >= 0 && controlIndex < controls.length - 1) this.focus(controls[controlIndex + 1]); else this.enterContent(); }
+      else if (code === 40) { this.enterContent(); }
       else if (code === 38) { this.focus(document.getElementById(this.lastNav)); }
       else if (code === 13) { active.click(); }
-      else if (code === 27 || code === 10009 || code === 8) { this.navigate('home'); }
+      else if (code === 27 || code === 10009 || code === 8) { if (this.route !== 'home') this.navigate('home'); else return; }
       else { return; }
       event.preventDefault(); event.stopImmediatePropagation(); return;
     }
@@ -205,6 +210,15 @@ export class HubShell {
         if (rect.width && rect.height && rect.left + rect.width / 2 < origin.left + origin.width / 2 - 2 && Math.min(rect.bottom, origin.bottom) > Math.max(rect.top, origin.top)) { hasLeft = true; break; }
       }
       if (!hasLeft) { this.lastContent = active.id; this.focus(document.getElementById(this.lastNav)); event.preventDefault(); event.stopImmediatePropagation(); return; }
+    }
+    if (code === 38) {
+      var contentRoot = this.focusRoot(); var activeRect = active.getBoundingClientRect(); var hasAbove = false;
+      var contentNodes = contentRoot.querySelectorAll('button, input');
+      for (var aboveIndex = 0; aboveIndex < contentNodes.length; aboveIndex++) {
+        var aboveRect = contentNodes[aboveIndex].getBoundingClientRect();
+        if (contentNodes[aboveIndex] !== active && aboveRect.width && aboveRect.height && aboveRect.bottom < activeRect.top + 2 && Math.min(aboveRect.right, activeRect.right) > Math.max(aboveRect.left, activeRect.left)) { hasAbove = true; break; }
+      }
+      if (!hasAbove) { this.lastContent = active.id; this.focus(this.firstVisible(document.querySelector('.app-header') as HTMLElement)); event.preventDefault(); event.stopImmediatePropagation(); return; }
     }
     if (this.route === 'home') {
       if (code === 13) { active.click(); }

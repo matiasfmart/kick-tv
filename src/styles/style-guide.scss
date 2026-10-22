@@ -32,8 +32,7 @@
 html, body { width: 100%; height: 100%; margin: 0; }
 body { position: relative; overflow: hidden; background: t.$canvas; color: t.$ink; font-family: t.$font-family; font-size: 16px; }
 button { position: relative; display: inline-flex; align-items: center; justify-content: center; border: 0; padding: 0; color: inherit; background: none; font: inherit; cursor: pointer; }
-button:focus, .is-focused { outline: 0; transform: scale(1.06); box-shadow: t.$shadow-focus; z-index: 4; transition: transform .15s ease-out, box-shadow .15s ease-out; }
-button:focus:after, .is-focused:after { content: ''; position: absolute; z-index: 5; top: -7px; right: -7px; bottom: -7px; left: -7px; border: 3px solid t.$focus; border-radius: t.$radius-focus; pointer-events: none; }
+button:focus, .is-focused { outline: 0; border-color: t.$focus; background: t.$focus; color: t.$focus-ink; box-shadow: none; z-index: 4; transition: background-color .15s ease-out, color .15s ease-out; }
 svg { display: block; width: 28px; height: 28px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 .guide-shell { position: absolute; top: 24px; right: 24px; bottom: 24px; left: 24px; display: flex; overflow: hidden; border-radius: t.$radius-window; background: t.$white; }
 .guide-sidebar { display: flex; flex: 0 0 96px; flex-direction: column; align-items: center; padding: 24px 0; background: t.$white; }
@@ -46,7 +45,7 @@ svg { display: block; width: 28px; height: 28px; fill: none; stroke: currentColo
 .rail-item.active, .rail-item.is-focused { color: t.$ink; }
 .rail-item.kick-item[aria-current="page"] { color: t.$ink; }
 .rail-item.active:before { content: ''; position: absolute; left: -16px; top: 18px; width: 4px; height: 28px; border-radius: 2px; background: t.$ink; }
-.rail-item.is-focused { background: t.$white; }
+.rail-item.is-focused { background: t.$focus; color: t.$focus-ink; }
 .rail-exit { margin-top: auto; }
 .guide-main { display: flex; flex: 1 1 auto; flex-direction: column; min-width: 0; min-height: 0; height: 100%; padding: 0 24px 24px 0; }
 .guide-topbar { display: flex; flex: 0 0 76px; align-items: center; min-width: 0; }
@@ -117,7 +116,8 @@ body.dark-theme .meta-pill, body.dark-theme .filter-chip { border-color: t.$dark
 body.dark-theme .filter-chip.active { background: t.$dark-ink; color: t.$dark-canvas; }
 body.dark-theme .arrow-button, body.dark-theme .sample-focus-control { background: t.$dark-surface; color: t.$dark-ink; }
 body.dark-theme .arrow-button.previous { color: t.$dark-muted; }
-body.dark-theme button:focus:after, body.dark-theme .is-focused:after { border-color: #fff; }
+body.dark-theme button:focus, body.dark-theme .is-focused { border-color: t.$dark-focus; background: t.$dark-focus; color: t.$dark-focus-ink; }
+body.dark-theme .rail-item.is-focused, body.dark-theme .arrow-button.is-focused, body.dark-theme .filter-chip.is-focused { color: t.$dark-focus-ink; }
 @media screen and (max-width: 1100px) {
   .guide-shell { top: 16px; right: 16px; bottom: 16px; left: 16px; }
   .guide-sidebar { flex-basis: 80px; }

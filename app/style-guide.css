@@ -56,23 +56,12 @@ button {
 
 button:focus, .is-focused {
   outline: 0;
-  transform: scale(1.06);
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.16);
+  border-color: #111111;
+  background: #111111;
+  color: #FFFFFF;
+  box-shadow: none;
   z-index: 4;
-  transition: transform 0.15s ease-out, box-shadow 0.15s ease-out;
-}
-
-button:focus:after, .is-focused:after {
-  content: "";
-  position: absolute;
-  z-index: 5;
-  top: -7px;
-  right: -7px;
-  bottom: -7px;
-  left: -7px;
-  border: 3px solid #111111;
-  border-radius: 22px;
-  pointer-events: none;
+  transition: background-color 0.15s ease-out, color 0.15s ease-out;
 }
 
 svg {
@@ -170,7 +159,8 @@ svg {
 }
 
 .rail-item.is-focused {
-  background: #FFFFFF;
+  background: #111111;
+  color: #FFFFFF;
 }
 
 .rail-exit {
@@ -645,20 +635,20 @@ svg {
 }
 
 body.dark-theme {
-  background: #17191D;
+  background: #0B0D10;
   color: #F1F2F4;
 }
 
 body.dark-theme .guide-shell {
-  background: #202329;
+  background: #111418;
 }
 
 body.dark-theme .guide-sidebar, body.dark-theme .guide-topbar {
-  background: #202329;
+  background: #111418;
 }
 
 body.dark-theme .workspace {
-  background: #2A2E34;
+  background: #181C21;
 }
 
 body.dark-theme .wordmark, body.dark-theme .section-title, body.dark-theme .standard-title, body.dark-theme .data-value, body.dark-theme .hero-number {
@@ -670,7 +660,7 @@ body.dark-theme .service-indicator, body.dark-theme .section-link, body.dark-the
 }
 
 body.dark-theme .search-pill, body.dark-theme .hero-info, body.dark-theme .standard-info, body.dark-theme .top-action, body.dark-theme .profile-dot, body.dark-theme .sample-focus-card {
-  background: #373B42;
+  background: #22272D;
   color: #F1F2F4;
 }
 
@@ -683,18 +673,18 @@ body.dark-theme .rail-item.active, body.dark-theme .rail-item.is-focused {
 }
 
 body.dark-theme .meta-pill, body.dark-theme .filter-chip {
-  border-color: #444A54;
-  background: #373B42;
+  border-color: #343A43;
+  background: #22272D;
   color: #F1F2F4;
 }
 
 body.dark-theme .filter-chip.active {
   background: #F1F2F4;
-  color: #17191D;
+  color: #0B0D10;
 }
 
 body.dark-theme .arrow-button, body.dark-theme .sample-focus-control {
-  background: #373B42;
+  background: #22272D;
   color: #F1F2F4;
 }
 
@@ -702,8 +692,14 @@ body.dark-theme .arrow-button.previous {
   color: #A5ABB4;
 }
 
-body.dark-theme button:focus:after, body.dark-theme .is-focused:after {
-  border-color: #fff;
+body.dark-theme button:focus, body.dark-theme .is-focused {
+  border-color: #F1F2F4;
+  background: #F1F2F4;
+  color: #17191D;
+}
+
+body.dark-theme .rail-item.is-focused, body.dark-theme .arrow-button.is-focused, body.dark-theme .filter-chip.is-focused {
+  color: #17191D;
 }
 
 @media screen and (max-width: 1100px) {

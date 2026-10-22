@@ -64,16 +64,19 @@ button {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
 
-button:focus, input:focus {
-  outline: 3px solid #111111;
-  outline-offset: 4px;
+button:focus {
+  outline: 0;
+  border-color: #111111;
+  background: #111111;
+  color: #FFFFFF;
+  box-shadow: none;
+  z-index: 4;
+  transition: background-color 0.15s ease-out, color 0.15s ease-out;
 }
 
-button:focus {
-  transform: scale(1.06);
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.16);
-  z-index: 4;
-  transition: transform 0.15s ease-out, box-shadow 0.15s ease-out;
+input:focus {
+  outline: 0;
+  border-color: #111111;
 }
 
 button:disabled {
@@ -178,9 +181,9 @@ input {
   box-shadow: none;
 }
 
-#hub-nav button.selected {
-  color: #111111;
-  background: transparent;
+#hub-nav button.selected, #hub-nav button:hover {
+  color: #FFFFFF;
+  background: #111111;
 }
 
 #hub-nav button.selected:before {
@@ -191,14 +194,14 @@ input {
   width: 4px;
   height: 28px;
   border-radius: 2px;
-  background: #111111;
+  background: #FFFFFF;
 }
 
 #hub-nav button:focus {
-  background: #FFFFFF;
-  color: #111111;
+  background: #111111;
+  color: #FFFFFF;
   border: 0;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  box-shadow: none;
 }
 
 #hub-nav button:focus:before {
@@ -224,6 +227,10 @@ input {
   color: #111111;
   font-size: 18px;
   font-weight: 600;
+}
+
+#hub-nav button.selected .hub-nav-label, #hub-nav button:hover .hub-nav-label, #hub-nav button:focus .hub-nav-label {
+  color: #FFFFFF;
 }
 
 .hub-sidebar.expanded #hub-nav {
@@ -718,8 +725,18 @@ p {
   box-shadow: none;
 }
 
-.channel-favorite.saved {
+.channel-favorite:focus {
+  border-color: rgba(255, 255, 255, 0.75);
+  background: rgba(255, 255, 255, 0.94);
   color: #111111;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  transform: translateY(-2px);
+}
+
+.channel-favorite.saved, .channel-favorite[aria-pressed=true] {
+  border-color: #EFD08D;
+  background: #F6E8E2;
+  color: #A9573A;
 }
 
 .channel-favorite [data-icon] {
@@ -731,22 +748,13 @@ p {
   z-index: 4;
 }
 
-.channel-play:focus, .hub-media:focus {
-  outline: 0;
-  transform: scale(1.06);
+#library .channel-play:hover, #library .channel-play:focus, #library .hub-media:hover, #library .hub-media:focus {
+  border: 0;
+  background: #FFFFFF;
+  color: #111111;
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.16);
-}
-
-.channel-play:focus:after, .hub-media:focus:after {
-  content: "";
-  position: absolute;
-  top: -7px;
-  right: -7px;
-  bottom: -7px;
-  left: -7px;
-  border: 3px solid #111111;
-  border-radius: 24px;
-  pointer-events: none;
+  transform: translateY(-4px);
+  z-index: 4;
 }
 
 .channel-play, .hub-media {
@@ -1241,22 +1249,22 @@ p {
 }
 
 body.dark-theme {
-  background: #17191D;
+  background: #0B0D10;
   color: #F1F2F4;
 }
 
 body.dark-theme #library {
-  border-color: #444A54;
-  background: #202329;
+  border-color: #343A43;
+  background: #111418;
 }
 
 body.dark-theme .hub-sidebar, body.dark-theme .app-header {
-  background: #202329;
+  background: #111418;
   color: #F1F2F4;
 }
 
 body.dark-theme .hub-main {
-  background: #2A2E34;
+  background: #181C21;
   color: #F1F2F4;
 }
 
@@ -1265,8 +1273,8 @@ body.dark-theme .brand, body.dark-theme .brand span, body.dark-theme h1, body.da
 }
 
 body.dark-theme button, body.dark-theme input {
-  border-color: #444A54;
-  background: #373B42;
+  border-color: #343A43;
+  background: #22272D;
   color: #F1F2F4;
 }
 
@@ -1277,13 +1285,13 @@ body.dark-theme .tab, body.dark-theme .header-action, body.dark-theme #hub-nav b
 }
 
 body.dark-theme #hub-nav button.selected, body.dark-theme .tab.active {
-  background: #373B42;
+  background: #22272D;
   color: #F1F2F4;
 }
 
 body.dark-theme .header-search, body.dark-theme .hub-service, body.dark-theme .hub-media, body.dark-theme #favorites-grid .channel-play, body.dark-theme #search-grid .channel-play, body.dark-theme #iptv-grid .channel-play, body.dark-theme .hero-info, body.dark-theme .standard-info {
-  border-color: #444A54;
-  background: #373B42;
+  border-color: #343A43;
+  background: #22272D;
   color: #F1F2F4;
 }
 
@@ -1292,18 +1300,18 @@ body.dark-theme .search-placeholder, body.dark-theme .hub-muted, body.dark-theme
 }
 
 body.dark-theme .meta-pill, body.dark-theme .filter-chip {
-  border-color: #444A54;
-  background: #202329;
+  border-color: #343A43;
+  background: #111418;
   color: #F1F2F4;
 }
 
 body.dark-theme .filter-chip.active {
   background: #F1F2F4;
-  color: #17191D;
+  color: #0B0D10;
 }
 
 body.dark-theme .channel-status {
-  border-color: #444A54;
+  border-color: #343A43;
   background: rgba(32, 35, 41, 0.95);
   color: #A5ABB4;
 }
@@ -1315,13 +1323,13 @@ body.dark-theme .channel-status.live {
 }
 
 body.dark-theme .avatar, body.dark-theme #iptv-grid .avatar img {
-  background: #202329;
+  background: #111418;
   color: #A5ABB4;
 }
 
 body.dark-theme .modal > section {
-  border-color: #444A54;
-  background: #373B42;
+  border-color: #343A43;
+  background: #22272D;
   color: #F1F2F4;
 }
 
@@ -1332,7 +1340,7 @@ body.dark-theme .modal-heading h2 {
 body.dark-theme .menu-option.selected {
   border-color: #F1F2F4;
   background: #F1F2F4;
-  color: #17191D;
+  color: #0B0D10;
 }
 
 body.dark-theme .empty-icon {
@@ -1343,8 +1351,19 @@ body.dark-theme #iptv-status {
   color: #f3c878;
 }
 
-body.dark-theme button:focus, body.dark-theme input:focus {
-  outline-color: #E7EAEE;
+body.dark-theme button:focus {
+  border-color: #F1F2F4;
+  background: #F1F2F4;
+  color: #17191D;
+}
+
+body.dark-theme button:focus .channel-name, body.dark-theme button:focus .channel-title, body.dark-theme button:focus .channel-category, body.dark-theme .hub-media:focus strong, body.dark-theme .hub-media:focus > .hub-source-label {
+  color: #17191D;
+}
+
+body.dark-theme input:focus {
+  outline: 0;
+  border-color: #F1F2F4;
 }
 
 @media screen and (max-width: 1250px) {
@@ -1770,18 +1789,31 @@ body.dark-theme button:focus, body.dark-theme input:focus {
   }
 }
 body.theme-dark {
-  background: #17191D;
+  background: #0B0D10;
   color: #F1F2F4;
 }
 
 body.theme-dark #library {
-  border-color: #444A54;
-  background: #202329;
+  border-color: #343A43;
+  background: #111418;
 }
 
 body.theme-dark .hub-sidebar, body.theme-dark .app-header {
-  background: #202329;
+  background: #111418;
   color: #F1F2F4;
+}
+
+body.theme-dark #hub-nav button.selected, body.theme-dark #hub-nav button:hover {
+  background: #F1F2F4;
+  color: #17191D;
+}
+
+body.theme-dark #hub-nav button.selected:before {
+  background: #17191D;
+}
+
+body.theme-dark #hub-nav button.selected .hub-nav-label, body.theme-dark #hub-nav button:hover .hub-nav-label, body.theme-dark #hub-nav button:focus .hub-nav-label {
+  color: #17191D;
 }
 
 body.theme-dark .hub-mark, body.theme-dark .brand, body.theme-dark .brand span, body.theme-dark h1, body.theme-dark h2, body.theme-dark .section-title, body.theme-dark .hub-band-heading h2 {
@@ -1789,7 +1821,7 @@ body.theme-dark .hub-mark, body.theme-dark .brand, body.theme-dark .brand span, 
 }
 
 body.theme-dark .hub-main {
-  background: #2A2E34;
+  background: #181C21;
   color: #F1F2F4;
 }
 
@@ -1797,37 +1829,51 @@ body.theme-dark .hub-muted, body.theme-dark .section-link, body.theme-dark .serv
   color: #A5ABB4;
 }
 
+body.theme-dark .hub-nav-label, body.theme-dark .hub-media strong, body.theme-dark .channel-name, body.theme-dark .setting-row h2, body.theme-dark .setting-row label {
+  color: #F1F2F4;
+}
+
+body.theme-dark .hub-source-label, body.theme-dark #hub-header-search-label {
+  color: #A5ABB4;
+}
+
+body.theme-dark .tab.active {
+  background: #22272D;
+  color: #F1F2F4;
+  box-shadow: none;
+}
+
 body.theme-dark button, body.theme-dark input {
-  border-color: #444A54;
-  background: #373B42;
+  border-color: #343A43;
+  background: #22272D;
   color: #F1F2F4;
 }
 
 body.theme-dark .header-search, body.theme-dark .hero-info, body.theme-dark .standard-info, body.theme-dark .standard-art, body.theme-dark .hub-service, body.theme-dark .hub-row .hub-media, body.theme-dark #favorites-grid .channel-play, body.theme-dark #search-grid .channel-play, body.theme-dark #iptv-grid .channel-play {
-  border-color: #444A54;
-  background: #373B42;
+  border-color: #343A43;
+  background: #22272D;
   color: #F1F2F4;
 }
 
 body.theme-dark .meta-pill, body.theme-dark .filter-chip {
-  border-color: #444A54;
-  background: #202329;
+  border-color: #343A43;
+  background: #111418;
   color: #F1F2F4;
 }
 
 body.theme-dark .filter-chip.active {
   border-color: #F1F2F4;
   background: #F1F2F4;
-  color: #17191D;
+  color: #0B0D10;
 }
 
 body.theme-dark .avatar, body.theme-dark #iptv-grid .avatar img {
-  background: #202329;
+  background: #111418;
   color: #A5ABB4;
 }
 
 body.theme-dark .channel-status {
-  border-color: #444A54;
+  border-color: #343A43;
   background: rgba(32, 35, 41, 0.95);
   color: #A5ABB4;
 }
@@ -1841,12 +1887,12 @@ body.theme-dark .channel-status.live {
 body.theme-dark .menu-option.selected {
   border-color: #F1F2F4;
   background: #F1F2F4;
-  color: #17191D;
+  color: #0B0D10;
 }
 
 body.theme-dark .modal > section {
-  border-color: #444A54;
-  background: #373B42;
+  border-color: #343A43;
+  background: #22272D;
   color: #F1F2F4;
 }
 
@@ -1862,6 +1908,42 @@ body.theme-dark #iptv-status {
   color: #f3c878;
 }
 
-body.theme-dark button:focus, body.theme-dark input:focus {
-  outline-color: #E7EAEE;
+body.theme-dark button:focus {
+  border-color: #F1F2F4;
+  background: #F1F2F4;
+  color: #17191D;
+}
+
+body.theme-dark #hub-nav button:focus {
+  border-color: #F1F2F4;
+  background: #F1F2F4;
+  color: #17191D;
+}
+
+body.theme-dark #library .channel-play:hover, body.theme-dark #library .channel-play:focus, body.theme-dark #library .hub-media:hover, body.theme-dark #library .hub-media:focus {
+  border: 0;
+  background: #22272D;
+  color: #F1F2F4;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.42);
+  transform: translateY(-4px);
+  z-index: 4;
+}
+
+body.theme-dark #library .channel-favorite:focus {
+  border-color: #343A43;
+  background: #22272D;
+  color: #F1F2F4;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.42);
+  transform: translateY(-2px);
+}
+
+body.theme-dark #library .channel-favorite.saved, body.theme-dark #library .channel-favorite[aria-pressed=true] {
+  border-color: #7A6035;
+  background: #3B3327;
+  color: #F3C878;
+}
+
+body.theme-dark input:focus {
+  outline: 0;
+  border-color: #F1F2F4;
 }
