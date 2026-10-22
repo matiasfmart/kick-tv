@@ -1,0 +1,18 @@
+{
+  "countries": ["AR"],
+  "environment": "home-ar",
+  "requireReview": false,
+  "includeUnreviewed": true,
+  "includeUnverified": true,
+  "verificationMode": "on-demand",
+  "concurrency": 6,
+  "perHost": 2,
+  "timeoutMs": 6000,
+  "retries": 1,
+  "maxChecks": 80,
+  "maxRunMs": 240000,
+  "successTtlMs": 86400000,
+  "failureTtlMs": 21600000,
+  "pageSize": 32,
+  "maxFileBytes": 262144
+}

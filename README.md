@@ -3,6 +3,116 @@
 Cliente personal de Kick para Samsung UN50MU6100 (2017), Tizen 3.0 y TizenBrew
 2.0.5. Interfaz vanilla JavaScript compilada a ES5. Sin WebAssembly, login ni chat.
 
+## Rama del hub: IPTV local
+
+La entrada actual de `feature/catalogo-online` muestra `HUB-02 / IPTV LOCAL`.
+Kick e IPTV Argentina aparecen como modulos del mismo shell y usan un solo
+elemento video y PlayerController. La version publicada V1-02 no se modifica
+con estos cambios locales. La prueba fisica de este refactor sigue pendiente.
+
+IPTV consulta directamente `countries/ar.m3u` y `blocklist.json` de iptv-org por
+XHR. La prueba en Chrome obtuvo CORS 200 y la app cargó 180 canales tras aplicar
+blocklist, filtros de URL, opciones VLC incompatibles y exclusiones conocidas.
+Todos quedan marcados con procedencia no revisada y se prueban al seleccionarlos;
+la disponibilidad real de Tizen aún debe verificarse en la Samsung.
+
+Para probar en Chrome: mantener abierto `Iniciar.command`, abrir
+http://localhost:5173 y elegir IPTV Argentina. `Catalogo.command` ya no hace falta
+para que la vista cargue. La TV consultará iptv-org directamente al ejecutar el
+módulo; el CORS de Tizen y la reproducción de streams siguen pendientes de prueba.
+
+IPTV incluye categorias, busqueda por teclado en pantalla, una ventana
+de 12 tarjetas, Mi grilla con numeros 1-999, CH+/CH-, numero con espera de dos
+segundos y canal anterior con Azul. La estrella agrega/quita de Mi grilla y el
+boton numerico permite reasignar. Los duplicados se rechazan; ordenar numeros
+ordena Mi grilla. Los digitos tambien estan declarados en el manifiesto TizenBrew,
+pero sus eventos reales deben comprobarse al publicar/probar el modulo.
+
+Los fallos locales tienen cooldown, politica de despriorizar/ocultar/mostrar y
+restablecimiento. El fallback intenta hasta tres URLs del mismo canal antes de
+mostrar error; no cambia de emision regional automaticamente. No se declara un
+geobloqueo a partir de un error generico del reproductor. Si ocultar dejara toda
+la grilla vacia, se conservan los canales para reintentar.
+
+El engranaje de IPTV configura la URL M3U y recarga la app. Usa la clave
+`stream-hub-iptv-url`; también admite `HUB_CONFIG.iptvPlaylistUrl` o `playlistUrl`
+en el registro. La blocklist se toma de iptv-org; las URLs se verifican en el
+reproductor de cada dispositivo y los resultados pueden variar por red/región.
+
+### Generador IPTV: fase 3 local
+
+El usuario decidio posponer la prueba fisica de la fase 2 y avanzar con el
+generador de Argentina. Esa prueba sigue pendiente; no es una validacion de la TV.
+El generador, CLI de doble clic y workflow manual estan preparados en esta rama,
+sin activacion de GitHub Pages ni publicacion. Ver [catalog/README.md](catalog/README.md)
+para auditoria, procedencia, verificacion incremental, checkpoints y salida.
+
+La app ya no depende del catálogo generado. `Catalogo.command` sigue disponible
+para auditar o generar un snapshot estático alternativo; ese flujo encontró 180
+canales AR y 238 URLs candidatas y conserva sus filtros y revisión de procedencia.
+
+La fase 2 introdujo el shell que ahora se extiende en `HUB-02`.
+Esta iteracion no se publico ni modifica la version V1-02 de produccion descrita
+mas abajo. Abrir http://localhost:5173 despues de ejecutar `Iniciar.command`.
+
+Incluye shell con Inicio, sidebar colapsable, Kick e IPTV como ServiceModule,
+favoritos migrados, recientes y un transporte de video compartido. El registro
+`src/hub/config/services.json` decide que servicios aparecen. IPTV esta limitado
+a Argentina y muestra errores controlados si el catalogo todavia no se genero.
+
+Estructura implementada:
+
+- `src/hub/domain/contracts.ts`: entidades, referencias, fuentes, Player y contratos.
+- `src/hub/application/services.ts`: registro, favoritos, historial, reproduccion y zapping.
+- `src/hub/infrastructure/browser.ts`: HTTP XHR, localStorage y Html5Player.
+- `src/hub/presentation/shell.ts`: sidebar, rutas comunes, Inicio y sus scopes de foco.
+- `src/hub/services/kick/`: fuente, modulo y adaptador de vista de Kick.
+- `src/hub/services/iptv/`: repositorio, integridad, fuente y vista de IPTV.
+- `src/hub/application/grid.ts`: numeros de canal y salud local.
+- `src/hub/presentation/player.ts`: presentacion comun y fallback de reproduccion.
+- `src/hub/bootstrap/root.ts`: composition root y puente con la UI anterior.
+
+El nucleo usa TypeScript strict con lib ES5 + DOM. El build descubre
+`src/hub/services/*/module.ts`, genera las imports de factories en memoria,
+ensambla el hub, transpila a ES5 y valida la gramatica con Acorn. No se carga
+JavaScript de plugins desde URLs remotas. `npm test` verifica ambos bundles y
+tests de datos, navegacion, nucleo y catalogo. `npx tsc -p tsconfig.hub.json` permite
+ejecutar solo el typecheck.
+
+La presentacion de Kick conserva por ahora `src/tv.js` como adaptador de migracion.
+Delega HTTP y resolucion en KickSource, favoritos en FavoritesService, transporte
+de video y controles en PlayerController/PlaybackService/Html5Player.
+No es una conversion completa de todas las pantallas a TypeScript. Inicio y
+Favoritos del menu agregan referencias de todas las fuentes e indican el servicio.
+La busqueda permanece dentro de cada app para evitar mezclar resultados. Mi grilla
+de IPTV esta dentro de su propia seccion.
+
+Los favoritos nuevos usan `stream-hub-favorites-v1` con sourceId/itemId; la clave
+antigua `kick-tv-favorites` se conserva y sincroniza para Kick. La migracion no
+guarda URLs de video ni borra calidad o proxy. Los recientes solo se registran
+cuando el video confirma avance y se limitan a 20 elementos. El origen de la
+pagina sigue determinando el almacenamiento; la version local no comparte sus
+favoritos con el origen del modulo publicado.
+
+Control de la fase 2: izquierda desde el borde del contenido entra al sidebar;
+arriba/abajo recorre sus items; OK abre una seccion y derecha regresa al contenido.
+Back cierra modal o video, vuelve de una seccion a Inicio y alli confirma salida.
+Conservar las teclas y preferencias de Kick. La edicion del proxy mantiene sus
+flechas nativas, sin que el sidebar robe el foco.
+
+Para agregar un servicio: crear su `VideoSource`, `ServiceView` y exportar
+`createModule(dependencies, configuration)` desde `services/<tipo>/module.ts`.
+Debe devolver ServiceModule con id, nombre, icono, capacidades y rutas. La vista
+monta su contenido en `service-content` y describe/abre sus MediaRef. Agregar
+la entrada JSON con id estable, type igual al directorio, enabled, order e icon
+(nombre de Lucide), y recompilar. El sidebar toma el modulo y sus rutas sin
+editar el shell. El build incluye los iconos declarados por los modulos habilitados.
+
+Pendiente de prueba fisica en la TV: sidebar/foco, Kick real con calidad y
+CH+/CH-, persistencia de la migracion y memoria de este bundle. Playwright
+moderno y Acorn ES5 no certifican rendimiento ni APIs de la TV. No habilitar
+el generador de Actions o desplegar esta rama sin una autorizacion posterior.
+
 Estado: `V1-02` preparada para el proxy de Vercel; pendiente de verificar el
 despliegue completo y la reproduccion en la TV con la Mac apagada.
 La TV ya reprodujo el HLS de referencia y Kick en vivo con imagen y sonido en

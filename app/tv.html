@@ -3,21 +3,29 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Kick TV</title>
+  <title>Streaming Hub</title>
   <link rel="stylesheet" href="tv.css">
 </head>
 <body>
   <div id="library">
+    <aside id="hub-sidebar" class="hub-sidebar" aria-label="Menu del hub"><div class="hub-mark">TV</div><nav id="hub-nav" aria-label="Servicios y secciones"></nav></aside>
     <header class="app-header">
-      <div class="brand">KICK<span>TV</span></div>
-      <nav class="tabs" aria-label="Vistas">
+      <div class="brand">STREAM<span>HUB</span></div>
+      <nav id="kick-tabs" class="tabs" aria-label="Vistas de Kick" hidden>
         <button id="tab-favorites" data-action="tab" data-tab="favorites" class="tab active" aria-current="page">Favoritos</button>
         <button id="tab-search" data-action="tab" data-tab="search" class="tab">Buscar</button>
         <button id="tab-settings" data-action="tab" data-tab="settings" class="tab">Ajustes</button>
       </nav>
-      <span class="build">V1-02</span>
+      <span class="build">HUB-02 / IPTV LOCAL</span>
     </header>
-    <main>
+    <main class="hub-main">
+      <section id="hub-home" aria-label="Inicio del hub">
+        <div class="section-heading"><div><h1>Inicio</h1><p class="hub-muted">Tus servicios</p></div></div>
+        <div id="hub-services" class="hub-services"></div>
+        <section class="hub-band"><h2>Favoritos</h2><div id="hub-favorites" class="hub-row"></div></section>
+        <section class="hub-band"><h2>Recientes</h2><div id="hub-recents" class="hub-row"></div></section>
+      </section>
+      <div id="service-content"><div id="kick-content" hidden>
       <div class="section-heading"><div><h1 id="view-title">Favoritos</h1><p id="view-summary"></p></div><button id="refresh" class="icon-button" data-action="refresh" aria-label="Actualizar favoritos" title="Actualizar favoritos"><span data-icon="refresh-cw"></span></button></div>
       <p id="library-error" class="error-banner" role="alert" hidden></p>
       <section id="view-favorites" aria-label="Favoritos">
@@ -39,6 +47,7 @@
         <form id="proxy-form" class="setting-row"><div class="proxy-field"><label for="proxy-url">URL del proxy</label><input id="proxy-url" type="url" spellcheck="false" autocomplete="off" required></div><button id="save-proxy" type="submit"><span data-icon="check"></span>Guardar</button></form>
         <div class="setting-row"><div><h2>Dispositivo</h2><p id="device-info"></p><p id="storage-info"></p></div><button id="diagnostic" data-action="diagnostic">Diagnostico</button></div>
       </section>
+      </div></div>
     </main>
   </div>
   <section id="player" class="player" aria-label="Reproductor" hidden>

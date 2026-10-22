@@ -1,0 +1,120 @@
+name: Catalogo IPTV Argentina
+
+on:
+  workflow_dispatch:
+    inputs:
+      audit:
+        description: Auditar sin verificar streams ni publicar
+        type: boolean
+        default: true
+      publish:
+        description: Publicar en GitHub Pages, solo desde main
+        type: boolean
+        default: false
+      max_checks:
+        description: Maximo de streams a verificar
+        type: number
+        default: 80
+permissions:
+  contents: read
+
+concurrency:
+  group: catalog-ar
+  cancel-in-progress: false
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: write
+    outputs:
+      publish: ${{ github.ref == 'refs/heads/main' && github.event_name == 'workflow_dispatch' && inputs.publish && !inputs.audit }}
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci
+      - run: npm test
+      - name: Recuperar checkpoint
+        uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd
+        with:
+          script: |
+            const fs = require('node:fs');
+            try {
+              const result = await github.rest.repos.getContent({ ...context.repo, path: 'state.json', ref: 'catalog-state' });
+              if (!result.data.content) throw new Error('Checkpoint sin contenido');
+              fs.mkdirSync('.catalog', { recursive: true });
+              fs.writeFileSync('.catalog/state.json', Buffer.from(result.data.content, 'base64'));
+            } catch (error) {
+              if (error.status !== 404) throw error;
+              core.info('Primera ejecucion: sin checkpoint remoto.');
+            }
+      - name: Generar catalogo o auditoria
+        env:
+          AUDIT: ${{ github.event_name == 'workflow_dispatch' && inputs.audit && 'true' || 'false' }}
+          MAX_CHECKS: ${{ inputs.max_checks || 80 }}
+        run: |
+          args=()
+          if [[ "$AUDIT" == "true" ]]; then args+=(--audit); fi
+          node tools/catalog/cli.cjs --environment github-hosted --max-checks "$MAX_CHECKS" "${args[@]}"
+      - name: Conservar checkpoint fuera de main
+        if: always() && github.ref == 'refs/heads/main'
+        uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd
+        with:
+          script: |
+            const fs = require('node:fs');
+            if (!fs.existsSync('.catalog/state.json')) return;
+            const content = fs.readFileSync('.catalog/state.json', 'utf8');
+            const parsed = JSON.parse(content);
+            if (parsed.version !== 1) throw new Error('Checkpoint incompatible');
+            let parent = null;
+            try {
+              parent = (await github.rest.git.getRef({ ...context.repo, ref: 'heads/catalog-state' })).data.object.sha;
+            } catch (error) {
+              if (error.status !== 404) throw error;
+            }
+            const blob = await github.rest.git.createBlob({ ...context.repo, content, encoding: 'utf-8' });
+            const tree = await github.rest.git.createTree({ ...context.repo, tree: [{ path: 'state.json', mode: '100644', type: 'blob', sha: blob.data.sha }] });
+            if (parent) {
+              const current = await github.rest.git.getCommit({ ...context.repo, commit_sha: parent });
+              if (current.data.tree.sha === tree.data.sha) return;
+            }
+            const commit = await github.rest.git.createCommit({ ...context.repo, message: 'Update catalog verification checkpoint', tree: tree.data.sha, parents: parent ? [parent] : [] });
+            if (parent) await github.rest.git.updateRef({ ...context.repo, ref: 'heads/catalog-state', sha: commit.data.sha, force: false });
+            else await github.rest.git.createRef({ ...context.repo, ref: 'refs/heads/catalog-state', sha: commit.data.sha });
+      - name: Guardar reportes y checkpoint de la ejecucion
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: catalog-state-${{ github.run_id }}
+          path: |
+            .catalog/state.json
+            .catalog/audit.json
+          include-hidden-files: true
+          if-no-files-found: ignore
+          retention-days: 7
+      - name: Preparar sitio estatico
+        if: github.ref == 'refs/heads/main' && github.event_name == 'workflow_dispatch' && inputs.publish && !inputs.audit
+        uses: actions/upload-pages-artifact@7b1f4a764d45c48632c6b24a0339c27f5614fb0b
+        with:
+          path: catalog-output
+
+  deploy:
+    needs: generate
+    if: needs.generate.outputs.publish == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b
+      - id: deployment
+        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e

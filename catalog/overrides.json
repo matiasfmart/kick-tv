@@ -1,0 +1,47 @@
+{
+  "hidden": ["AiredeSantaFe.ar"],
+  "channels": {
+    "Canal7Neuquen.ar": {
+      "approved": true,
+      "evidence": "https://arcast.com.ar/c7nq/",
+      "allowedHosts": ["stream.arcast.com.ar"],
+      "name": "Canal 7 Neuquen",
+      "categories": ["general"]
+    },
+    "CanalUniversidad.ar": {
+      "approved": true,
+      "evidence": "https://canal.mdp.edu.ar/canalvivo.html",
+      "allowedHosts": ["videostream.shockmedia.com.ar"],
+      "name": "Canal Universidad UNMdP",
+      "categories": ["education", "culture"]
+    },
+    "Canal26.ar": {
+      "approved": true,
+      "evidence": "https://www.canal26.com/canal26-en-vivo/",
+      "allowedHosts": ["stream-gtlc.telecentro.net.ar"],
+      "name": "Canal 26",
+      "categories": ["news"]
+    },
+    "ItelTVCanal2.ar": {
+      "approved": true,
+      "evidence": "https://iteltv.com.ar/",
+      "allowedHosts": ["proxystream.iteltv.com.ar"],
+      "name": "Itel TV Canal 2",
+      "categories": ["general"]
+    },
+    "CorreaRadiovision.ar": {
+      "approved": true,
+      "evidence": "https://www.correadigital.com.ar/canal12.html",
+      "allowedHosts": ["stream.arcast.net"],
+      "name": "Correa Radiovision",
+      "categories": ["general"]
+    },
+    "CanalOrbe21.ar": {
+      "approved": true,
+      "evidence": "https://canalorbe21.com/",
+      "allowedHosts": ["stream.arcast.net"],
+      "name": "Canal Orbe 21",
+      "categories": ["religious"]
+    }
+  }
+}

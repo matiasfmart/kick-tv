@@ -1,6 +1,7 @@
 (function () {
   'use strict';
 
+  var hub = window.StreamHub;
   var favoriteKey = 'kick-tv-favorites';
   var qualityKey = 'kick-tv-default-quality';
   var proxyKey = 'kick-tv-api-base';
@@ -56,7 +57,10 @@
   }
 
   function saveStorage(key, value) {
-    try { window.localStorage.setItem(key, value); }
+    try {
+      if (key === favoriteKey) { hub.favorites.replaceSource('kick', JSON.parse(value)); }
+      else { window.localStorage.setItem(key, value); }
+    }
     catch (error) { storageOK = false; notice('No se pudo guardar. Los cambios se perderan al cerrar la app.'); }
     text('storage-info', storageOK ? 'Almacenamiento disponible' : 'Almacenamiento no disponible');
   }
@@ -70,28 +74,6 @@
     target.focus();
     var rect = target.getBoundingClientRect();
     if (rect.top < 20 || rect.bottom > window.innerHeight - 20) { target.scrollIntoView(rect.top < 20); }
-  }
-
-  function api(path, callback) {
-    var request = new XMLHttpRequest();
-    request.onload = function () {
-      var result;
-      try { result = JSON.parse(request.responseText); }
-      catch (error) { callback({ message: 'El proxy no devolvio JSON valido.' }); return; }
-      if (request.status < 200 || request.status >= 300) {
-        callback({ message: (result && result.message) || 'Error HTTP ' + request.status + ' del proxy.' });
-        return;
-      }
-      callback(null, result);
-    };
-    request.onerror = function () { callback({ message: 'No hay conexion con el proxy. Verificar Internet, el servicio y la URL en Ajustes.' }); };
-    request.ontimeout = function () { callback({ message: 'El proxy no respondio en 35 segundos. Reintentar.' }); };
-    try {
-      request.open('GET', proxyURL.replace(/\/$/, '') + path, true);
-      request.timeout = 35000;
-      request.send();
-    } catch (error) { callback({ message: 'No se pudo consultar el proxy: ' + error.name }); }
-    return request;
   }
 
   function button(label, action, name) {
@@ -174,6 +156,7 @@
       if (element(active)) { focus(active); }
       else { focus(list.length ? 'favorites-watch-' + list[0].slug : 'empty-search'); }
     }
+    hub.refreshHome();
   }
 
   function refreshFavorites() {
@@ -200,7 +183,7 @@
       }
     }
     function update(slug) {
-      api('/channels/' + encodeURIComponent(slug) + '/status', function (error, channel) {
+      hub.status(slug, function (error, channel) {
         if (sequence !== refreshSequence) { return; }
         pending--;
         if (error || !channel || typeof channel.live !== 'boolean') {
@@ -236,7 +219,7 @@
     if (searchRequest) { searchRequest.abort(); }
     var sequence = ++searchSequence;
     text('search-status', 'Buscando...');
-    searchRequest = api('/search?q=' + encodeURIComponent(query.trim()), function (error, result) {
+    searchRequest = hub.search(query.trim(), function (error, result) {
       if (sequence !== searchSequence) { return; }
       searchRequest = null;
       if (!error && (!result || !Array.isArray(result.channels))) { error = { message: 'El proxy devolvio resultados de busqueda invalidos.' }; }
@@ -261,7 +244,10 @@
     if (index < 0) { refreshFavorites(); }
   }
 
-  function setTab(nextTab) {
+  function setTab(nextTab) { hub.navigateLegacy(nextTab); }
+
+  function setKickTab(nextTab) {
+    favorites = hub.favorites.list('kick').map(function (ref) { return ref.itemId; });
     tab = nextTab;
     var tabs = ['favorites', 'search', 'settings'];
     for (var index = 0; index < tabs.length; index++) {
@@ -349,14 +335,9 @@
   function playVideo() {
     if (!video.getAttribute('src')) { return; }
     var sequence = mediaSequence;
-    try {
-      var result = video.play();
-      if (result && typeof result.catch === 'function') {
-        result.catch(function (error) {
-          if (playerOpen && sequence === mediaSequence && error.name !== 'AbortError') { playerError('No se pudo reproducir: ' + error.name + '. Intentar con Play o con otra calidad.'); }
-        });
-      }
-    } catch (error) { playerError('No se pudo reproducir: ' + error.name); }
+    hub.playback.play(function (error) {
+      if (playerOpen && sequence === mediaSequence) { playerError(error.message); }
+    });
   }
 
   function attachQuality(quality) {
@@ -368,7 +349,8 @@
     text('player-message', 'Cargando video...'); show('player-message', true);
     text('player-resolution', '');
     lastVideoTime = -1;
-    video.src = quality.url; video.load(); armWatchdog(); playVideo(); showControls();
+    try { hub.playback.select(quality); armWatchdog(); playVideo(); showControls(); }
+    catch (error) { playerError(error.message); }
   }
 
   function updatePlayerFavorite() {
@@ -382,32 +364,9 @@
 
   function openChannel(slug) {
     if (!validSlug(slug)) { return; }
-    if (!playerOpen) { playerReturn = document.activeElement.id; }
-    var sequence = ++playerSequence;
-    mediaSequence++;
-    if (playerRequest) { playerRequest.abort(); playerRequest = null; }
-    playerOpen = false; clearWatchdog(); video.pause(); video.removeAttribute('src'); video.load();
-    playerOpen = true; playerState = 'loading'; playerQuality = null;
-    playerChannel = channels[slug] || { slug: slug, name: slug };
-    show('library', false); show('player', true);
-    text('player-name', playerChannel.name || slug); text('player-title', playerChannel.title || ''); text('player-meta', '');
-    text('current-quality', qualityLabel(defaultQuality)); text('player-resolution', '');
-    text('player-message', 'Consultando canal y calidades...'); show('player-message', true);
-    updatePlayerFavorite(); showControls(); focus('player-toggle');
-    playerRequest = api('/channels/' + encodeURIComponent(slug), function (error, channel) {
-      if (!playerOpen || sequence !== playerSequence) { return; }
-      playerRequest = null;
-      if (error) { playerError(error.message); return; }
-      if (!channel || typeof channel.live !== 'boolean' || !Array.isArray(channel.qualities)) { playerError('El proxy devolvio datos de canal invalidos.'); return; }
-      channels[slug] = channel;
-      playerChannel = channel;
-      text('player-name', channel.name || slug); text('player-title', channel.title || '');
-      text('player-meta', (channel.category || '') + (channel.viewers ? ' / ' + channel.viewers + ' espectadores' : ''));
-      updatePlayerFavorite();
-      if (!channel.live) { playerError('Este canal esta offline. Reintentar mas tarde o cambiar de canal.'); return; }
-      var quality = preferredQuality(channel.qualities);
-      if (!quality || typeof quality.url !== 'string') { playerError('No hay una URL de reproduccion disponible.'); return; }
-      attachQuality(quality);
+    hub.openMedia({ sourceId: 'kick', itemId: slug }, function () {
+      favorites = hub.favorites.list('kick').map(function (ref) { return ref.itemId; });
+      renderFavorites(); renderSearch();
     });
   }
 
@@ -415,7 +374,7 @@
     playerOpen = false; playerState = 'idle'; playerSequence++; mediaSequence++;
     if (playerRequest) { playerRequest.abort(); playerRequest = null; }
     clearWatchdog(); window.clearTimeout(overlayTimer);
-    video.pause(); video.removeAttribute('src'); video.load();
+    hub.playback.stop();
     show('player', false); show('library', true); renderFavorites(); renderSearch();
     if (element(playerReturn) && element(playerReturn).getBoundingClientRect().height) { focus(playerReturn); }
     else { focus('tab-' + tab); }
@@ -425,10 +384,8 @@
     if (!playerOpen) { return; }
     var live = favoriteChannels().filter(function (channel) { return channel.live === true; });
     if (!live.length || (live.length === 1 && playerChannel && live[0].slug === playerChannel.slug)) { notice('No hay otros favoritos en vivo.'); showControls(); return; }
-    var current = -1;
-    for (var index = 0; index < live.length; index++) { if (playerChannel && live[index].slug === playerChannel.slug) { current = index; } }
-    var next = current < 0 ? (direction > 0 ? 0 : live.length - 1) : (current + direction + live.length) % live.length;
-    openChannel(live[next].slug);
+    var next = hub.zapping.next(playerChannel ? { sourceId: 'kick', itemId: playerChannel.slug } : null, live.map(function (channel) { return { sourceId: 'kick', itemId: channel.slug }; }), direction);
+    if (next) { openChannel(next.itemId); }
   }
 
   function choosePlayerQuality() {
@@ -444,7 +401,7 @@
   function toggleVideo() {
     if (!video.getAttribute('src')) { return; }
     if (video.paused) { armWatchdog(); playVideo(); }
-    else { video.pause(); }
+    else { hub.playback.pause(); }
     showControls();
   }
 
@@ -460,8 +417,8 @@
   function back() {
     if (modalOpen) { closeModal(); }
     else if (playerOpen) { closePlayer(); }
-    else if (tab !== 'favorites') { setTab('favorites'); }
-    else { openModal('Salir de Kick TV?', [{ label: 'Continuar', action: closeModal }, { label: 'Salir', action: exitApp }]); }
+    else if (!hub.isHome()) { hub.backFromSection(); }
+    else { openModal('Salir del hub?', [{ label: 'Continuar', action: closeModal }, { label: 'Salir', action: exitApp }]); }
   }
 
   function action(target) {
@@ -488,7 +445,7 @@
     else if (name === 'previous') { changeChannel(-1); }
   }
 
-  function scope() { return modalOpen ? element('modal') : playerOpen ? element('player') : element('library'); }
+  function scope() { return modalOpen ? element('modal') : playerOpen ? element('player') : hub.focusRoot(); }
 
   function spatial(code) {
     var root = scope();
@@ -527,6 +484,7 @@
   }
 
   document.addEventListener('click', function (event) {
+    if (!hub.isKickViewActive() && !playerOpen && !modalOpen) { return; }
     var node = event.target;
     while (node && node !== document.body && !node.getAttribute('data-action')) { node = node.parentElement; }
     if (node && node.getAttribute('data-action')) { action(node); }
@@ -535,6 +493,7 @@
 
   document.addEventListener('keydown', function (event) {
     var code = event.keyCode;
+    if (!hub.isKickViewActive() && !playerOpen && !modalOpen && code !== 10009 && code !== 27 && code !== 8) { return; }
     var target = event.target;
     if (target.tagName === 'INPUT' && !target.readOnly) {
       if (code === 13 || code === 27 || code === 10009) { event.preventDefault(); target.blur(); focus('save-proxy'); }
@@ -563,7 +522,7 @@
         event.preventDefault();
         if (code === 413) { closePlayer(); }
         else if (code === 415) { armWatchdog(); playVideo(); }
-        else if (code === 19) { video.pause(); }
+        else if (code === 19) { hub.playback.pause(); }
         else { toggleVideo(); }
       } else if (code === 405) { event.preventDefault(); choosePlayerQuality(); }
       else if (code === 403 && playerChannel) { event.preventDefault(); toggleFavorite(playerChannel.slug); }
@@ -593,7 +552,7 @@
     var value = element('proxy-url').value.trim().replace(/\/$/, '');
     var anchor = document.createElement('a'); anchor.href = value;
     if (!/^https?:\/\//i.test(value) || !anchor.hostname || anchor.username || anchor.password || anchor.search || anchor.hash) { notice('Ingresar una URL HTTP o HTTPS del proxy, sin credenciales ni parametros.'); return; }
-    proxyURL = value; saveStorage(proxyKey, value); refreshSequence++; refreshing = false; refreshFavorites(); notice('URL del proxy guardada.');
+    proxyURL = value; hub.setBaseURL(value); saveStorage(proxyKey, value); refreshSequence++; refreshing = false; refreshFavorites(); notice('URL del proxy guardada.');
   };
 
   video.addEventListener('playing', function () {
@@ -605,6 +564,7 @@
     if (!playerOpen || video.paused) { return; }
     text('player-resolution', video.videoWidth + 'x' + video.videoHeight);
     if (video.currentTime > lastVideoTime) { lastVideoTime = video.currentTime; armWatchdog(); }
+    if (video.currentTime > 0) { hub.playback.confirmPlayback(); }
   });
   video.addEventListener('pause', function () {
     if (!playerOpen || !video.getAttribute('src')) { return; }
@@ -628,14 +588,7 @@
   });
 
   fillIcons(document);
-  try {
-    var stored = JSON.parse(readStorage(favoriteKey) || '[]');
-    if (Array.isArray(stored)) {
-      for (var storedIndex = 0; storedIndex < stored.length && favorites.length < 50; storedIndex++) {
-        if (validSlug(stored[storedIndex]) && !isFavorite(stored[storedIndex].toLowerCase())) { favorites.push(stored[storedIndex].toLowerCase()); }
-      }
-    }
-  } catch (error) { notice('No se pudo recuperar la lista guardada de favoritos.'); }
+  favorites = hub.favorites.list('kick').map(function (ref) { return ref.itemId; });
   var savedQuality = readStorage(qualityKey);
   if (savedQuality === 'auto' || /^[0-9]{3,4}$/.test(savedQuality || '')) { defaultQuality = savedQuality; }
   var config = window.KICK_TV_CONFIG || {};
@@ -656,6 +609,7 @@
       catch (error) { }
     }
   }
-  setTab('favorites'); refreshFavorites();
+  hub.bindKickUI({ activate: setKickTab, watch: openChannel, describe: function (slug) { return channels[slug] || null; } });
+  hub.start(); refreshFavorites();
   window.setInterval(function () { if (!document.hidden) { refreshFavorites(); } }, 90000);
 }());

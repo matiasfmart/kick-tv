@@ -86,7 +86,39 @@ p { line-height: 1.45; }
 .menu-option.selected { color: #53fc18; }
 .menu-option [data-icon] { margin-right: 18px; }
 .notice { position: fixed; z-index: 5; bottom: 30px; left: 10%; width: 80%; margin: 0; padding: 20px 28px; background: #274335; border: 1px solid #84d3ab; color: #fff; font-size: 24px; text-align: center; overflow-wrap: break-word; word-wrap: break-word; }
+.notice { pointer-events: none; }
 .notice.above-player { bottom: 180px; }
+.hub-sidebar { position: fixed; top: 0; left: 0; bottom: 0; width: 96px; background: #171e19; border-right: 1px solid #39443c; z-index: 1; overflow-x: hidden; overflow-y: auto; }
+.hub-sidebar.expanded { width: 290px; box-shadow: 20px 0 40px rgba(0,0,0,.35); }
+.hub-mark { height: 126px; display: flex; align-items: center; justify-content: center; color: #53fc18; font-size: 27px; font-weight: bold; }
+#hub-nav { padding: 12px; }
+#hub-nav button { display: flex; justify-content: flex-start; width: 100%; height: 76px; margin-bottom: 14px; padding: 18px; background: transparent; border-color: transparent; white-space: nowrap; }
+#hub-nav button.selected { color: #53fc18; background: #28382b; }
+#hub-nav button:focus { background: #30432e; }
+#hub-nav [data-icon] { width: 30px; height: 30px; margin-right: 0; }
+.hub-nav-label { display: none; margin-left: 20px; font-size: 24px; }
+.expanded .hub-nav-label { display: inline; }
+.hub-sidebar [data-icon] svg { stroke-width: 1.6; }
+.app-header { margin-left: 96px; }
+.hub-main { margin-left: 96px; max-width: none; }
+.hub-muted { color: #aab7ad; font-size: 23px; margin: 8px 0; }
+.hub-services, .hub-row { display: flex; flex-wrap: wrap; }
+.hub-service { min-width: 250px; min-height: 110px; justify-content: flex-start; padding: 24px; margin: 8px 24px 8px 0; font-size: 30px; }
+.hub-service .hub-nav-label { display: inline; font-size: 30px; }
+.hub-band { margin-top: 42px; }
+.hub-media { display: flex; position: relative; flex-direction: column; align-items: flex-start; justify-content: flex-end; width: 23%; min-height: 150px; margin: 12px 2% 12px 0; padding: 24px; border-radius: 6px; }
+.hub-media img { width: 52px; height: 52px; border-radius: 50%; object-fit: cover; margin-bottom: 16px; }
+.hub-media strong { font-size: 27px; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.hub-media > span { font-size: 20px; color: #b5c6b9; margin-top: 12px; }
+.iptv-toolbar, .iptv-pages { display: flex; flex-wrap: wrap; align-items: center; margin-bottom: 24px; }
+.iptv-toolbar button { margin: 8px 18px 8px 0; }
+.iptv-pages { justify-content: space-between; margin-top: 22px; }
+#iptv-status { min-height: 36px; color: #ffc875; font-size: 23px; }
+#iptv-search { max-width: 720px; margin-bottom: 28px; }
+#iptv-query { width: 100%; margin-bottom: 18px; }
+.iptv-number { position: absolute; right: 24px; bottom: 20px; min-height: 48px; font-size: 22px; padding: 8px 14px; }
+.iptv-digit { width: 17%; margin: 1%; padding: 12px; }
+#iptv-number-input { width: 100%; margin-bottom: 18px; }
 @media (max-width: 1250px) {
   .app-header { padding: 22px 28px; }
   .tabs { margin-left: 28px; }
@@ -130,4 +162,16 @@ p { line-height: 1.45; }
   .modal > section { padding: 20px; }
   .notice { left: 5%; width: 90%; bottom: 18px; font-size: 21px; }
   .notice.above-player { bottom: 260px; }
+  .hub-sidebar { width: 72px; }
+  .hub-sidebar.expanded { width: 250px; }
+  .hub-mark { height: 110px; }
+  #hub-nav { padding: 8px; }
+  #hub-nav button { height: 60px; min-height: 60px; padding: 10px; }
+  .app-header, .hub-main { margin-left: 72px; }
+  .brand { font-size: 25px; }
+  .brand span { font-size: 20px; }
+  .build { font-size: 14px; margin-top: 14px; width: 100%; }
+  .hub-service { min-width: 0; width: 100%; margin-right: 0; }
+  .hub-media { width: 100%; margin-right: 0; }
+  .keyboard button { font-size: 18px; padding: 4px 0; }
 }
