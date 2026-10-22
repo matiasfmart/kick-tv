@@ -1,4 +1,4 @@
 [
-  { "id": "kick", "type": "kick", "enabled": true, "order": 10, "icon": "video" },
+  { "id": "kick", "type": "kick", "enabled": true, "order": 10, "icon": "kick" },
   { "id": "iptv", "type": "iptv", "enabled": true, "order": 20, "icon": "tv", "playlistUrl": "https://iptv-org.github.io/iptv/countries/ar.m3u", "blocklistUrl": "https://iptv-org.github.io/api/blocklist.json", "hiddenChannels": ["AiredeSantaFe.ar"] }
 ]

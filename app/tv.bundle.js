@@ -1,4 +1,4 @@
-window.KickTVIcons = {"search":"<!-- @license lucide-static v1.61.0 - ISC -->\n<svg\n  class=\"lucide lucide-search\"\n  xmlns=\"http://www.w3.org/2000/svg\"\n  width=\"24\"\n  height=\"24\"\n  viewBox=\"0 0 24 24\"\n  fill=\"none\"\n  stroke=\"currentColor\"\n  stroke-width=\"2\"\n  stroke-linecap=\"round\"\n  stroke-linejoin=\"round\"\n>\n  <path d=\"m21 21-4.34-4.34\" />\n  <circle cx=\"11\" cy=\"11\" r=\"8\" />\n</svg>\n","star":"<!-- @license lucide-static v1.61.0 - ISC -->\n<svg\n  class=\"lucide lucide-star\"\n  xmlns=\"http://www.w3.org/2000/svg\"\n  width=\"24\"\n  height=\"24\"\n  viewBox=\"0 0 24 24\"\n  fill=\"none\"\n  stroke=\"currentColor\"\n  stroke-width=\"2\"\n  stroke-linecap=\"round\"\n  stroke-linejoin=\"round\"\n>\n  <path d=\"M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z\" />\n</svg>\n","star-off":"<!-- @license lucide-static v1.61.0 - ISC -->\n<svg\n  class=\"lucide lucide-star-off\"\n  xmlns=\"http://www.w3.org/2000/svg\"\n  width=\"24\"\n  height=\"24\"\n  viewBox=\"0 0 24 24\"\n  fill=\"none\"\n  stroke=\"currentColor\"\n  stroke-width=\"2\"\n  stroke-linecap=\"round\"\n  stroke-linejoin=\"round\"\n>\n  <path d=\"m10.344 4.688 1.181-2.393a.53.53 0 0 1 .95 0l2.31 4.679a2.12 2.12 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.237 3.152\" />\n  <path d=\"m17.945 17.945.43 2.505a.53.53 0 0 1-.771.56l-4.618-2.428a2.12 2.12 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.12 2.12 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a8 8 0 0 0 .4-.099\" />\n  <path d=\"m2 2 20 20\" />\n</svg>\n","settings":"<!-- @license lucide-static v1.61.0 - ISC -->\n<svg\n  class=\"lucide lucide-settings\"\n  xmlns=\"http://www.w3.org/2000/svg\"\n  width=\"24\"\n  height=\"24\"\n  viewBox=\"0 0 24 24\"\n  fill=\"none\"\n  stroke=\"currentColor\"\n  stroke-width=\"2\"\n  stroke-linecap=\"round\"\n  stroke-linejoin=\"round\"\n>\n  <path d=\"M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915\" />\n  <circle cx=\"12\" cy=\"12\" r=\"3\" />\n</svg>\n","refresh-cw":"<!-- @license lucide-static v1.61.0 - ISC -->\n<svg\n  class=\"lucide lucide-refresh-cw\"\n  xmlns=\"http://www.w3.org/2000/svg\"\n  width=\"24\"\n  height=\"24\"\n  viewBox=\"0 0 24 24\"\n  fill=\"none\"\n  stroke=\"currentColor\"\n  stroke-width=\"2\"\n  stroke-linecap=\"round\"\n  stroke-linejoin=\"round\"\n>\n  <path d=\"M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8\" />\n  <path d=\"M21 3v5h-5\" />\n  <path d=\"M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16\" />\n  <path d=\"M8 16H3v5\" />\n</svg>\n","play":"<!-- @license lucide-static v1.61.0 - ISC -->\n<svg\n  class=\"lucide lucide-play\"\n  xmlns=\"http://www.w3.org/2000/svg\"\n  width=\"24\"\n  height=\"24\"\n  viewBox=\"0 0 24 24\"\n  fill=\"none\"\n  stroke=\"currentColor\"\n  stroke-width=\"2\"\n  stroke-linecap=\"round\"\n  stroke-linejoin=\"round\"\n>\n  <path d=\"M5 5a2 2 0 0 1 3.008-1.728l11.997 6.998a2 2 0 0 1 .003 3.458l-12 7A2 2 0 0 1 5 19z\" />\n</svg>\n","pause":"<!-- @license lucide-static v1.61.0 - ISC -->\n<svg\n  class=\"lucide lucide-pause\"\n  xmlns=\"http://www.w3.org/2000/svg\"\n  width=\"24\"\n  height=\"24\"\n  viewBox=\"0 0 24 24\"\n  fill=\"none\"\n  stroke=\"currentColor\"\n  stroke-width=\"2\"\n  stroke-linecap=\"round\"\n  stroke-linejoin=\"round\"\n>\n  <rect x=\"14\" y=\"3\" width=\"5\" height=\"18\" rx=\"1\" />\n  <rect x=\"5\" y=\"3\" width=\"5\" height=\"18\" rx=\"1\" />\n</svg>\n","arrow-left":"<!-- @license lucide-static v1.61.0 - ISC -->\n<svg\n  class=\"lucide lucide-arrow-left\"\n  xmlns=\"http://www.w3.org/2000/svg\"\n  width=\"24\"\n  height=\"24\"\n  viewBox=\"0 0 24 24\"\n  fill=\"none\"\n  stroke=\"currentColor\"\n  stroke-width=\"2\"\n  stroke-linecap=\"round\"\n  stroke-linejoin=\"round\"\n>\n  <path d=\"m12 19-7-7 7-7\" />\n  <path d=\"M19 12H5\" />\n</svg>\n","arrow-up":"<!-- @license lucide-static v1.61.0 - ISC -->\n<svg\n  class=\"lucide lucide-arrow-up\"\n  xmlns=\"http://www.w3.org/2000/svg\"\n  width=\"24\"\n  height=\"24\"\n  viewBox=\"0 0 24 24\"\n  fill=\"none\"\n  stroke=\"currentColor\"\n  stroke-width=\"2\"\n  stroke-linecap=\"round\"\n  stroke-linejoin=\"round\"\n>\n  <path d=\"m5 12 7-7 7 7\" />\n  <path d=\"M12 19V5\" />\n</svg>\n","arrow-down":"<!-- @license lucide-static v1.61.0 - ISC -->\n<svg\n  class=\"lucide lucide-arrow-down\"\n  xmlns=\"http://www.w3.org/2000/svg\"\n  width=\"24\"\n  height=\"24\"\n  viewBox=\"0 0 24 24\"\n  fill=\"none\"\n  stroke=\"currentColor\"\n  stroke-width=\"2\"\n  stroke-linecap=\"round\"\n  stroke-linejoin=\"round\"\n>\n  <path d=\"M12 5v14\" />\n  <path d=\"m19 12-7 7-7-7\" />\n</svg>\n","x":"<!-- @license lucide-static v1.61.0 - ISC -->\n<svg\n  class=\"lucide lucide-x\"\n  xmlns=\"http://www.w3.org/2000/svg\"\n  width=\"24\"\n  height=\"24\"\n  viewBox=\"0 0 24 24\"\n  fill=\"none\"\n  stroke=\"currentColor\"\n  stroke-width=\"2\"\n  stroke-linecap=\"round\"\n  stroke-linejoin=\"round\"\n>\n  <path d=\"M18 6 6 18\" />\n  <path d=\"m6 6 12 12\" />\n</svg>\n","check":"<!-- @license lucide-static v1.61.0 - ISC -->\n<svg\n  class=\"lucide lucide-check\"\n  xmlns=\"http://www.w3.org/2000/svg\"\n  width=\"24\"\n  height=\"24\"\n  viewBox=\"0 0 24 24\"\n  fill=\"none\"\n  stroke=\"currentColor\"\n  stroke-width=\"2\"\n  stroke-linecap=\"round\"\n  stroke-linejoin=\"round\"\n>\n  <path d=\"M20 6 9 17l-5-5\" />\n</svg>\n","delete":"<!-- @license lucide-static v1.61.0 - ISC -->\n<svg\n  class=\"lucide lucide-delete\"\n  xmlns=\"http://www.w3.org/2000/svg\"\n  width=\"24\"\n  height=\"24\"\n  viewBox=\"0 0 24 24\"\n  fill=\"none\"\n  stroke=\"currentColor\"\n  stroke-width=\"2\"\n  stroke-linecap=\"round\"\n  stroke-linejoin=\"round\"\n>\n  <path d=\"M10 5a2 2 0 0 0-1.344.519l-6.328 5.74a1 1 0 0 0 0 1.481l6.328 5.741A2 2 0 0 0 10 19h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2z\" />\n  <path d=\"m12 9 6 6\" />\n  <path d=\"m18 9-6 6\" />\n</svg>\n","house":"<!-- @license lucide-static v1.61.0 - ISC -->\n<svg\n  class=\"lucide lucide-house\"\n  xmlns=\"http://www.w3.org/2000/svg\"\n  width=\"24\"\n  height=\"24\"\n  viewBox=\"0 0 24 24\"\n  fill=\"none\"\n  stroke=\"currentColor\"\n  stroke-width=\"2\"\n  stroke-linecap=\"round\"\n  stroke-linejoin=\"round\"\n>\n  <path d=\"M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8\" />\n  <path d=\"M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z\" />\n</svg>\n","video":"<!-- @license lucide-static v1.61.0 - ISC -->\n<svg\n  class=\"lucide lucide-video\"\n  xmlns=\"http://www.w3.org/2000/svg\"\n  width=\"24\"\n  height=\"24\"\n  viewBox=\"0 0 24 24\"\n  fill=\"none\"\n  stroke=\"currentColor\"\n  stroke-width=\"2\"\n  stroke-linecap=\"round\"\n  stroke-linejoin=\"round\"\n>\n  <path d=\"m16 13 5.223 3.482a.5.5 0 0 0 .777-.416V7.87a.5.5 0 0 0-.752-.432L16 10.5\" />\n  <rect x=\"2\" y=\"6\" width=\"14\" height=\"12\" rx=\"2\" />\n</svg>\n","history":"<!-- @license lucide-static v1.61.0 - ISC -->\n<svg\n  class=\"lucide lucide-history\"\n  xmlns=\"http://www.w3.org/2000/svg\"\n  width=\"24\"\n  height=\"24\"\n  viewBox=\"0 0 24 24\"\n  fill=\"none\"\n  stroke=\"currentColor\"\n  stroke-width=\"2\"\n  stroke-linecap=\"round\"\n  stroke-linejoin=\"round\"\n>\n  <path d=\"M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8\" />\n  <path d=\"M3 3v5h5\" />\n  <path d=\"M12 7v5l4 2\" />\n</svg>\n","tv":"<!-- @license lucide-static v1.61.0 - ISC -->\n<svg\n  class=\"lucide lucide-tv\"\n  xmlns=\"http://www.w3.org/2000/svg\"\n  width=\"24\"\n  height=\"24\"\n  viewBox=\"0 0 24 24\"\n  fill=\"none\"\n  stroke=\"currentColor\"\n  stroke-width=\"2\"\n  stroke-linecap=\"round\"\n  stroke-linejoin=\"round\"\n>\n  <path d=\"m17 2-5 5-5-5\" />\n  <rect width=\"20\" height=\"15\" x=\"2\" y=\"7\" rx=\"2\" />\n</svg>\n"};
+window.KickTVIcons = {"search":"<!-- @license lucide-static v1.61.0 - ISC -->\n<svg\n  class=\"lucide lucide-search\"\n  xmlns=\"http://www.w3.org/2000/svg\"\n  width=\"24\"\n  height=\"24\"\n  viewBox=\"0 0 24 24\"\n  fill=\"none\"\n  stroke=\"currentColor\"\n  stroke-width=\"2\"\n  stroke-linecap=\"round\"\n  stroke-linejoin=\"round\"\n>\n  <path d=\"m21 21-4.34-4.34\" />\n  <circle cx=\"11\" cy=\"11\" r=\"8\" />\n</svg>\n","star":"<!-- @license lucide-static v1.61.0 - ISC -->\n<svg\n  class=\"lucide lucide-star\"\n  xmlns=\"http://www.w3.org/2000/svg\"\n  width=\"24\"\n  height=\"24\"\n  viewBox=\"0 0 24 24\"\n  fill=\"none\"\n  stroke=\"currentColor\"\n  stroke-width=\"2\"\n  stroke-linecap=\"round\"\n  stroke-linejoin=\"round\"\n>\n  <path d=\"M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z\" />\n</svg>\n","star-off":"<!-- @license lucide-static v1.61.0 - ISC -->\n<svg\n  class=\"lucide lucide-star-off\"\n  xmlns=\"http://www.w3.org/2000/svg\"\n  width=\"24\"\n  height=\"24\"\n  viewBox=\"0 0 24 24\"\n  fill=\"none\"\n  stroke=\"currentColor\"\n  stroke-width=\"2\"\n  stroke-linecap=\"round\"\n  stroke-linejoin=\"round\"\n>\n  <path d=\"m10.344 4.688 1.181-2.393a.53.53 0 0 1 .95 0l2.31 4.679a2.12 2.12 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.237 3.152\" />\n  <path d=\"m17.945 17.945.43 2.505a.53.53 0 0 1-.771.56l-4.618-2.428a2.12 2.12 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.12 2.12 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a8 8 0 0 0 .4-.099\" />\n  <path d=\"m2 2 20 20\" />\n</svg>\n","settings":"<!-- @license lucide-static v1.61.0 - ISC -->\n<svg\n  class=\"lucide lucide-settings\"\n  xmlns=\"http://www.w3.org/2000/svg\"\n  width=\"24\"\n  height=\"24\"\n  viewBox=\"0 0 24 24\"\n  fill=\"none\"\n  stroke=\"currentColor\"\n  stroke-width=\"2\"\n  stroke-linecap=\"round\"\n  stroke-linejoin=\"round\"\n>\n  <path d=\"M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915\" />\n  <circle cx=\"12\" cy=\"12\" r=\"3\" />\n</svg>\n","refresh-cw":"<!-- @license lucide-static v1.61.0 - ISC -->\n<svg\n  class=\"lucide lucide-refresh-cw\"\n  xmlns=\"http://www.w3.org/2000/svg\"\n  width=\"24\"\n  height=\"24\"\n  viewBox=\"0 0 24 24\"\n  fill=\"none\"\n  stroke=\"currentColor\"\n  stroke-width=\"2\"\n  stroke-linecap=\"round\"\n  stroke-linejoin=\"round\"\n>\n  <path d=\"M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8\" />\n  <path d=\"M21 3v5h-5\" />\n  <path d=\"M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16\" />\n  <path d=\"M8 16H3v5\" />\n</svg>\n","play":"<!-- @license lucide-static v1.61.0 - ISC -->\n<svg\n  class=\"lucide lucide-play\"\n  xmlns=\"http://www.w3.org/2000/svg\"\n  width=\"24\"\n  height=\"24\"\n  viewBox=\"0 0 24 24\"\n  fill=\"none\"\n  stroke=\"currentColor\"\n  stroke-width=\"2\"\n  stroke-linecap=\"round\"\n  stroke-linejoin=\"round\"\n>\n  <path d=\"M5 5a2 2 0 0 1 3.008-1.728l11.997 6.998a2 2 0 0 1 .003 3.458l-12 7A2 2 0 0 1 5 19z\" />\n</svg>\n","pause":"<!-- @license lucide-static v1.61.0 - ISC -->\n<svg\n  class=\"lucide lucide-pause\"\n  xmlns=\"http://www.w3.org/2000/svg\"\n  width=\"24\"\n  height=\"24\"\n  viewBox=\"0 0 24 24\"\n  fill=\"none\"\n  stroke=\"currentColor\"\n  stroke-width=\"2\"\n  stroke-linecap=\"round\"\n  stroke-linejoin=\"round\"\n>\n  <rect x=\"14\" y=\"3\" width=\"5\" height=\"18\" rx=\"1\" />\n  <rect x=\"5\" y=\"3\" width=\"5\" height=\"18\" rx=\"1\" />\n</svg>\n","arrow-left":"<!-- @license lucide-static v1.61.0 - ISC -->\n<svg\n  class=\"lucide lucide-arrow-left\"\n  xmlns=\"http://www.w3.org/2000/svg\"\n  width=\"24\"\n  height=\"24\"\n  viewBox=\"0 0 24 24\"\n  fill=\"none\"\n  stroke=\"currentColor\"\n  stroke-width=\"2\"\n  stroke-linecap=\"round\"\n  stroke-linejoin=\"round\"\n>\n  <path d=\"m12 19-7-7 7-7\" />\n  <path d=\"M19 12H5\" />\n</svg>\n","arrow-right":"<!-- @license lucide-static v1.61.0 - ISC -->\n<svg\n  class=\"lucide lucide-arrow-right\"\n  xmlns=\"http://www.w3.org/2000/svg\"\n  width=\"24\"\n  height=\"24\"\n  viewBox=\"0 0 24 24\"\n  fill=\"none\"\n  stroke=\"currentColor\"\n  stroke-width=\"2\"\n  stroke-linecap=\"round\"\n  stroke-linejoin=\"round\"\n>\n  <path d=\"M5 12h14\" />\n  <path d=\"m12 5 7 7-7 7\" />\n</svg>\n","arrow-up":"<!-- @license lucide-static v1.61.0 - ISC -->\n<svg\n  class=\"lucide lucide-arrow-up\"\n  xmlns=\"http://www.w3.org/2000/svg\"\n  width=\"24\"\n  height=\"24\"\n  viewBox=\"0 0 24 24\"\n  fill=\"none\"\n  stroke=\"currentColor\"\n  stroke-width=\"2\"\n  stroke-linecap=\"round\"\n  stroke-linejoin=\"round\"\n>\n  <path d=\"m5 12 7-7 7 7\" />\n  <path d=\"M12 19V5\" />\n</svg>\n","arrow-down":"<!-- @license lucide-static v1.61.0 - ISC -->\n<svg\n  class=\"lucide lucide-arrow-down\"\n  xmlns=\"http://www.w3.org/2000/svg\"\n  width=\"24\"\n  height=\"24\"\n  viewBox=\"0 0 24 24\"\n  fill=\"none\"\n  stroke=\"currentColor\"\n  stroke-width=\"2\"\n  stroke-linecap=\"round\"\n  stroke-linejoin=\"round\"\n>\n  <path d=\"M12 5v14\" />\n  <path d=\"m19 12-7 7-7-7\" />\n</svg>\n","x":"<!-- @license lucide-static v1.61.0 - ISC -->\n<svg\n  class=\"lucide lucide-x\"\n  xmlns=\"http://www.w3.org/2000/svg\"\n  width=\"24\"\n  height=\"24\"\n  viewBox=\"0 0 24 24\"\n  fill=\"none\"\n  stroke=\"currentColor\"\n  stroke-width=\"2\"\n  stroke-linecap=\"round\"\n  stroke-linejoin=\"round\"\n>\n  <path d=\"M18 6 6 18\" />\n  <path d=\"m6 6 12 12\" />\n</svg>\n","check":"<!-- @license lucide-static v1.61.0 - ISC -->\n<svg\n  class=\"lucide lucide-check\"\n  xmlns=\"http://www.w3.org/2000/svg\"\n  width=\"24\"\n  height=\"24\"\n  viewBox=\"0 0 24 24\"\n  fill=\"none\"\n  stroke=\"currentColor\"\n  stroke-width=\"2\"\n  stroke-linecap=\"round\"\n  stroke-linejoin=\"round\"\n>\n  <path d=\"M20 6 9 17l-5-5\" />\n</svg>\n","delete":"<!-- @license lucide-static v1.61.0 - ISC -->\n<svg\n  class=\"lucide lucide-delete\"\n  xmlns=\"http://www.w3.org/2000/svg\"\n  width=\"24\"\n  height=\"24\"\n  viewBox=\"0 0 24 24\"\n  fill=\"none\"\n  stroke=\"currentColor\"\n  stroke-width=\"2\"\n  stroke-linecap=\"round\"\n  stroke-linejoin=\"round\"\n>\n  <path d=\"M10 5a2 2 0 0 0-1.344.519l-6.328 5.74a1 1 0 0 0 0 1.481l6.328 5.741A2 2 0 0 0 10 19h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2z\" />\n  <path d=\"m12 9 6 6\" />\n  <path d=\"m18 9-6 6\" />\n</svg>\n","house":"<!-- @license lucide-static v1.61.0 - ISC -->\n<svg\n  class=\"lucide lucide-house\"\n  xmlns=\"http://www.w3.org/2000/svg\"\n  width=\"24\"\n  height=\"24\"\n  viewBox=\"0 0 24 24\"\n  fill=\"none\"\n  stroke=\"currentColor\"\n  stroke-width=\"2\"\n  stroke-linecap=\"round\"\n  stroke-linejoin=\"round\"\n>\n  <path d=\"M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8\" />\n  <path d=\"M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z\" />\n</svg>\n","video":"<!-- @license lucide-static v1.61.0 - ISC -->\n<svg\n  class=\"lucide lucide-video\"\n  xmlns=\"http://www.w3.org/2000/svg\"\n  width=\"24\"\n  height=\"24\"\n  viewBox=\"0 0 24 24\"\n  fill=\"none\"\n  stroke=\"currentColor\"\n  stroke-width=\"2\"\n  stroke-linecap=\"round\"\n  stroke-linejoin=\"round\"\n>\n  <path d=\"m16 13 5.223 3.482a.5.5 0 0 0 .777-.416V7.87a.5.5 0 0 0-.752-.432L16 10.5\" />\n  <rect x=\"2\" y=\"6\" width=\"14\" height=\"12\" rx=\"2\" />\n</svg>\n","history":"<!-- @license lucide-static v1.61.0 - ISC -->\n<svg\n  class=\"lucide lucide-history\"\n  xmlns=\"http://www.w3.org/2000/svg\"\n  width=\"24\"\n  height=\"24\"\n  viewBox=\"0 0 24 24\"\n  fill=\"none\"\n  stroke=\"currentColor\"\n  stroke-width=\"2\"\n  stroke-linecap=\"round\"\n  stroke-linejoin=\"round\"\n>\n  <path d=\"M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8\" />\n  <path d=\"M3 3v5h5\" />\n  <path d=\"M12 7v5l4 2\" />\n</svg>\n","user":"<!-- @license lucide-static v1.61.0 - ISC -->\n<svg\n  class=\"lucide lucide-user\"\n  xmlns=\"http://www.w3.org/2000/svg\"\n  width=\"24\"\n  height=\"24\"\n  viewBox=\"0 0 24 24\"\n  fill=\"none\"\n  stroke=\"currentColor\"\n  stroke-width=\"2\"\n  stroke-linecap=\"round\"\n  stroke-linejoin=\"round\"\n>\n  <path d=\"M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2\" />\n  <circle cx=\"12\" cy=\"7\" r=\"4\" />\n</svg>\n","moon":"<!-- @license lucide-static v1.61.0 - ISC -->\n<svg\n  class=\"lucide lucide-moon\"\n  xmlns=\"http://www.w3.org/2000/svg\"\n  width=\"24\"\n  height=\"24\"\n  viewBox=\"0 0 24 24\"\n  fill=\"none\"\n  stroke=\"currentColor\"\n  stroke-width=\"2\"\n  stroke-linecap=\"round\"\n  stroke-linejoin=\"round\"\n>\n  <path d=\"M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401\" />\n</svg>\n","sun":"<!-- @license lucide-static v1.61.0 - ISC -->\n<svg\n  class=\"lucide lucide-sun\"\n  xmlns=\"http://www.w3.org/2000/svg\"\n  width=\"24\"\n  height=\"24\"\n  viewBox=\"0 0 24 24\"\n  fill=\"none\"\n  stroke=\"currentColor\"\n  stroke-width=\"2\"\n  stroke-linecap=\"round\"\n  stroke-linejoin=\"round\"\n>\n  <circle cx=\"12\" cy=\"12\" r=\"4\" />\n  <path d=\"M12 2v2\" />\n  <path d=\"M12 20v2\" />\n  <path d=\"m4.93 4.93 1.41 1.41\" />\n  <path d=\"m17.66 17.66 1.41 1.41\" />\n  <path d=\"M2 12h2\" />\n  <path d=\"M20 12h2\" />\n  <path d=\"m6.34 17.66-1.41 1.41\" />\n  <path d=\"m19.07 4.93-1.41 1.41\" />\n</svg>\n","pencil":"<!-- @license lucide-static v1.61.0 - ISC -->\n<svg\n  class=\"lucide lucide-pencil\"\n  xmlns=\"http://www.w3.org/2000/svg\"\n  width=\"24\"\n  height=\"24\"\n  viewBox=\"0 0 24 24\"\n  fill=\"none\"\n  stroke=\"currentColor\"\n  stroke-width=\"2\"\n  stroke-linecap=\"round\"\n  stroke-linejoin=\"round\"\n>\n  <path d=\"M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z\" />\n  <path d=\"m15 5 4 4\" />\n</svg>\n","lock":"<!-- @license lucide-static v1.61.0 - ISC -->\n<svg\n  class=\"lucide lucide-lock\"\n  xmlns=\"http://www.w3.org/2000/svg\"\n  width=\"24\"\n  height=\"24\"\n  viewBox=\"0 0 24 24\"\n  fill=\"none\"\n  stroke=\"currentColor\"\n  stroke-width=\"2\"\n  stroke-linecap=\"round\"\n  stroke-linejoin=\"round\"\n>\n  <rect width=\"18\" height=\"11\" x=\"3\" y=\"11\" rx=\"2\" ry=\"2\" />\n  <path d=\"M7 11V7a5 5 0 0 1 10 0v4\" />\n</svg>\n","radio":"<!-- @license lucide-static v1.61.0 - ISC -->\n<svg\n  class=\"lucide lucide-radio\"\n  xmlns=\"http://www.w3.org/2000/svg\"\n  width=\"24\"\n  height=\"24\"\n  viewBox=\"0 0 24 24\"\n  fill=\"none\"\n  stroke=\"currentColor\"\n  stroke-width=\"2\"\n  stroke-linecap=\"round\"\n  stroke-linejoin=\"round\"\n>\n  <path d=\"M16.247 7.761a6 6 0 0 1 0 8.478\" />\n  <path d=\"M19.075 4.933a10 10 0 0 1 0 14.134\" />\n  <path d=\"M4.925 19.067a10 10 0 0 1 0-14.134\" />\n  <path d=\"M7.753 16.239a6 6 0 0 1 0-8.478\" />\n  <circle cx=\"12\" cy=\"12\" r=\"2\" />\n</svg>\n","log-out":"<!-- @license lucide-static v1.61.0 - ISC -->\n<svg\n  class=\"lucide lucide-log-out\"\n  xmlns=\"http://www.w3.org/2000/svg\"\n  width=\"24\"\n  height=\"24\"\n  viewBox=\"0 0 24 24\"\n  fill=\"none\"\n  stroke=\"currentColor\"\n  stroke-width=\"2\"\n  stroke-linecap=\"round\"\n  stroke-linejoin=\"round\"\n>\n  <path d=\"m16 17 5-5-5-5\" />\n  <path d=\"M21 12H9\" />\n  <path d=\"M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4\" />\n</svg>\n","kick":"<svg width=\"26\" height=\"26\" viewBox=\"0 0 26 26\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n  <path fill-rule=\"evenodd\" clip-rule=\"evenodd\" d=\"M1 0H9.76711V5.79452H12.589V2.82193H15.5616V0H24.1781V8.61645H21.3561V11.589H18.3836V14.411H21.3561V17.3836H24.1781V26H15.5616V23.1781H12.589V20.2055H9.76711V26H1V0Z\" fill=\"#53FC18\"/>\n</svg>","tv":"<!-- @license lucide-static v1.61.0 - ISC -->\n<svg\n  class=\"lucide lucide-tv\"\n  xmlns=\"http://www.w3.org/2000/svg\"\n  width=\"24\"\n  height=\"24\"\n  viewBox=\"0 0 24 24\"\n  fill=\"none\"\n  stroke=\"currentColor\"\n  stroke-width=\"2\"\n  stroke-linecap=\"round\"\n  stroke-linejoin=\"round\"\n>\n  <path d=\"m17 2-5 5-5-5\" />\n  <rect width=\"20\" height=\"15\" x=\"2\" y=\"7\" rx=\"2\" />\n</svg>\n"};
 function _callSuper(t, o, e) { return o = _getPrototypeOf(o), _possibleConstructorReturn(t, _isNativeReflectConstruct() ? Reflect.construct(o, e || [], _getPrototypeOf(t).constructor) : o.apply(t, e)); }
 function _possibleConstructorReturn(t, e) { if (e && ("object" == _typeof(e) || "function" == typeof e)) return e; if (void 0 !== e) throw new TypeError("Derived constructors may only return object or undefined"); return _assertThisInitialized(t); }
 function _assertThisInitialized(e) { if (void 0 === e) throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); return e; }
@@ -593,12 +593,13 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
   var HubShell = function () {
     "use strict";
 
-    function HubShell(registry, favorites, history, icons) {
+    function HubShell(registry, favorites, history, icons, storage) {
       _classCallCheck(this, HubShell);
       this.registry = registry;
       this.favorites = favorites;
       this.history = history;
       this.icons = icons;
+      this.storage = storage;
       __publicField(this, "route", "home");
       __publicField(this, "activeService", null);
       __publicField(this, "lastContent", "");
@@ -619,8 +620,24 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
         this.addNav("source:" + modules[index].id, modules[index].name, modules[index].icon);
       }
       this.addNav("favorites", "Favoritos", "star");
-      this.addNav("settings", "Ajustes", "settings");
       var self = this;
+      document.getElementById("hub-favorites-all").onclick = function () {
+        self.navigate("favorites");
+      };
+      document.getElementById("hub-header-search").onclick = function () {
+        self.searchCurrent();
+      };
+      document.getElementById("hub-header-refresh").onclick = function () {
+        self.refreshCurrent();
+      };
+      document.getElementById("hub-header-settings").onclick = function () {
+        self.settingsCurrent();
+      };
+      document.getElementById("hub-theme-toggle").onclick = function () {
+        self.setTheme(document.body.className.indexOf("theme-dark") < 0, true);
+      };
+      this.setTheme(storage.get("stream-hub-theme") === "dark", false);
+      this.updateHeader("home", void 0);
       document.addEventListener("keydown", function (event) {
         self.onKey(event);
       }, true);
@@ -683,6 +700,65 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
         }
       }
     }, {
+      key: "setTheme",
+      value: function setTheme(dark, persist) {
+        document.body.className = dark ? "theme-dark" : "";
+        var button = document.getElementById("hub-theme-toggle");
+        var icon = dark ? "sun" : "moon";
+        var label = dark ? "Activar modo claro" : "Activar modo oscuro";
+        button.innerHTML = '<span data-icon="' + icon + '">' + (this.icons[icon] || "") + "</span>";
+        button.setAttribute("aria-label", label);
+        button.title = label;
+        if (persist) {
+          try {
+            this.storage.set("stream-hub-theme", dark ? "dark" : "light");
+          } catch (error) {}
+        }
+      }
+    }, {
+      key: "updateHeader",
+      value: function updateHeader(route, module) {
+        var search = document.getElementById("hub-header-search");
+        var refresh = document.getElementById("hub-header-refresh");
+        var settings = document.getElementById("hub-header-settings");
+        search.hidden = !module || !module.capabilities.search;
+        if (module) {
+          search.setAttribute("aria-label", "Buscar en " + module.name);
+          document.getElementById("hub-header-search-label").textContent = "Buscar en " + module.name;
+        }
+        refresh.hidden = !module || module.id === "kick" && route.indexOf("search:") === 0;
+        settings.hidden = !module;
+        document.getElementById("hub-current-service").textContent = module ? module.name + (route === "settings" ? " / Ajustes" : "") : route === "favorites" ? "Favoritos" : "Inicio";
+      }
+    }, {
+      key: "searchCurrent",
+      value: function searchCurrent() {
+        if (!this.activeService) return;
+        if (this.activeService === "iptv") {
+          var input = document.getElementById("iptv-search-toggle");
+          if (input) {
+            input.click();
+            return;
+          }
+        }
+        this.navigate("search:" + this.activeService);
+      }
+    }, {
+      key: "refreshCurrent",
+      value: function refreshCurrent() {
+        if (!this.activeService) return;
+        var target = document.getElementById(this.activeService === "iptv" ? "iptv-refresh" : "refresh");
+        if (target && !target.hidden) target.click();
+      }
+    }, {
+      key: "settingsCurrent",
+      value: function settingsCurrent() {
+        if (this.activeService === "iptv") {
+          var target = document.getElementById("iptv-catalog-settings");
+          if (target) target.click();
+        } else if (this.activeService === "kick") this.navigate("settings");
+      }
+    }, {
       key: "navigate",
       value: function navigate(route) {
         var modules = this.registry.list();
@@ -695,8 +771,9 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
         this.globalFavorites.hidden = route !== "favorites";
         document.getElementById("kick-tabs").hidden = true;
         var navButtons = this.nav.querySelectorAll("button");
+        var selectedRoute = route === "settings" ? "source:kick" : route;
         for (var navIndex = 0; navIndex < navButtons.length; navIndex++) {
-          var selected = navButtons[navIndex].getAttribute("data-route") === route;
+          var selected = navButtons[navIndex].getAttribute("data-route") === selectedRoute;
           navButtons[navIndex].className = selected ? "selected" : "";
           if (selected) {
             navButtons[navIndex].setAttribute("aria-current", "page");
@@ -706,11 +783,13 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
           }
         }
         if (route === "home") {
+          this.updateHeader(route, void 0);
           this.renderHome();
           this.enterContent();
           return;
         }
         if (route === "favorites") {
+          this.updateHeader(route, void 0);
           this.renderRefs("hub-global-favorites-list", this.favorites.list(), "global-favorite");
           this.enterContent();
           return;
@@ -728,6 +807,7 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
           return entry.id === routeId;
         })[0] || module.routes[0];
         module.view.activate(contribution ? contribution.section : "browse");
+        this.updateHeader(route, module);
         this.expand(false);
       }
     }, {
@@ -749,21 +829,21 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
           };
           services.appendChild(button);
         });
-        this.renderRefs("hub-favorites", this.favorites.list(), "favorite");
+        this.renderRefs("hub-favorites", this.favorites.list(), "favorite", 8);
         this.renderRefs("hub-recents", this.history.list().map(function (entry) {
           return entry.ref;
-        }), "recent");
+        }), "recent", 8);
         if (active && active.indexOf("hub-") === 0) {
           this.focus(document.getElementById(active));
         }
       }
     }, {
       key: "renderRefs",
-      value: function renderRefs(id, refs, prefix) {
+      value: function renderRefs(id, refs, prefix, limit) {
         var root = document.getElementById(id);
         root.textContent = "";
         var self = this;
-        refs.slice(0, 8).forEach(function (ref, index) {
+        (limit === void 0 ? refs : refs.slice(0, limit)).forEach(function (ref, index) {
           var module = self.registry.get(ref.sourceId);
           if (!module) {
             return;
@@ -787,7 +867,14 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
           name.textContent = item ? item.name : self.favorites.name(ref) || ref.itemId;
           button.appendChild(name);
           var service = document.createElement("span");
-          service.textContent = module.name + (item instanceof LiveStream && item.live ? " / EN VIVO" : "");
+          service.className = "hub-source-label";
+          if (module.id === "kick") {
+            var mark = document.createElement("span");
+            mark.setAttribute("data-icon", "kick");
+            mark.innerHTML = self.icons.kick || "";
+            service.appendChild(mark);
+          }
+          service.appendChild(document.createTextNode(module.name + (item instanceof LiveStream && item.live ? " / EN VIVO" : "")));
           button.appendChild(service);
           button.onclick = function () {
             self.navigate("source:" + ref.sourceId);
@@ -808,8 +895,19 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
         this.expand(false);
         var root = this.route === "home" ? this.home : this.route === "favorites" ? this.globalFavorites : document.getElementById("service-content");
         var previous = document.getElementById(this.lastContent);
-        var first = root.querySelector("button, input");
-        this.focus(previous && root.contains(previous) ? previous : first || document.getElementById("hub-nav-home"));
+        var previousBox = previous && root.contains(previous) ? previous.getBoundingClientRect() : null;
+        this.focus(previousBox && previousBox.width && previousBox.height ? previous : this.firstVisible(root) || document.getElementById("hub-nav-home"));
+      }
+    }, {
+      key: "firstVisible",
+      value: function firstVisible(root) {
+        var nodes = root.querySelectorAll("button, input");
+        for (var index = 0; index < nodes.length; index++) {
+          var node = nodes[index];
+          var rect = node.getBoundingClientRect();
+          if (!node.disabled && rect.width && rect.height) return node;
+        }
+        return null;
       }
     }, {
       key: "isServiceActive",
@@ -854,6 +952,31 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
             this.enterContent();
           } else if (code === 13) {
             active.click();
+          } else {
+            return;
+          }
+          event.preventDefault();
+          event.stopImmediatePropagation();
+          return;
+        }
+        var kickTabs = document.getElementById("kick-tabs");
+        if (kickTabs.contains(active)) {
+          var tabs = kickTabs.querySelectorAll("button");
+          var tabPosition = 0;
+          for (var tabIndex = 0; tabIndex < tabs.length; tabIndex++) {
+            if (tabs[tabIndex] === active) tabPosition = tabIndex;
+          }
+          if (code === 37 || code === 39) {
+            this.focus(tabs[(tabPosition + (code === 37 ? tabs.length - 1 : 1)) % tabs.length]);
+          } else if (code === 40) {
+            this.lastContent = active.id;
+            this.focus(this.firstVisible(document.getElementById("service-content")));
+          } else if (code === 38) {
+            this.focus(document.getElementById(this.lastNav));
+          } else if (code === 13) {
+            active.click();
+          } else if (code === 27 || code === 10009 || code === 8) {
+            this.navigate("home");
           } else {
             return;
           }
@@ -1118,7 +1241,15 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
           var number = self.grid.list().filter(function (entry) {
             return sameRef(entry.ref, ref);
           })[0];
-          self.text("player-meta", (number ? number.number + " / " : "") + (service ? service.name : "") + (item instanceof LiveChannel ? " / " + item.country + " / " + item.categories.join(", ") + (item.provenance.status === "reviewed" ? "" : " / Fuente no revisada") : item instanceof LiveStream ? " / " + item.viewers + " espectadores" : ""));
+          var meta = self.node("player-meta");
+          meta.textContent = (number ? number.number + " / " : "") + (service ? service.name : "") + (item instanceof LiveChannel ? " / " + item.country + " / " + item.categories.join(", ") + (item.provenance.status === "reviewed" ? "" : " / Fuente no revisada") : item instanceof LiveStream ? " / " + item.viewers + " espectadores" : "");
+          if (service && service.id === "kick") {
+            var kickMark = document.createElement("span");
+            kickMark.setAttribute("data-icon", "kick");
+            kickMark.className = "kick-inline-mark";
+            kickMark.innerHTML = self.icons.kick || "";
+            meta.insertBefore(kickMark, meta.firstChild);
+          }
           if (item instanceof LiveStream && !item.live) {
             self.error("Este canal esta offline.");
             return;
@@ -1681,7 +1812,7 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
         }
       }, entry));
     });
-    shell = new HubShell(registry, favorites, history, browser.KickTVIcons);
+    shell = new HubShell(registry, favorites, history, browser.KickTVIcons, storage);
     var kickModule = registry.get("kick");
     var source = kickModule ? kickModule.source : null;
     var kickView = kickModule ? kickModule.view : null;
@@ -1790,6 +1921,27 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
       }
     };
   }
+  var localizedCategories = {
+    animation: "Animacion",
+    business: "Economia",
+    comedy: "Comedia",
+    cooking: "Cocina",
+    culture: "Cultura",
+    documentary: "Documentales",
+    education: "Educacion",
+    entertainment: "Entretenimiento",
+    family: "Familia",
+    general: "General",
+    kids: "Infantil",
+    movies: "Peliculas",
+    music: "Musica",
+    news: "Noticias",
+    outdoor: "Aire libre",
+    religious: "Religion",
+    series: "Series",
+    sports: "Deportes",
+    travel: "Viajes"
+  };
   function parseAttributes(line) {
     var result = {};
     var match;
@@ -2105,7 +2257,7 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
             var categoryName = group[categoryIndex];
             var categoryId = categoryName.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "general";
             if (channel.item.categories.indexOf(categoryId) < 0) channel.item.categories.push(categoryId);
-            categories[categoryId] = categoryName;
+            categories[categoryId] = localizedCategories[categoryName.toLowerCase()] || categoryName;
           }
           if (channel.candidates.some(function (candidate) {
             return candidate.url === streamURL;
@@ -2238,7 +2390,7 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
       this.root = document.createElement("section");
       this.root.id = "iptv-content";
       this.root.hidden = true;
-      this.root.innerHTML = '<div class="section-heading"><div><h1>IPTV Argentina</h1><p id="iptv-summary" class="hub-muted"></p></div><button id="iptv-refresh" class="icon-button" aria-label="Actualizar catalogo" title="Actualizar catalogo">' + this.icons["refresh-cw"] + '</button></div><div class="iptv-toolbar"><button id="iptv-category">Todas las categorias</button><button id="iptv-language">Todos los idiomas</button><button id="iptv-saved">Mi grilla</button><button id="iptv-search-toggle" class="iptv-search-button" aria-label="Buscar canal en IPTV Argentina" title="Buscar canal en IPTV Argentina" aria-expanded="false"><span data-icon="search">' + this.icons.search + '</span>Buscar</button><button id="iptv-health">Fallos: despriorizar</button><button id="iptv-reset" class="icon-button" aria-label="Restablecer fallos locales" title="Restablecer fallos locales">' + this.icons["refresh-cw"] + '</button><button id="iptv-catalog-settings" class="icon-button" aria-label="URL del catalogo" title="URL del catalogo">' + this.icons.settings + '</button></div><div id="iptv-search" hidden><input id="iptv-query" type="text" readonly aria-label="Nombre del canal IPTV" placeholder="Nombre del canal"><div id="iptv-keyboard" class="keyboard" aria-label="Teclado IPTV"></div><div class="keyboard-actions"><button id="iptv-delete" class="icon-button" aria-label="Borrar caracter" title="Borrar caracter">' + this.icons.delete + '</button><button id="iptv-clear" class="icon-button" aria-label="Limpiar busqueda" title="Limpiar busqueda">' + this.icons.x + '</button></div></div><p id="iptv-status" role="status"></p><div id="iptv-grid" class="channel-grid"></div><div class="iptv-pages"><button id="iptv-prev" class="icon-button" aria-label="Pagina anterior" title="Pagina anterior">' + this.icons["arrow-left"] + '</button><span id="iptv-range"></span><button id="iptv-next" class="icon-button" aria-label="Pagina siguiente" title="Pagina siguiente">' + this.icons["arrow-down"] + "</button></div>";
+      this.root.innerHTML = '<div class="section-heading"><div><h1>IPTV Argentina</h1><p id="iptv-summary" class="hub-muted"></p></div><button id="iptv-refresh" class="icon-button" aria-label="Actualizar catalogo" title="Actualizar catalogo">' + this.icons["refresh-cw"] + '</button></div><div class="iptv-toolbar"><button id="iptv-category">Todas las categorias</button><button id="iptv-language">Todos los idiomas</button><button id="iptv-saved">Mi grilla</button><button id="iptv-search-toggle" class="iptv-search-button" aria-label="Buscar canal en IPTV Argentina" title="Buscar canal en IPTV Argentina" aria-expanded="false"><span data-icon="search">' + this.icons.search + '</span>Buscar</button><button id="iptv-health">Fallos: despriorizar</button><button id="iptv-reset" class="icon-button" aria-label="Restablecer fallos locales" title="Restablecer fallos locales">' + this.icons["refresh-cw"] + '</button><button id="iptv-catalog-settings" class="icon-button" aria-label="URL del catalogo" title="URL del catalogo">' + this.icons.settings + '</button></div><div id="iptv-search" hidden><input id="iptv-query" type="text" readonly aria-label="Nombre del canal IPTV" placeholder="Nombre del canal"><div id="iptv-keyboard" class="keyboard" aria-label="Teclado IPTV"></div><div class="keyboard-actions"><button id="iptv-delete" class="icon-button" aria-label="Borrar caracter" title="Borrar caracter">' + this.icons.delete + '</button><button id="iptv-clear" class="icon-button" aria-label="Limpiar busqueda" title="Limpiar busqueda">' + this.icons.x + '</button></div></div><p id="iptv-status" role="status"></p><div id="iptv-grid" class="channel-grid"></div><div class="iptv-pages"><button id="iptv-prev" class="icon-button" aria-label="Pagina anterior" title="Pagina anterior">' + this.icons["arrow-left"] + '</button><span id="iptv-range"></span><button id="iptv-next" class="icon-button" aria-label="Pagina siguiente" title="Pagina siguiente">' + this.icons["arrow-right"] + "</button></div>";
       document.getElementById("service-content").appendChild(this.root);
       var self = this;
       this.node("iptv-refresh").onclick = function () {
@@ -2461,12 +2613,13 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
         var unreviewedSources = this.items.filter(function (item) {
           return item.provenance.status !== "reviewed";
         }).length;
-        this.node("iptv-summary").textContent = this.items.length + " canales / AR / " + pendingAvailability + " se comprueban al reproducir / " + unreviewedSources + " fuentes sin revision / " + (info && info.mode === "direct" ? "iptv-org directo" : "catalogo local");
+        this.node("iptv-summary").textContent = this.items.length + " canales / " + pendingAvailability + " pendientes / " + (info && info.mode === "direct" ? "iptv-org directo" : "catalogo local");
         this.node("iptv-category").textContent = this.category ? info && info.categories[this.category] || this.category : "Todas las categorias";
         var hasLanguages = this.items.some(function (item) {
           return item.languages.length > 0;
         });
         this.node("iptv-language").disabled = !hasLanguages;
+        this.node("iptv-language").hidden = !hasLanguages;
         this.node("iptv-language").textContent = hasLanguages ? this.language === "spa" ? "Espanol" : this.language || "Todos los idiomas" : "Idiomas no disponibles";
         this.node("iptv-saved").setAttribute("aria-pressed", String(this.savedOnly));
         this.node("iptv-health").textContent = "Fallos: " + (this.health.policy() === "hide" ? "ocultar" : this.health.policy() === "all" ? "mostrar todos" : "despriorizar");
@@ -2505,9 +2658,7 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
           watch.appendChild(detail);
           var language = document.createElement("span");
           language.className = "channel-category";
-          language.textContent = "AR / " + (item.languages.length ? item.languages.map(function (value) {
-            return value === "spa" ? "Espanol" : value;
-          }).join(", ") : "Idioma sin datos") + " / " + (item.verification.status === "ok" ? "HLS analizado" : "Comprobar al reproducir") + (item.provenance.status === "reviewed" ? "" : " / Fuente no revisada");
+          language.textContent = (item.verification.status === "ok" ? "HLS sondeado" : "Por probar") + " / " + (item.provenance.status === "reviewed" ? "Fuente revisada" : "Sin revisar");
           watch.appendChild(language);
           watch.onclick = function () {
             self.openItem(item.ref);
@@ -2836,7 +2987,7 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
     return {
       id: configuration.id,
       name: "Kick",
-      icon: configuration.icon || "video",
+      icon: configuration.icon || "kick",
       capabilities: source.getCapabilities(),
       source: source,
       view: new KickServiceView(),
@@ -2860,7 +3011,7 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
     "type": "kick",
     "enabled": true,
     "order": 10,
-    "icon": "video"
+    "icon": "kick"
   }, {
     "id": "iptv",
     "type": "iptv",

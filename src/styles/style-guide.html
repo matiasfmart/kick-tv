@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Style guide · Stream Hub</title>
+  <link rel="stylesheet" href="style-guide.css">
+</head>
+<body>
+  <div class="guide-shell">
+    <aside class="guide-sidebar" aria-label="Navegacion de muestra">
+      <div class="kick-mark" aria-label="Kick">{{ICON:kick}}</div>
+      <nav class="rail-nav">
+        <button class="rail-item active" aria-label="Inicio activo">{{ICON:house}}</button>
+        <button class="rail-item kick-item" aria-label="Kick">{{ICON:kick}}</button>
+        <button class="rail-item" aria-label="IPTV Argentina">{{ICON:tv}}</button>
+        <button class="rail-item" aria-label="Favoritos">{{ICON:star}}</button>
+      </nav>
+    </aside>
+    <div class="guide-main">
+      <header class="guide-topbar">
+        <div class="wordmark">STREAM HUB</div>
+        <button class="search-pill" aria-label="Buscar en IPTV Argentina"><span>{{ICON:search}}</span><span class="search-placeholder">Buscar en IPTV Argentina...</span></button>
+        <div class="top-spacer"></div>
+        <button class="top-action" aria-label="Actualizar IPTV">{{ICON:refresh-cw}}</button>
+        <button class="top-action" aria-label="Ajustes IPTV">{{ICON:settings}}</button>
+        <button id="theme-toggle" class="top-action" aria-label="Activar modo oscuro">{{ICON:moon}}</button>
+        <span class="service-indicator">IPTV Argentina</span>
+      </header>
+      <main class="workspace">
+        <div class="section-row">
+          <h1 class="section-title">En vivo ahora</h1>
+          <a class="section-link" href="#live">Ver todo</a>
+          <div class="row-arrows">
+            <button class="arrow-button previous" aria-label="Anterior">{{ICON:arrow-left}}</button>
+            <button class="arrow-button" aria-label="Siguiente">{{ICON:arrow-right}}</button>
+          </div>
+        </div>
+        <section class="hero-track" aria-label="Tarjetas hero">
+          <article class="hero-card">
+            <div class="hero-art"><img src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=900&amp;auto=format&amp;fit=crop&amp;q=80" alt="Escena cinematografica" loading="eager"></div>
+            <div class="hero-info">
+              <div><span class="data-label">Canal</span><div class="hero-channel"><span class="channel-avatar">26</span><span class="data-value">Canal 26</span></div></div>
+              <div><span class="data-label">Categoria</span><span class="data-value">Noticias</span></div>
+              <div><span class="data-label">Espectadores</span><span class="data-value">12.4K</span></div>
+              <div><span class="data-label">Calidad</span><span class="hero-number">1080p</span></div>
+            </div>
+          </article>
+          <article class="hero-card">
+            <div class="hero-art"><img src="https://images.unsplash.com/photo-1519608487953-e999c86e7455?w=900&amp;auto=format&amp;fit=crop&amp;q=80" alt="Cielo al atardecer" loading="eager"></div>
+            <div class="hero-info">
+              <div><span class="data-label">Canal</span><div class="hero-channel"><span class="channel-avatar">7N</span><span class="data-value">Canal 7 Neuquen</span></div></div>
+              <div><span class="data-label">Categoria</span><span class="data-value">General</span></div>
+              <div><span class="data-label">Espectadores</span><span class="data-value">En vivo</span></div>
+              <div><span class="data-label">Calidad</span><span class="hero-number">720p</span></div>
+            </div>
+          </article>
+          <article class="hero-card">
+            <div class="hero-art"><img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=900&amp;auto=format&amp;fit=crop&amp;q=80" alt="Paisaje costero" loading="eager"></div>
+            <div class="hero-info">
+              <div><span class="data-label">Canal</span><div class="hero-channel"><span class="channel-avatar">IT</span><span class="data-value">Itel TV</span></div></div>
+              <div><span class="data-label">Categoria</span><span class="data-value">General</span></div>
+              <div><span class="data-label">Espectadores</span><span class="data-value">En vivo</span></div>
+              <div><span class="data-label">Calidad</span><span class="hero-number">Original</span></div>
+            </div>
+          </article>
+        </section>
+        <div class="section-row standard-heading">
+          <h2 class="section-title">Mi grilla</h2>
+          <a class="section-link" href="#grid">Ver todos los canales</a>
+          <div class="row-arrows">
+            <button class="arrow-button previous" aria-label="Anterior">{{ICON:arrow-left}}</button>
+            <button class="arrow-button" aria-label="Siguiente">{{ICON:arrow-right}}</button>
+          </div>
+        </div>
+        <section class="standard-track" aria-label="Tarjetas estandar">
+          <article class="standard-card">
+            <div class="standard-art"><img src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=700&amp;auto=format&amp;fit=crop&amp;q=80" alt="Fotograma de pelicula" loading="eager"></div>
+            <div class="standard-info"><div class="standard-title-row"><span class="standard-title">Canal Universidad</span><span class="meta-pill">EN VIVO</span></div><div class="standard-secondary"><span class="channel-avatar">U</span><span>Cultura · AR</span></div></div>
+          </article>
+          <article class="standard-card">
+            <div class="standard-art"><img src="https://images.unsplash.com/photo-1519608487953-e999c86e7455?w=700&amp;auto=format&amp;fit=crop&amp;q=80" alt="Cielo rosado" loading="eager"></div>
+            <div class="standard-info"><div class="standard-title-row"><span class="standard-title">Canal 7 Neuquen</span><span class="meta-pill">#07</span></div><div class="standard-secondary"><span class="channel-avatar">7N</span><span>General · AR</span></div></div>
+          </article>
+          <article class="standard-card">
+            <div class="standard-art"><img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=700&amp;auto=format&amp;fit=crop&amp;q=80" alt="Paisaje abierto" loading="eager"></div>
+            <div class="standard-info"><div class="standard-title-row"><span class="standard-title">Canal 26</span><span class="meta-pill">1080p</span></div><div class="standard-secondary"><span class="channel-avatar">26</span><span>Noticias · AR</span></div></div>
+          </article>
+          <article class="standard-card">
+            <div class="standard-art"><img src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=700&amp;auto=format&amp;fit=crop&amp;q=80" alt="Escena" loading="eager"></div>
+            <div class="standard-info"><div class="standard-title-row"><span class="standard-title">Kick · Canal</span><span class="meta-pill">OFFLINE</span></div><div class="standard-secondary"><span class="channel-avatar">K</span><span>Streaming · Kick</span></div></div>
+          </article>
+        </section>
+        <div class="component-strip" aria-label="Muestras de controles enfocados">
+          <span class="component-label">Foco remoto · 150ms</span>
+          <button class="sample-focus-control" aria-label="Foco sidebar">{{ICON:search}}</button>
+          <div class="search-pill sample-search"><span>{{ICON:search}}</span><span class="search-placeholder">Buscar...</span></div>
+          <button class="filter-chip active">Mi grilla</button>
+          <button class="filter-chip is-focused">Chip enfocado</button>
+          <button class="arrow-button is-focused" aria-label="Flecha enfocada">{{ICON:arrow-right}}</button>
+          <button class="sample-focus-card"><span>Canal 7 Neuquen</span><small>General · AR</small></button>
+        </div>
+      </main>
+    </div>
+  </div>
+  <script>
+    (function () {
+      var button = document.getElementById('theme-toggle');
+      button.onclick = function () {
+        var dark = document.body.className.indexOf('dark-theme') < 0;
+        document.body.className = dark ? 'dark-theme' : '';
+        button.setAttribute('aria-label', dark ? 'Activar modo claro' : 'Activar modo oscuro');
+      };
+    }());
+  </script>
+</body>
+</html>

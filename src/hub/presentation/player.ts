@@ -87,7 +87,8 @@ export class PlayerController {
       var item = result.value.item; self.text('player-name', item.name); self.text('player-title', item.title);
       var service = self.registry.get(item.ref.sourceId);
       var number = self.grid.list().filter(function (entry) { return sameRef(entry.ref, ref); })[0];
-      self.text('player-meta', (number ? number.number + ' / ' : '') + (service ? service.name : '') + (item instanceof LiveChannel ? ' / ' + item.country + ' / ' + item.categories.join(', ') + (item.provenance.status === 'reviewed' ? '' : ' / Fuente no revisada') : item instanceof LiveStream ? ' / ' + item.viewers + ' espectadores' : ''));
+      var meta = self.node('player-meta'); meta.textContent = (number ? number.number + ' / ' : '') + (service ? service.name : '') + (item instanceof LiveChannel ? ' / ' + item.country + ' / ' + item.categories.join(', ') + (item.provenance.status === 'reviewed' ? '' : ' / Fuente no revisada') : item instanceof LiveStream ? ' / ' + item.viewers + ' espectadores' : '');
+      if (service && service.id === 'kick') { var kickMark = document.createElement('span'); kickMark.setAttribute('data-icon', 'kick'); kickMark.className = 'kick-inline-mark'; kickMark.innerHTML = self.icons.kick || ''; meta.insertBefore(kickMark, meta.firstChild); }
       if (item instanceof LiveStream && !item.live) { self.error('Este canal esta offline.'); return; }
       self.updateFavorite();
       var preferred = self.storage.get('kick-tv-default-quality') || 'auto';

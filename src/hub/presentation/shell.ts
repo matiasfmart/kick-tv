@@ -1,5 +1,5 @@
 import { FavoritesService, HistoryService, ServiceRegistry } from '../application/services';
-import { LiveStream, MediaRef } from '../domain/contracts';
+import { KeyValueStore, LiveStream, MediaRef, ServiceModule } from '../domain/contracts';
 
 export class HubShell {
   private route = 'home';
@@ -9,7 +9,7 @@ export class HubShell {
   private readonly nav: HTMLElement;
   private readonly home: HTMLElement;
   private readonly globalFavorites: HTMLElement;
-  constructor(private readonly registry: ServiceRegistry, private readonly favorites: FavoritesService, private readonly history: HistoryService, private readonly icons: { [name: string]: string }) {
+  constructor(private readonly registry: ServiceRegistry, private readonly favorites: FavoritesService, private readonly history: HistoryService, private readonly icons: { [name: string]: string }, private readonly storage: KeyValueStore) {
     this.nav = document.getElementById('hub-nav') as HTMLElement;
     this.home = document.getElementById('hub-home') as HTMLElement;
     this.globalFavorites = document.createElement('section'); this.globalFavorites.id = 'hub-global-favorites'; this.globalFavorites.hidden = true;
@@ -19,8 +19,14 @@ export class HubShell {
     var modules = registry.list();
     for (var index = 0; index < modules.length; index++) { this.addNav('source:' + modules[index].id, modules[index].name, modules[index].icon); }
     this.addNav('favorites', 'Favoritos', 'star');
-    this.addNav('settings', 'Ajustes', 'settings');
     var self = this;
+    (document.getElementById('hub-favorites-all') as HTMLButtonElement).onclick = function () { self.navigate('favorites'); };
+    (document.getElementById('hub-header-search') as HTMLButtonElement).onclick = function () { self.searchCurrent(); };
+    (document.getElementById('hub-header-refresh') as HTMLButtonElement).onclick = function () { self.refreshCurrent(); };
+    (document.getElementById('hub-header-settings') as HTMLButtonElement).onclick = function () { self.settingsCurrent(); };
+    (document.getElementById('hub-theme-toggle') as HTMLButtonElement).onclick = function () { self.setTheme(document.body.className.indexOf('theme-dark') < 0, true); };
+    this.setTheme(storage.get('stream-hub-theme') === 'dark', false);
+    this.updateHeader('home', undefined);
     document.addEventListener('keydown', function (event) { self.onKey(event); }, true);
     this.nav.addEventListener('focusin', function () { self.expand(true); });
     this.nav.addEventListener('focusout', function () {
@@ -49,6 +55,38 @@ export class HubShell {
     var rect = node.getBoundingClientRect();
     if (rect.top < 16 || rect.bottom > window.innerHeight - 16) { node.scrollIntoView(rect.top < 16); }
   }
+  private setTheme(dark: boolean, persist: boolean): void {
+    document.body.className = dark ? 'theme-dark' : '';
+    var button = document.getElementById('hub-theme-toggle') as HTMLButtonElement;
+    var icon = dark ? 'sun' : 'moon'; var label = dark ? 'Activar modo claro' : 'Activar modo oscuro';
+    button.innerHTML = '<span data-icon="' + icon + '">' + (this.icons[icon] || '') + '</span>';
+    button.setAttribute('aria-label', label); button.title = label;
+    if (persist) { try { this.storage.set('stream-hub-theme', dark ? 'dark' : 'light'); } catch (error) { } }
+  }
+  private updateHeader(route: string, module: ServiceModule | undefined): void {
+    var search = document.getElementById('hub-header-search') as HTMLButtonElement;
+    var refresh = document.getElementById('hub-header-refresh') as HTMLButtonElement;
+    var settings = document.getElementById('hub-header-settings') as HTMLButtonElement;
+    search.hidden = !module || !module.capabilities.search;
+    if (module) { search.setAttribute('aria-label', 'Buscar en ' + module.name); (document.getElementById('hub-header-search-label') as HTMLElement).textContent = 'Buscar en ' + module.name; }
+    refresh.hidden = !module || (module.id === 'kick' && route.indexOf('search:') === 0);
+    settings.hidden = !module;
+    (document.getElementById('hub-current-service') as HTMLElement).textContent = module ? module.name + (route === 'settings' ? ' / Ajustes' : '') : route === 'favorites' ? 'Favoritos' : 'Inicio';
+  }
+  private searchCurrent(): void {
+    if (!this.activeService) return;
+    if (this.activeService === 'iptv') { var input = document.getElementById('iptv-search-toggle') as HTMLButtonElement | null; if (input) { input.click(); return; } }
+    this.navigate('search:' + this.activeService);
+  }
+  private refreshCurrent(): void {
+    if (!this.activeService) return;
+    var target = document.getElementById(this.activeService === 'iptv' ? 'iptv-refresh' : 'refresh') as HTMLButtonElement | null;
+    if (target && !target.hidden) target.click();
+  }
+  private settingsCurrent(): void {
+    if (this.activeService === 'iptv') { var target = document.getElementById('iptv-catalog-settings') as HTMLButtonElement | null; if (target) target.click(); }
+    else if (this.activeService === 'kick') this.navigate('settings');
+  }
   navigate(route: string): void {
     var modules = this.registry.list();
     for (var index = 0; index < modules.length; index++) { modules[index].view.deactivate(); }
@@ -58,14 +96,15 @@ export class HubShell {
     this.globalFavorites.hidden = route !== 'favorites';
     (document.getElementById('kick-tabs') as HTMLElement).hidden = true;
     var navButtons = this.nav.querySelectorAll('button');
+    var selectedRoute = route === 'settings' ? 'source:kick' : route;
     for (var navIndex = 0; navIndex < navButtons.length; navIndex++) {
-      var selected = navButtons[navIndex].getAttribute('data-route') === route;
+      var selected = navButtons[navIndex].getAttribute('data-route') === selectedRoute;
       navButtons[navIndex].className = selected ? 'selected' : '';
       if (selected) { navButtons[navIndex].setAttribute('aria-current', 'page'); this.lastNav = navButtons[navIndex].id; }
       else { navButtons[navIndex].removeAttribute('aria-current'); }
     }
-    if (route === 'home') { this.renderHome(); this.enterContent(); return; }
-    if (route === 'favorites') { this.renderRefs('hub-global-favorites-list', this.favorites.list(), 'global-favorite'); this.enterContent(); return; }
+    if (route === 'home') { this.updateHeader(route, undefined); this.renderHome(); this.enterContent(); return; }
+    if (route === 'favorites') { this.updateHeader(route, undefined); this.renderRefs('hub-global-favorites-list', this.favorites.list(), 'global-favorite'); this.enterContent(); return; }
     var selectedId = route.indexOf('source:') === 0 ? route.slice(7) : route.indexOf('search:') === 0 ? route.slice(7) : '';
     var module = selectedId ? this.registry.get(selectedId) : route === 'settings' ? modules[0] : null;
     if (!module) { this.navigate('home'); return; }
@@ -74,6 +113,7 @@ export class HubShell {
     var routeId = route.indexOf('search:') === 0 ? 'search' : route === 'settings' ? 'settings' : 'browse';
     var contribution = module.routes.filter(function (entry) { return entry.id === routeId; })[0] || module.routes[0];
     module.view.activate(contribution ? contribution.section : 'browse');
+    this.updateHeader(route, module);
     this.expand(false);
   }
   renderHome(): void {
@@ -85,14 +125,14 @@ export class HubShell {
       var button = self.iconButton(module.name, module.icon); button.id = 'hub-service-' + module.id; button.className = 'hub-service';
       button.onclick = function () { self.navigate('source:' + module.id); }; services.appendChild(button);
     });
-    this.renderRefs('hub-favorites', this.favorites.list(), 'favorite');
-    this.renderRefs('hub-recents', this.history.list().map(function (entry) { return entry.ref; }), 'recent');
+    this.renderRefs('hub-favorites', this.favorites.list(), 'favorite', 8);
+    this.renderRefs('hub-recents', this.history.list().map(function (entry) { return entry.ref; }), 'recent', 8);
     if (active && active.indexOf('hub-') === 0) { this.focus(document.getElementById(active)); }
   }
-  private renderRefs(id: string, refs: MediaRef[], prefix: string): void {
+  private renderRefs(id: string, refs: MediaRef[], prefix: string, limit?: number): void {
     var root = document.getElementById(id) as HTMLElement; root.textContent = '';
     var self = this;
-    refs.slice(0, 8).forEach(function (ref, index) {
+    (limit === undefined ? refs : refs.slice(0, limit)).forEach(function (ref, index) {
       var module = self.registry.get(ref.sourceId);
       if (!module) { return; }
       var view = module.view;
@@ -102,7 +142,9 @@ export class HubShell {
         var image = document.createElement('img'); image.src = item.artwork; image.alt = ''; image.onerror = function () { image.hidden = true; }; button.appendChild(image);
       }
       var name = document.createElement('strong'); name.textContent = item ? item.name : self.favorites.name(ref) || ref.itemId; button.appendChild(name);
-      var service = document.createElement('span'); service.textContent = module.name + (item instanceof LiveStream && item.live ? ' / EN VIVO' : ''); button.appendChild(service);
+      var service = document.createElement('span'); service.className = 'hub-source-label';
+      if (module.id === 'kick') { var mark = document.createElement('span'); mark.setAttribute('data-icon', 'kick'); mark.innerHTML = self.icons.kick || ''; service.appendChild(mark); }
+      service.appendChild(document.createTextNode(module.name + (item instanceof LiveStream && item.live ? ' / EN VIVO' : ''))); button.appendChild(service);
       button.onclick = function () { self.navigate('source:' + ref.sourceId); view.openItem(ref); };
       root.appendChild(button);
     });
@@ -112,8 +154,16 @@ export class HubShell {
     this.expand(false);
     var root = this.route === 'home' ? this.home : this.route === 'favorites' ? this.globalFavorites : document.getElementById('service-content') as HTMLElement;
     var previous = document.getElementById(this.lastContent);
-    var first = root.querySelector('button, input') as HTMLElement | null;
-    this.focus(previous && root.contains(previous) ? previous : first || document.getElementById('hub-nav-home'));
+    var previousBox = previous && root.contains(previous) ? previous.getBoundingClientRect() : null;
+    this.focus(previousBox && previousBox.width && previousBox.height ? previous : this.firstVisible(root) || document.getElementById('hub-nav-home'));
+  }
+  private firstVisible(root: HTMLElement): HTMLElement | null {
+    var nodes = root.querySelectorAll('button, input');
+    for (var index = 0; index < nodes.length; index++) {
+      var node = nodes[index] as HTMLButtonElement; var rect = node.getBoundingClientRect();
+      if (!node.disabled && rect.width && rect.height) return node;
+    }
+    return null;
   }
   isServiceActive(id: string): boolean { return this.activeService === id; }
   isHome(): boolean { return this.route === 'home'; }
@@ -132,6 +182,18 @@ export class HubShell {
       if (code === 38 || code === 40) { this.focus(buttons[Math.max(0, Math.min(buttons.length - 1, position + (code === 38 ? -1 : 1)))] as HTMLElement); }
       else if (code === 39 || code === 27 || code === 10009) { this.enterContent(); }
       else if (code === 13) { active.click(); }
+      else { return; }
+      event.preventDefault(); event.stopImmediatePropagation(); return;
+    }
+    var kickTabs = document.getElementById('kick-tabs') as HTMLElement;
+    if (kickTabs.contains(active)) {
+      var tabs = kickTabs.querySelectorAll('button'); var tabPosition = 0;
+      for (var tabIndex = 0; tabIndex < tabs.length; tabIndex++) { if (tabs[tabIndex] === active) tabPosition = tabIndex; }
+      if (code === 37 || code === 39) { this.focus(tabs[(tabPosition + (code === 37 ? tabs.length - 1 : 1)) % tabs.length] as HTMLElement); }
+      else if (code === 40) { this.lastContent = active.id; this.focus(this.firstVisible(document.getElementById('service-content') as HTMLElement)); }
+      else if (code === 38) { this.focus(document.getElementById(this.lastNav)); }
+      else if (code === 13) { active.click(); }
+      else if (code === 27 || code === 10009 || code === 8) { this.navigate('home'); }
       else { return; }
       event.preventDefault(); event.stopImmediatePropagation(); return;
     }

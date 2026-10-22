@@ -26,7 +26,7 @@ export function startHub(configuration: ServiceConfiguration[], factories: { [ty
     if (!factories[entry.type]) { throw new Error('Tipo de servicio desconocido: ' + entry.type); }
     registry.register(factories[entry.type]({ http, favorites, grid, health, presenter, storage, icons: browser.KickTVIcons, navigate: function (route) { shell.navigate(route); } }, entry));
   });
-  shell = new HubShell(registry, favorites, history, browser.KickTVIcons);
+  shell = new HubShell(registry, favorites, history, browser.KickTVIcons, storage);
   var kickModule = registry.get('kick');
   var source = kickModule ? kickModule.source as KickSource : null;
   var kickView = kickModule ? kickModule.view as KickServiceView : null;

@@ -3,6 +3,12 @@ import { CatalogTransport, IptvDirectorySource, IptvSourceInfo } from './source'
 
 interface PlaylistChannel { item: LiveChannel; candidates: StreamCandidate[]; }
 interface PlaylistRow { id: string; name: string; logo: string; categories: string[]; url: string; label: string; height: number; }
+var localizedCategories: { [name: string]: string } = {
+  animation: 'Animacion', business: 'Economia', comedy: 'Comedia', cooking: 'Cocina',
+  culture: 'Cultura', documentary: 'Documentales', education: 'Educacion', entertainment: 'Entretenimiento',
+  family: 'Familia', general: 'General', kids: 'Infantil', movies: 'Peliculas', music: 'Musica',
+  news: 'Noticias', outdoor: 'Aire libre', religious: 'Religion', series: 'Series', sports: 'Deportes', travel: 'Viajes'
+};
 
 function parseAttributes(line: string): { [name: string]: string } {
   var result: { [name: string]: string } = {}; var match: RegExpExecArray | null;
@@ -126,7 +132,7 @@ export class IptvOrgPlaylistSource extends VideoSource implements IptvDirectoryS
       for (var categoryIndex = 0; categoryIndex < group.length; categoryIndex++) {
         var categoryName = group[categoryIndex]; var categoryId = categoryName.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'general';
         if (channel.item.categories.indexOf(categoryId) < 0) channel.item.categories.push(categoryId);
-        categories[categoryId] = categoryName;
+        categories[categoryId] = localizedCategories[categoryName.toLowerCase()] || categoryName;
       }
       if (channel.candidates.some(function (candidate) { return candidate.url === streamURL; })) { header = ''; options = []; return; }
       var variant = (attrs['tvg-id'].split('@')[1] || '').toUpperCase();
