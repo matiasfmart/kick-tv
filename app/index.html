@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header><div class="brand">KICK<span>TV</span></div><span class="phase">FASE 02 / DIAGNOSTICO</span><span class="build">v0.1.0</span></header>
+  <header><div class="brand">KICK<span>TV</span></div><span class="phase">FASE 03 / PRUEBA EN VIVO</span><span class="build">v0.1.0 / KICK-01</span></header>
   <main>
     <h1>Estado del dispositivo</h1>
     <div class="columns">
@@ -29,12 +29,30 @@
       </section>
     </div>
     <nav class="actions" aria-label="Acciones de diagnostico">
+      <button id="open-tv" type="button">Abrir Kick TV</button>
       <button id="check" type="button">Comprobar entorno</button>
+      <button id="test-hls" type="button">Probar HLS 720p</button>
+      <button id="kick-720" type="button">Kick 720p</button>
+      <button id="kick-1080" type="button">Kick 1080p</button>
       <button id="clear" type="button">Limpiar registro</button>
       <button id="reload" type="button">Recargar</button>
       <button id="local" type="button">Abrir version local</button>
     </nav>
   </main>
+  <section id="playback" class="playback" aria-label="Prueba HLS" hidden>
+    <video id="test-video" preload="none" playsinline></video>
+    <div class="playback-info">
+      <h2 id="playback-title">HLS de referencia / 720p</h2>
+      <p id="playback-channel"></p>
+      <p id="playback-status" role="status">Preparando...</p>
+      <p id="playback-detail"></p>
+    </div>
+    <div class="playback-actions">
+      <button id="toggle-video" type="button">Pausar</button>
+      <button id="retry-video" type="button">Reintentar</button>
+      <button id="stop-video" type="button">Volver</button>
+    </div>
+  </section>
   <div id="exit-dialog" class="modal" hidden>
     <section role="dialog" aria-modal="true" aria-labelledby="exit-title">
       <h2 id="exit-title">Salir de la app?</h2>

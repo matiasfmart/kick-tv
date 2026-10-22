@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kick TV</title>
+  <link rel="stylesheet" href="tv.css">
+</head>
+<body>
+  <div id="library">
+    <header class="app-header">
+      <div class="brand">KICK<span>TV</span></div>
+      <nav class="tabs" aria-label="Vistas">
+        <button id="tab-favorites" data-action="tab" data-tab="favorites" class="tab active" aria-current="page">Favoritos</button>
+        <button id="tab-search" data-action="tab" data-tab="search" class="tab">Buscar</button>
+        <button id="tab-settings" data-action="tab" data-tab="settings" class="tab">Ajustes</button>
+      </nav>
+      <span class="build">V1-01</span>
+    </header>
+    <main>
+      <div class="section-heading"><div><h1 id="view-title">Favoritos</h1><p id="view-summary"></p></div><button id="refresh" class="icon-button" data-action="refresh" aria-label="Actualizar favoritos" title="Actualizar favoritos"><span data-icon="refresh-cw"></span></button></div>
+      <p id="library-error" class="error-banner" role="alert" hidden></p>
+      <section id="view-favorites" aria-label="Favoritos">
+        <div id="favorites-grid" class="channel-grid"></div>
+        <div id="favorites-empty" class="empty-state" hidden><span data-icon="star" class="empty-icon"></span><h2>No hay favoritos</h2><button id="empty-search" class="primary" data-action="tab" data-tab="search"><span data-icon="search"></span>Buscar canal</button></div>
+      </section>
+      <section id="view-search" aria-label="Buscar canales" hidden>
+        <div class="search-layout">
+          <div class="search-tools">
+            <div class="query-row"><input id="search-input" type="text" readonly maxlength="50" aria-label="Nombre del canal" placeholder="Nombre del canal"><button id="run-search" class="icon-button primary" data-action="search" aria-label="Buscar" title="Buscar"><span data-icon="search"></span></button></div>
+            <div id="keyboard" class="keyboard" aria-label="Teclado en pantalla"></div>
+            <div class="keyboard-actions"><button data-action="space">Espacio</button><button class="icon-button" data-action="delete" aria-label="Borrar caracter" title="Borrar caracter"><span data-icon="delete"></span></button><button class="icon-button" data-action="clear-query" aria-label="Limpiar busqueda" title="Limpiar busqueda"><span data-icon="x"></span></button></div>
+          </div>
+          <div class="search-results"><p id="search-status" role="status"></p><div id="search-grid" class="channel-grid"></div></div>
+        </div>
+      </section>
+      <section id="view-settings" class="settings" aria-label="Ajustes" hidden>
+        <div class="setting-row"><div><h2>Calidad predeterminada</h2><p id="default-quality-label">Auto</p></div><button id="default-quality" data-action="default-quality"><span data-icon="settings"></span>Elegir calidad</button></div>
+        <form id="proxy-form" class="setting-row"><div class="proxy-field"><label for="proxy-url">URL del proxy</label><input id="proxy-url" type="url" spellcheck="false" autocomplete="off" required></div><button id="save-proxy" type="submit"><span data-icon="check"></span>Guardar</button></form>
+        <div class="setting-row"><div><h2>Dispositivo</h2><p id="device-info"></p><p id="storage-info"></p></div><button id="diagnostic" data-action="diagnostic">Diagnostico</button></div>
+      </section>
+    </main>
+  </div>
+  <section id="player" class="player" aria-label="Reproductor" hidden>
+    <video id="player-video" preload="none" playsinline></video>
+    <div id="player-overlay" class="player-overlay">
+      <div class="player-heading"><div><span class="live-label">EN VIVO</span><h2 id="player-name"></h2><p id="player-title"></p><p id="player-meta"></p></div><button id="player-close" class="icon-button" data-action="close-player" aria-label="Volver a la lista" title="Volver a la lista"><span data-icon="arrow-left"></span></button></div>
+      <p id="player-message" class="player-message" role="status"></p>
+      <div class="player-controls">
+        <button id="player-prev" class="icon-button" data-action="previous" aria-label="Canal anterior" title="Canal anterior"><span data-icon="arrow-up"></span></button>
+        <button id="player-toggle" class="icon-button" data-action="toggle" aria-label="Pausar" title="Pausar"><span data-icon="pause"></span></button>
+        <button id="player-next" class="icon-button" data-action="next" aria-label="Canal siguiente" title="Canal siguiente"><span data-icon="arrow-down"></span></button>
+        <button id="player-quality" data-action="quality"><span data-icon="settings"></span><span id="current-quality">Auto</span></button>
+        <button id="player-favorite" class="icon-button" data-action="player-favorite" aria-label="Agregar a favoritos" title="Agregar a favoritos"><span data-icon="star"></span></button>
+        <button id="player-retry" class="icon-button" data-action="retry" aria-label="Reintentar reproduccion" title="Reintentar reproduccion"><span data-icon="refresh-cw"></span></button>
+        <span id="player-resolution"></span>
+      </div>
+    </div>
+  </section>
+  <div id="modal" class="modal" hidden><section role="dialog" aria-modal="true" aria-labelledby="modal-title"><div class="modal-heading"><h2 id="modal-title"></h2><button id="modal-close" class="icon-button" data-action="close-modal" aria-label="Cerrar" title="Cerrar"><span data-icon="x"></span></button></div><div id="modal-options" class="modal-options"></div></section></div>
+  <p id="notice" class="notice" role="status" hidden></p>
+  <script src="tv.bundle.js"></script>
+</body>
+</html>

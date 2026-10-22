@@ -8,8 +8,6 @@ if ! command -v node >/dev/null 2>&1; then
   read -r '?Presiona Enter para cerrar.'
   exit 1
 fi
-if [[ ! -d node_modules ]]; then
-  npm install || exit 1
-fi
+npm install --no-audit --no-fund || exit 1
 npm run build || exit 1
 npm start
