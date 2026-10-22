@@ -733,12 +733,17 @@ p {
   z-index: 4;
 }
 
-#library .channel-play:hover, #library .channel-play:focus, #library .hub-media:hover, #library .hub-media:focus {
-  border: 0;
-  background: #FFFFFF;
-  color: #111111;
+#library .channel-play:hover, #library .hub-media:hover {
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.16);
-  transform: translateY(-3px);
+  transform: translateY(-2px);
+  z-index: 4;
+}
+
+#library .channel-play:focus, #library .hub-media:focus {
+  outline: 2px solid #111111;
+  outline-offset: 4px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.16);
+  transform: translateY(-5px);
   z-index: 4;
 }
 
@@ -929,6 +934,7 @@ p {
 
 #player-name {
   margin: 8px 0;
+  color: #F8FAFC;
   font-size: 28px;
   font-weight: 600;
 }
@@ -937,6 +943,7 @@ p {
   max-height: 68px;
   overflow: hidden;
   margin: 0;
+  color: #F8FAFC;
   font-size: 18px;
   overflow-wrap: break-word;
 }
@@ -1749,12 +1756,17 @@ body.theme-dark #iptv-status {
   color: #f3c878;
 }
 
-body.theme-dark #library .channel-play:hover, body.theme-dark #library .channel-play:focus, body.theme-dark #library .hub-media:hover, body.theme-dark #library .hub-media:focus {
-  border: 0;
-  background: #22272D;
-  color: #F1F2F4;
+body.theme-dark #library .channel-play:hover, body.theme-dark #library .hub-media:hover {
   box-shadow: 0 10px 28px rgba(0, 0, 0, 0.42);
-  transform: translateY(-3px);
+  transform: translateY(-2px);
+  z-index: 4;
+}
+
+body.theme-dark #library .channel-play:focus, body.theme-dark #library .hub-media:focus {
+  outline: 2px solid #F1F2F4;
+  outline-offset: 4px;
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.56);
+  transform: translateY(-5px);
   z-index: 4;
 }
 
