@@ -2408,7 +2408,6 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
       __publicField(this, "category", "");
       __publicField(this, "language", "");
       __publicField(this, "savedOnly", false);
-      __publicField(this, "offset", 0);
       __publicField(this, "pending", null);
       __publicField(this, "debounce", 0);
       __publicField(this, "numberRef", null);
@@ -2419,7 +2418,7 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
       this.root = document.createElement("section");
       this.root.id = "iptv-content";
       this.root.hidden = true;
-      this.root.innerHTML = '<div class="section-heading"><div><h1>IPTV Argentina</h1><p id="iptv-summary" class="hub-muted"></p></div><button id="iptv-refresh" class="icon-button" aria-label="Actualizar catalogo" title="Actualizar catalogo">' + this.icons["refresh-cw"] + '</button></div><div id="iptv-toolbar" class="iptv-toolbar"><button id="iptv-category">Todas las categorias</button><button id="iptv-language">Todos los idiomas</button><button id="iptv-saved">Mi grilla</button><button id="iptv-search-toggle" class="iptv-search-button" aria-label="Buscar canal en IPTV Argentina" title="Buscar canal en IPTV Argentina" aria-expanded="false"><span data-icon="search">' + this.icons.search + '</span>Buscar</button><button id="iptv-health">Fallos: despriorizar</button><button id="iptv-reset" class="icon-button" aria-label="Restablecer fallos locales" title="Restablecer fallos locales">' + this.icons["refresh-cw"] + '</button><button id="iptv-catalog-settings" class="icon-button" aria-label="URL del catalogo" title="URL del catalogo">' + this.icons.settings + '</button></div><div id="iptv-search" hidden><input id="iptv-query" type="text" readonly aria-label="Nombre del canal IPTV" placeholder="Nombre del canal"><div id="iptv-keyboard" class="keyboard" aria-label="Teclado IPTV"></div><div class="keyboard-actions"><button id="iptv-delete" class="icon-button" aria-label="Borrar caracter" title="Borrar caracter">' + this.icons.delete + '</button><button id="iptv-clear" class="icon-button" aria-label="Limpiar busqueda" title="Limpiar busqueda">' + this.icons.x + '</button></div></div><p id="iptv-status" role="status"></p><div id="iptv-grid" class="channel-grid"></div><div class="iptv-pages"><button id="iptv-prev" class="icon-button" aria-label="Pagina anterior" title="Pagina anterior">' + this.icons["arrow-left"] + '</button><span id="iptv-range"></span><button id="iptv-next" class="icon-button" aria-label="Pagina siguiente" title="Pagina siguiente">' + this.icons["arrow-right"] + "</button></div>";
+      this.root.innerHTML = '<div class="section-heading"><div><h1>IPTV Argentina</h1><p id="iptv-summary" class="hub-muted"></p></div><button id="iptv-refresh" class="icon-button" aria-label="Actualizar catalogo" title="Actualizar catalogo">' + this.icons["refresh-cw"] + '</button></div><div id="iptv-toolbar" class="iptv-toolbar"><button id="iptv-category">Todas las categorias</button><button id="iptv-language">Todos los idiomas</button><button id="iptv-saved">Mi grilla</button><button id="iptv-search-toggle" class="iptv-search-button" aria-label="Buscar canal en IPTV Argentina" title="Buscar canal en IPTV Argentina" aria-expanded="false"><span data-icon="search">' + this.icons.search + '</span>Buscar</button><button id="iptv-health">Fallos: despriorizar</button><button id="iptv-reset" class="icon-button" aria-label="Restablecer fallos locales" title="Restablecer fallos locales">' + this.icons["refresh-cw"] + '</button><button id="iptv-catalog-settings" class="icon-button" aria-label="URL del catalogo" title="URL del catalogo">' + this.icons.settings + '</button></div><div id="iptv-search" hidden><input id="iptv-query" type="text" readonly aria-label="Nombre del canal IPTV" placeholder="Nombre del canal"><div id="iptv-keyboard" class="keyboard" aria-label="Teclado IPTV"></div><div class="keyboard-actions"><button id="iptv-delete" class="icon-button" aria-label="Borrar caracter" title="Borrar caracter">' + this.icons.delete + '</button><button id="iptv-clear" class="icon-button" aria-label="Limpiar busqueda" title="Limpiar busqueda">' + this.icons.x + '</button></div></div><p id="iptv-status" role="status"></p><div id="iptv-grid" class="channel-grid"></div>';
       document.getElementById("service-content").appendChild(this.root);
       var self = this;
       this.node("iptv-refresh").onclick = function () {
@@ -2440,7 +2439,6 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
       };
       this.node("iptv-saved").onclick = function () {
         self.savedOnly = !self.savedOnly;
-        self.offset = 0;
         self.render();
       };
       this.node("iptv-category").onclick = function () {
@@ -2451,7 +2449,6 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
           });
         });
         self.category = categories[(categories.indexOf(self.category) + 1) % categories.length];
-        self.offset = 0;
         self.render();
       };
       this.node("iptv-language").onclick = function () {
@@ -2462,7 +2459,6 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
           });
         });
         self.language = languages[(languages.indexOf(self.language) + 1) % languages.length];
-        self.offset = 0;
         self.render();
       };
       this.node("iptv-health").onclick = function () {
@@ -2476,16 +2472,6 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
       };
       this.node("iptv-catalog-settings").onclick = function () {
         self.settings();
-      };
-      this.node("iptv-prev").onclick = function () {
-        self.offset = Math.max(0, self.offset - 12);
-        self.render();
-        self.focusFirst();
-      };
-      this.node("iptv-next").onclick = function () {
-        self.offset += 12;
-        self.render();
-        self.focusFirst();
       };
       var keys = "qwertyuiopasdfghjklzxcvbnm0123456789";
       for (var index = 0; index < keys.length; index++) {
@@ -2577,7 +2563,6 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
             return;
           }
           self.items = result.value.items;
-          self.offset = 0;
           self.status("");
           self.render();
         });
@@ -2591,7 +2576,6 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
         }
         this.source.refresh();
         this.items = [];
-        this.offset = 0;
         this.render();
         this.load();
       }
@@ -2600,7 +2584,6 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
       value: function setQuery(value) {
         this.query = value.substring(0, 50);
         this.node("iptv-query").value = this.query;
-        this.offset = 0;
         window.clearTimeout(this.debounce);
         var self = this;
         this.debounce = window.setTimeout(function () {
@@ -2654,13 +2637,12 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
         this.node("iptv-health").textContent = "Fallos: " + (this.health.policy() === "hide" ? "ocultar" : this.health.policy() === "all" ? "mostrar todos" : "despriorizar");
         var root = this.node("iptv-grid");
         root.textContent = "";
-        if (this.offset >= items.length) this.offset = Math.max(0, Math.floor((items.length - 1) / 12) * 12);
-        items.slice(this.offset, this.offset + 12).forEach(function (item, index) {
+        items.forEach(function (item, index) {
           var article = document.createElement("article");
           article.className = "channel";
           var watch = document.createElement("button");
           watch.type = "button";
-          watch.id = "iptv-watch-" + (self.offset + index);
+          watch.id = "iptv-watch-" + index;
           watch.className = "channel-play";
           var avatar = document.createElement("span");
           avatar.className = "avatar";
@@ -2695,7 +2677,7 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
           article.appendChild(watch);
           var favorite = document.createElement("button");
           favorite.type = "button";
-          favorite.id = "iptv-favorite-" + (self.offset + index);
+          favorite.id = "iptv-favorite-" + index;
           var selected = saved.some(function (ref) {
             return sameRef(ref, item.ref);
           });
@@ -2748,9 +2730,6 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
           }
           root.appendChild(article);
         });
-        this.node("iptv-prev").disabled = this.offset === 0;
-        this.node("iptv-next").disabled = this.offset + 12 >= items.length;
-        this.node("iptv-range").textContent = items.length ? this.offset + 1 + "-" + Math.min(items.length, this.offset + 12) + " / " + items.length : "Sin canales para este filtro";
       }
     }, {
       key: "focusFirst",
@@ -2916,7 +2895,8 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
     }, {
       key: "move",
       value: function move(code, root) {
-        var origin = document.activeElement.getBoundingClientRect();
+        var active = document.activeElement;
+        var origin = active.getBoundingClientRect();
         var nodes = root.querySelectorAll("button, input");
         var best = null;
         var score = Infinity;
@@ -2928,6 +2908,7 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
           var horizontal = code === 37 || code === 39;
           var deltaX = rect.left + rect.width / 2 - origin.left - origin.width / 2;
           var deltaY = rect.top + rect.height / 2 - origin.top - origin.height / 2;
+          if (!horizontal && active.classList.contains("channel-play") && node.classList.contains("channel-favorite")) continue;
           var primary = horizontal ? deltaX * (code === 37 ? -1 : 1) : deltaY * (code === 38 ? -1 : 1);
           if (primary <= 2) continue;
           var aligned = horizontal ? Math.min(rect.bottom, origin.bottom) > Math.max(rect.top, origin.top) : Math.min(rect.right, origin.right) > Math.max(rect.left, origin.left);

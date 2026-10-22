@@ -31,11 +31,11 @@
 * { box-sizing: border-box; }
 html, body { width: 100%; height: 100%; margin: 0; }
 body { position: relative; overflow: hidden; background: t.$canvas; color: t.$ink; font-family: t.$font-family; font-size: 16px; }
-button { position: relative; display: inline-flex; align-items: center; justify-content: center; border: 0; padding: 0; color: inherit; background: none; font: inherit; cursor: pointer; }
-button:focus, .is-focused { outline: 0; border-color: t.$focus; background: t.$focus; color: t.$focus-ink; box-shadow: none; z-index: 4; transition: background-color .15s ease-out, color .15s ease-out; }
+button { position: relative; display: inline-flex; align-items: center; justify-content: center; border: 0; padding: 0; color: inherit; background: none; font: inherit; cursor: pointer; transition: background-color t.$motion-fast t.$motion-easing, border-color t.$motion-fast t.$motion-easing, color t.$motion-fast t.$motion-easing, box-shadow t.$motion-fast t.$motion-easing, transform t.$motion-fast t.$motion-easing; }
+button:not(.sample-focus-card):focus, .is-focused:not(.sample-focus-card) { outline: 0; border-color: t.$focus; background: t.$focus; color: t.$focus-ink; box-shadow: none; transform: translateY(-1px); z-index: 4; }
 svg { display: block; width: 28px; height: 28px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-.guide-shell { position: absolute; top: 24px; right: 24px; bottom: 24px; left: 24px; display: flex; overflow: hidden; border-radius: t.$radius-window; background: t.$white; }
-.guide-sidebar { display: flex; flex: 0 0 96px; flex-direction: column; align-items: center; padding: 24px 0; background: t.$white; }
+.guide-shell { position: absolute; top: 0; right: 0; bottom: 0; left: 0; display: flex; overflow: hidden; border-radius: 0; background: t.$white; }
+.guide-sidebar { display: flex; flex: 0 0 96px; flex-direction: column; align-items: center; padding: 24px 0; border-right: 1px solid t.$line; background: t.$white; }
 .kick-mark { display: flex; width: 40px; height: 32px; align-items: center; justify-content: center; margin-bottom: 24px; color: t.$ink; }
 .kick-mark svg { width: 34px; height: 34px; }
 .kick-mark svg path, .kick-item svg path { fill: currentColor; stroke: none; }
@@ -47,8 +47,8 @@ svg { display: block; width: 28px; height: 28px; fill: none; stroke: currentColo
 .rail-item.active:before { content: ''; position: absolute; left: -16px; top: 18px; width: 4px; height: 28px; border-radius: 2px; background: t.$ink; }
 .rail-item.is-focused { background: t.$focus; color: t.$focus-ink; }
 .rail-exit { margin-top: auto; }
-.guide-main { display: flex; flex: 1 1 auto; flex-direction: column; min-width: 0; min-height: 0; height: 100%; padding: 0 24px 24px 0; }
-.guide-topbar { display: flex; flex: 0 0 76px; align-items: center; min-width: 0; }
+.guide-main { display: flex; flex: 1 1 auto; flex-direction: column; min-width: 0; min-height: 0; height: 100%; padding: 0; }
+.guide-topbar { display: flex; flex: 0 0 76px; align-items: center; min-width: 0; padding: 0 24px; border-bottom: 1px solid t.$line; background: t.$white; }
 .wordmark { display: inline-flex; align-items: center; flex: 0 0 auto; margin-right: 32px; color: t.$ink; font-size: 23px; font-weight: 800; }
 .search-pill { display: flex; width: 420px; min-width: 280px; height: 48px; flex: 0 0 420px; align-items: center; padding: 0 18px; border-radius: t.$radius-pill; background: t.$white; color: t.$muted; }
 .search-pill svg { width: 19px; height: 19px; margin-right: 12px; color: t.$muted; }
@@ -58,7 +58,7 @@ svg { display: block; width: 28px; height: 28px; fill: none; stroke: currentColo
 .top-action svg { width: 22px; height: 22px; }
 .profile-dot { width: 34px; height: 34px; border-radius: 50%; background: #d8dadd; color: t.$ink; font-size: 12px; font-weight: 600; }
 .service-indicator { margin-left: 14px; color: t.$muted; font-size: 13px; font-weight: 500; white-space: nowrap; }
-.workspace { display: flex; flex: 1 1 auto; flex-direction: column; min-width: 0; min-height: 0; overflow: hidden; padding: 28px 36px 30px; border-radius: t.$radius-window; background: t.$panel; }
+.workspace { display: flex; flex: 1 1 auto; flex-direction: column; min-width: 0; min-height: 0; overflow: hidden; padding: 28px 36px 30px; border-radius: 0; background: t.$panel; }
 .section-row { display: flex; flex: 0 0 38px; align-items: center; min-width: 0; margin-bottom: 14px; }
 .section-title { margin: 0; color: t.$ink; font-size: 32px; font-weight: 600; line-height: 1.2; white-space: nowrap; }
 .section-link { margin-left: 14px; color: t.$muted; font-size: 16px; font-weight: 500; text-decoration: none; white-space: nowrap; }
@@ -101,11 +101,12 @@ svg { display: block; width: 28px; height: 28px; fill: none; stroke: currentColo
 .component-strip .filter-chip { flex: 0 0 auto; margin-right: 12px; }
 .component-strip .arrow-button { width: 42px; height: 42px; flex: 0 0 42px; margin-right: 18px; }
 .sample-focus-card { display: flex; width: 190px; height: 56px; flex: 0 0 190px; flex-direction: column; align-items: flex-start; padding: 8px 14px; border: 1px solid t.$line; border-radius: 12px; background: t.$white; color: t.$ink; text-align: left; }
+.sample-focus-card:focus, .sample-focus-card.is-focused { background: t.$white; color: t.$ink; box-shadow: t.$shadow-focus; transform: translateY(-3px); z-index: 4; }
 .sample-focus-card span { font-size: 14px; font-weight: 600; }
 .sample-focus-card small { color: t.$muted; font-size: 11px; font-weight: 500; }
 body.dark-theme { background: t.$dark-canvas; color: t.$dark-ink; }
-body.dark-theme .guide-shell { background: t.$dark-window; }
-body.dark-theme .guide-sidebar, body.dark-theme .guide-topbar { background: t.$dark-window; }
+body.dark-theme .guide-shell { background: t.$dark-panel; }
+body.dark-theme .guide-sidebar, body.dark-theme .guide-topbar { border-color: t.$dark-line; background: t.$dark-window; }
 body.dark-theme .workspace { background: t.$dark-panel; }
 body.dark-theme .wordmark, body.dark-theme .section-title, body.dark-theme .standard-title, body.dark-theme .data-value, body.dark-theme .hero-number { color: t.$dark-ink; }
 body.dark-theme .service-indicator, body.dark-theme .section-link, body.dark-theme .data-label, body.dark-theme .standard-secondary { color: t.$dark-muted; }
@@ -116,12 +117,12 @@ body.dark-theme .meta-pill, body.dark-theme .filter-chip { border-color: t.$dark
 body.dark-theme .filter-chip.active { background: t.$dark-ink; color: t.$dark-canvas; }
 body.dark-theme .arrow-button, body.dark-theme .sample-focus-control { background: t.$dark-surface; color: t.$dark-ink; }
 body.dark-theme .arrow-button.previous { color: t.$dark-muted; }
-body.dark-theme button:focus, body.dark-theme .is-focused { border-color: t.$dark-focus; background: t.$dark-focus; color: t.$dark-focus-ink; }
+body.dark-theme button:not(.sample-focus-card):focus, body.dark-theme .is-focused:not(.sample-focus-card) { border-color: t.$dark-focus; background: t.$dark-focus; color: t.$dark-focus-ink; transform: translateY(-1px); }
+body.dark-theme .sample-focus-card:focus, body.dark-theme .sample-focus-card.is-focused { background: t.$dark-surface; color: t.$dark-ink; box-shadow: 0 10px 28px rgba(0, 0, 0, .42); transform: translateY(-3px); }
 body.dark-theme .rail-item.is-focused, body.dark-theme .arrow-button.is-focused, body.dark-theme .filter-chip.is-focused { color: t.$dark-focus-ink; }
 @media screen and (max-width: 1100px) {
-  .guide-shell { top: 16px; right: 16px; bottom: 16px; left: 16px; }
   .guide-sidebar { flex-basis: 80px; }
-  .guide-main { padding-right: 16px; }
+  .guide-topbar { padding: 0 16px; }
   .workspace { padding: 24px; }
   .hero-card { width: 560px; flex-basis: 560px; }
   .hero-art { width: 350px; flex-basis: 350px; }
