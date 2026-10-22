@@ -1,7 +1,7 @@
 const http = require('node:http');
 const fs = require('node:fs');
 const path = require('node:path');
-const { resolveChannel, channelStatus, searchChannels } = require('./kick.cjs');
+const apiReady = import('../api/index.mjs');
 
 const root = path.resolve(__dirname, '..', 'app');
 const port = Number(process.env.PORT || 5173);
@@ -12,31 +12,10 @@ http.createServer(async (request, response) => {
   const pathname = url.pathname;
   response.setHeader('Cache-Control', 'no-store');
   if (pathname.startsWith('/api/')) {
-    response.setHeader('Access-Control-Allow-Origin', '*');
-    response.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
-    response.setHeader('Content-Type', 'application/json; charset=utf-8');
-    if (request.method === 'OPTIONS') { response.writeHead(204); response.end(); return; }
-    if (request.method !== 'GET') {
-      response.writeHead(405);
-      response.end(JSON.stringify({ code: 'METHOD', message: 'Solo se admite GET.' }));
-      return;
-    }
-    const match = pathname.match(/^\/api\/channels\/([a-z0-9_-]{1,50})(\/status)?$/i);
-    if (!match && pathname !== '/api/search') {
-      response.writeHead(404);
-      response.end(JSON.stringify({ code: 'API_ROUTE', message: 'Endpoint no encontrado.' }));
-      return;
-    }
-    try {
-      const result = pathname === '/api/search'
-        ? { channels: await searchChannels(url.searchParams.get('q')) }
-        : await (match[2] ? channelStatus(match[1]) : resolveChannel(match[1]));
-      response.end(JSON.stringify(result));
-    }
-    catch (error) {
-      response.writeHead(error.status || 502);
-      response.end(JSON.stringify({ code: error.code || 'PROXY_ERROR', message: error.code ? error.message : 'Error del proxy local.' }));
-    }
+    const api = (await apiReady).default;
+    const result = await api.fetch(new Request(url, { method: request.method }));
+    response.writeHead(result.status, Object.fromEntries(result.headers));
+    response.end(await result.text());
     return;
   }
   const relative = pathname.replace(/^\/app\//, '/');

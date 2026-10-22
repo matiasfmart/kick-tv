@@ -4,8 +4,18 @@
   "buildCommand": "npm run build",
   "outputDirectory": "app",
   "functions": {
+    "api/index.mjs": {
+      "maxDuration": 40
+    },
     "api/probe.mjs": {
       "maxDuration": 20
     }
-  }
+  },
+  "rewrites": [
+    { "source": "/api/health", "destination": "/api/index" },
+    { "source": "/api/search", "destination": "/api/index" },
+    { "source": "/api/channels/:slug/status", "destination": "/api/index" },
+    { "source": "/api/channels/:slug", "destination": "/api/index" },
+    { "source": "/", "destination": "/tv.html" }
+  ]
 }

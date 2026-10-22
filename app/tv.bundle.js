@@ -15,7 +15,7 @@ window.KickTVIcons = {"search":"<!-- @license lucide-static v1.61.0 - ISC -->\n<
   var refreshSequence = 0;
   var refreshing = false;
   var defaultQuality = 'auto';
-  var proxyURL = 'http://192.168.0.220:5173/api';
+  var proxyURL = 'https://kick-tv-phi.vercel.app/api';
   var storageOK = true;
   var modalOpen = false;
   var modalReturn = '';
@@ -115,7 +115,7 @@ window.KickTVIcons = {"search":"<!-- @license lucide-static v1.61.0 - ISC -->\n<
     };
     request.onerror = function () {
       callback({
-        message: 'No hay conexion con el proxy. Verificar la Mac, el servidor y la URL en Ajustes.'
+        message: 'No hay conexion con el proxy. Verificar Internet, el servicio y la URL en Ajustes.'
       });
     };
     request.ontimeout = function () {

@@ -3,7 +3,8 @@
 Cliente personal de Kick para Samsung UN50MU6100 (2017), Tizen 3.0 y TizenBrew
 2.0.5. Interfaz vanilla JavaScript compilada a ES5. Sin WebAssembly, login ni chat.
 
-Estado: v1 local (`V1-01`), pendiente de validar sus recorridos completos en la TV.
+Estado: `V1-02` preparada para el proxy de Vercel; pendiente de verificar el
+despliegue completo y la reproduccion en la TV con la Mac apagada.
 La TV ya reprodujo el HLS de referencia y Kick en vivo con imagen y sonido en
 720p; tambien confirmo seleccion 1080p60 y video 1920x1080. Esto no certifica
 otros codecs o resoluciones. No hay un tope 1080p impuesto al selector.
@@ -20,7 +21,7 @@ otros codecs o resoluciones. No hay un tope 1080p impuesto al selector.
 Una consulta fallida se muestra como "Sin datos", no como offline. Los favoritos
 empiezan vacios y se agregan con el boton de estrella de cada resultado.
 
-## Mac
+## Mac: desarrollo opcional
 
 Abrir `Iniciar.command` con doble clic. Mantener esa terminal abierta mientras se prueba.
 Abrir http://localhost:5173 en Chrome. Flechas mueven el foco, Enter activa la accion
@@ -44,28 +45,30 @@ impide usar un repositorio publico de GitHub mediante TizenBrew.
 ## Instalar y actualizar en la TV
 
 El repositorio publico es `matiasfmart/kick-tv`. La version publicada inicialmente
-contiene el diagnostico; los cambios de v1 requieren un commit/push posterior.
+contenia el diagnostico; el manifiesto actual abre la interfaz principal.
 
-1. Iniciar el servidor en la Mac.
+1. Mantener la TV conectada a Internet; no hace falta iniciar el servidor local para V1-02.
 2. Abrir TizenBrew y usar el boton verde para entrar a Module Manager.
 3. Elegir GitHub e ingresar `matiasfmart/kick-tv`, sin URL ni prefijo `gh/`.
 4. Cerrar la edicion del campo para que pierda el foco: TizenBrew 2.0.5 agrega
 	el modulo en `onBlur`, no con un boton Submit.
-5. Abrir el modulo. Si aparece el diagnostico publicado, elegir "Abrir version local".
-6. En el diagnostico local actualizado, elegir "Abrir Kick TV". Debe aparecer `V1-01`.
+5. Abrir el modulo desde TizenBrew, sin elegir "Abrir version local".
+6. Comprobar que aparece `V1-02` y que Ajustes muestra `https://kick-tv-phi.vercel.app/api`.
 
 El manifiesto de v1 usa `packageType: app`, `appName: Kick TV` y
 `appPath: app/tv.html`. `main` no es la entrada de un modulo app y no se necesita
-`serviceFile`: el proxy se ejecuta en la Mac, no como servicio Node antiguo de la TV.
+`serviceFile`: el proxy se ejecuta en Node.js en Vercel, no como servicio Node antiguo de la TV.
 No hace falta reinstalar TizenBrew ni cambiar la Host IP: mantener `127.0.0.1`.
 
 TizenBrew 2.0.5 usa jsDelivr, por lo que el repositorio debe ser publico y los
-cambios publicados pueden tardar en aparecer por cache del CDN.
-Para iterar, la accion "Abrir version local" navega a
+cambios publicados pueden tardar en aparecer por cache del CDN. Si hace falta
+fijar una revision, jsDelivr admite el identificador GitHub `matiasfmart/kick-tv@COMMIT`.
+Para desarrollar, la accion "Abrir version local" navega a
 http://192.168.0.220:5173/app/index.html. La Mac debe estar encendida, en la misma
 red y permitir conexiones entrantes a Node. Desde alli, "Abrir Kick TV" navega a
-`/app/tv.html`. La app necesita el proxy de la Mac para datos y calidades; los
-segmentos de video se descargan directamente del CDN de Kick.
+`/app/tv.html`. Esta ruta es solo para iterar. La interfaz V1-02 consulta el proxy
+publico por defecto, incluso cuando se sirve localmente. Se puede elegir la API
+local en Ajustes. Los segmentos se descargan directamente del CDN de Kick.
 
 Flujo rapido: editar, ejecutar `npm run build` y recargar la pagina en la TV.
 Los cambios en el servidor requieren reiniciarlo. No es necesario publicar cada
@@ -178,8 +181,9 @@ la pagina: CH+/CH- todavia requieren prueba fisica en v1.
 ## Proxy y almacenamiento de v1
 
 En Ajustes se cambia la base del proxy sin modificar el reproductor. La base por
-defecto es `http://192.168.0.220:5173/api`; si cambia la IP de la Mac, actualizarla
-alli. La calidad y los favoritos se guardan en el origen actual, no en Kick.
+defecto de V1-02 es `https://kick-tv-phi.vercel.app/api`. Si se habia guardado
+manualmente la URL de la Mac, actualizarla en Ajustes: el valor guardado tiene
+prioridad sobre el predeterminado. La calidad y los favoritos se guardan en el origen actual, no en Kick.
 No borrar los datos del navegador ni cambiar de origen si se quieren conservar.
 
 El contrato HTTP del proxy es:
@@ -187,11 +191,13 @@ El contrato HTTP del proxy es:
 - `GET /api/search?q=nombre`: `{ channels: [...] }`, hasta 24 resultados.
 - `GET /api/channels/{slug}/status`: estado normalizado sin descargar HLS.
 - `GET /api/channels/{slug}`: estado y `qualities` con URLs vigentes.
+- `GET /api/health`: identificacion del servicio desplegado.
 
 Los canales incluyen `slug`, `name`, `avatar`, `live`, `title`, `category` y
 `viewers`. Las variantes incluyen `id`, `label`, `height`, `fps`, `bandwidth`
-y `url`. Un Worker puede sustituir a la Mac si implementa este contrato con CORS;
-todavia no se incluye un despliegue Worker ni se garantiza que evite Cloudflare.
+y `url`. La API compartida en `api/index.mjs` usa el mismo adaptador tanto en
+Vercel como en el servidor local. Las respuestas llevan no-store para no cachear
+URLs firmadas. No se garantiza que Kick siga aceptando consultas desde un proveedor.
 
 ## Prueba de alojamiento sin la Mac
 
@@ -199,16 +205,18 @@ El Worker `kick-tv-proxy.martinez-matiashc.workers.dev` se publico correctamente
 pero Kick respondio HTTP 403 desde ese alojamiento. No se cambio la app para
 depender de ese Worker.
 
-La prueba alternativa esta en `api/probe.mjs` y se ejecuta en Node.js en Vercel.
-Reutiliza el diagnostico de `worker/probe.mjs`; no es todavia el proxy completo.
+La prueba alternativa `https://kick-tv-phi.vercel.app/api/probe` respondio
+`ok: true`, `upstreamStatus: 200` y URL de reproduccion presente. Se ejecuto en
+Node.js en Vercel reutilizando `worker/probe.mjs`. La API completa se agrego
+despues en `api/index.mjs` y todavia requiere verificar sus endpoints publicados.
 
 1. Importar `matiasfmart/kick-tv` en Vercel con el plan Hobby para uso personal.
 2. Usar la raiz del repositorio como Root Directory y framework Other.
-3. La configuracion de `vercel.json` define `npm run build`, salida `app` y una
-	funcion de prueba con duracion maxima de 20 segundos.
+3. La configuracion de `vercel.json` define `npm run build`, salida `app`, prueba
+	de 20 segundos y API completa de 40 segundos. Las rutas se reescriben al handler compartido.
 4. Una vez desplegado, consultar `https://NOMBRE.vercel.app/api/probe`.
-5. Comprobar el JSON `ok` y `upstreamStatus` antes de adaptar o configurar el
-	proxy definitivo. Otra IP tampoco garantiza que Kick acepte la consulta.
+5. Comprobar tambien `/api/health`, `/api/search?q=xqc` y las variantes de
+	`/api/channels/xqc`. La raiz del sitio abre `tv.html` en Vercel.
 
 La prueba no devuelve tokens ni URLs firmadas. Solo consulta un canal fijo y
 admite GET/OPTIONS. No se necesitan credenciales de Kick ni variables secretas.
@@ -216,16 +224,17 @@ Usar la URL de produccion del proyecto, no una URL privada de preview. Si aparec
 una pantalla de autenticacion de Vercel, primero comprobar la proteccion del
 despliegue: ese error no demuestra un bloqueo de Kick.
 
-Hasta validar el proxy completo y la reproduccion en la TV con la Mac apagada,
-la configuracion de la app sigue usando el servidor local. Publicar el codigo
-no elimina por si solo esa dependencia.
+La configuracion predeterminada de V1-02 ya no apunta a la Mac. Para certificar
+que es independiente, cerrar TizenBrew, apagar la Mac, volver a abrir el modulo
+desde TizenBrew y probar busqueda, favoritos, calidad y video. Tambien falta
+confirmar CH+/CH- y persistencia en ese origen; arriba/abajo es la alternativa.
 
 ## Troubleshooting
 
-- Sin conexion al proxy: comprobar que `Iniciar.command` sigue abierto, misma red,
-	IP correcta y permiso de conexiones entrantes para Node en macOS.
-- Pantalla vieja: comprobar `V1-01`, recargar desde el servidor local. jsDelivr
-	puede conservar el modulo publicado en cache; no implica que el build local fallo.
+- Sin conexion al proxy: comprobar Internet, disponibilidad del servicio y URL
+	guardada en Ajustes. Si se eligio el servidor local para desarrollar, comprobar la Mac.
+- Pantalla vieja: comprobar `V1-02`. jsDelivr puede conservar el modulo publicado
+	en cache; usar la revision concreta del commit al agregar el modulo si es necesario.
 - Offline: el canal no emite; elegir otro o reintentar mas tarde.
 - Cloudflare/403: el servidor tambien puede ser bloqueado; probar otra ubicacion
 	del proxy. No se ejecutan desafios JS ni se garantiza eludirlos.
@@ -236,8 +245,9 @@ no elimina por si solo esa dependencia.
 - Sin persistencia: la app avisa si localStorage falla. Cambiar entre el origen
 	local y el del modulo publicado crea almacenamientos separados.
 
-No se han incluido login, chat, VOD, clips ni multivista. El servidor es para la
-red local y no debe exponerse en Internet.
+No se han incluido login, chat, VOD, clips ni multivista. No exponer el servidor
+de desarrollo de la Mac en Internet. Vercel aloja solo la interfaz y metadatos,
+no el transporte de los segmentos de video.
 
 ## Fuentes verificadas
 
